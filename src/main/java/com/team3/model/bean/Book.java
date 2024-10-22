@@ -1,14 +1,14 @@
 package com.team3.model.bean;
 
 public class Book {
-	private int cnt;
-	private String name;
-	private int price;
-	private String category;
-	private float rating;
-	private	String data;
-	private String img;
-	private String description;
+	private int cnt; //도서번호
+	private String name; //도서 제목
+	private int price; //가격
+	private String category; // 도서 카테고리
+	private float rating; //평점
+	private	String data; //출판일자
+	private String img; // 도서 이미지
+	private String description; // 도서 내용
 		
 	public Book() {
 		super();

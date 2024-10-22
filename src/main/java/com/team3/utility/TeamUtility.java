@@ -228,8 +228,7 @@ public class TeamUtility {
 		
 		// book section
 		opsMap.put("bookList", "com.team3.controller.book.BookListController");
-		opsMap.put("bookEndowment", "com.team3.controller.book.BookEndowmentController");
-
+		opsMap.put("bookDetail", "com.team3.controller.book.BookDetailController");
 		
 		// big data section
 		//opsMap.put("bigCorr01","com.team3.controller.bigdata.corr01Controller");

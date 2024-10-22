@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.team3.model.bean.Book;
 import com.team3.model.bean.Paging;
+import com.team3.model.bean.Product;
 
 public class BookDao extends SuperDao{
 
@@ -112,6 +113,70 @@ public class BookDao extends SuperDao{
 		}
 		
 		return bean;
+	}
+
+	public Book getDataByPk(int cnt) {
+		// 기본 키인 상품 번호를 이용하여 상품 정보를 반환합니다.
+				PreparedStatement pstmt = null ;
+				ResultSet rs = null ;		
+				String sql = " select * from booklist " ;
+				sql += " where cnt = ?  " ;
+				
+				Book bean = null ;
+				
+				try {
+					conn = super.getConnection() ;
+					pstmt = conn.prepareStatement(sql) ;
+					
+					pstmt.setInt(1, cnt);
+					
+					rs = pstmt.executeQuery() ;
+					
+					if(rs.next()) {
+						bean = getBookBeanData(rs);
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) {rs.close();}
+						if(pstmt!=null) {pstmt.close();}
+						if(conn!=null) {conn.close();}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				}
+				
+				return bean;
+	}
+
+	private Book getBookBeanData(ResultSet rs) {
+		Book bean = null ; 
+		
+		try {
+			bean = new Book() ;
+			
+			bean.setCnt(rs.getInt("cnt"));
+			bean.setName(rs.getString("name"));
+			
+			String priceString = rs.getString("price").replace(",", "");
+	        int price = Integer.parseInt(priceString);
+	        bean.setPrice(price);
+			
+			bean.setCategory(rs.getString("category"));
+			bean.setRating(rs.getFloat("rating"));
+			bean.setData(rs.getString("data"));
+			bean.setImg(rs.getString("img"));
+			bean.setDescription(rs.getString("description"));
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null ;
+		}
+		
+		return bean ;
 	}
 
 }
