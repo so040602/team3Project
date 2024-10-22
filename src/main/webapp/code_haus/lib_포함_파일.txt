@@ -1,0 +1,76 @@
+commons-fileupload2-core-2.0.0-M2.jar
+commons-io-2.9.0.jar
+jakarta.activation-2.0.0.jar
+jakarta.el-api-4.0.0.jar
+jakarta.servlet.jsp.jstl-2.0.0.jar
+jakarta.servlet.jsp.jstl-api-2.0.0.jar
+jakarta.servlet-api-5.0.0.jar
+jakarta.xml.bind-api-3.0.0.jar
+mariadb-java-client-3.3.3.jar
+
+
+Required JARs for Tomcat 10 and Jakarta EE
+
+jakarta.servlet-api-5.0.0.jar
+This is necessary for servlet support, including the Filter interface.
+
+jakarta.servlet.jsp.jstl-api-2.0.0.jar
+If you're using JSTL in your JSPs, this is also needed.
+
+jakarta.xml.bind-api-3.0.0.jar
+Useful for XML binding if your application uses it.
+
+commons-fileupload2-core-2.0.0-M2.jar and commons-io-2.9.0.jar
+These are common libraries for file uploads and I/O operations, so include them if your application uses file uploads.
+
+jakarta.activation-2.0.0.jar and jakarta.el-api-4.0.0.jar
+Include these if your application needs them (activation framework and EL support).
+
+* Clean the Local Repository
+After updating your pom.xml, clean the local repository and attempt to build again:
+mvn clean
+mvn dependency:purge-local-repository
+mvn install
+
+* Force Update of Snapshots/Releases
+If your dependencies are snapshots, you can force Maven to update them with:
+mvn clean install -U
+
+* Run Maven in Debug Mode
+If issues persist, run Maven with the -X flag for more detailed logs:
+mvn clean install -X
+
+
+mvn versions:display-dependency-updates
+[INFO]   commons-io:commons-io ................................ 2.9.0 -> 2.17.0
+[INFO]   jakarta.el:jakarta.el-api ............................. 4.0.0 -> 6.0.1
+[INFO]   jakarta.servlet:jakarta.servlet-api ................... 5.0.0 -> 6.1.0
+[INFO]   org.mariadb.jdbc:mariadb-java-client .................. 3.3.3 -> 3.4.1
+[INFO]   org.springframework:spring-web ....................... 5.3.6 -> 6.1.13
+[INFO]   org.springframework:spring-webmvc .................... 5.3.6 -> 6.1.13
+
+
+Compatibility Table
+Here’s a simple compatibility guide:
+Tomcat 10: Use Jakarta Servlet API 6.0.x
+Tomcat 9: Use Jakarta Servlet API 4.0.x (javax.servlet)
+Tomcat 8: Use Servlet API 3.1.x (javax.servlet)
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <spring.version>5.3.6</spring.version> <!-- Compatible with STS 3.9.18 -->
+    </properties>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <spring.version>5.3.6</spring.version> <!-- Compatible with STS 3.9.18 -->
+    </properties>
+
+  	<dependency>
+	    <groupId>jakarta.servlet</groupId>
+	    <artifactId>jakarta.servlet-api</artifactId>
+        <version>5.0.0</version> <!-- Compatible with Tomcat 10 -->
+	    <scope>provided</scope>
+	</dependency>

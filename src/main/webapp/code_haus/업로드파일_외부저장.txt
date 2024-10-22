@@ -1,0 +1,144 @@
+/uploads_dir : 755 저장 가능 
+/tomcat : G755
+/tomcat/webapps/goldberry : G755
+/tomcat/webapps/goldberry/uploads : G750 현재 파일 업로드되는 경로 
+/tomcat/uploads_dir : G755 저장 가능
+
+/uploads_dir 이곳이나 또는 /tomcat/uploads_dir 이곳에 저장할 수 있으면 WAR 파일을 업데이트해도 기존에 업로드된 파일은 삭제되지 않음 
+
+ChatGPT의 말:
+네, 맞습니다. WAR 파일을 업데이트할 때 기존에 업로드된 파일이 삭제되지 않도록 하려면, 애플리케이션의 업로드 디렉토리를 Tomcat의 webapps 디렉토리 외부에 설정하는 것이 올바른 방법입니다. /uploads_dir 또는 /tomcat/uploads_dir와 같은 경로를 사용하면 WAR 파일 업데이트와 무관하게 파일이 유지됩니다.
+
+파일 저장 위치 설정 방법
+파일 저장 경로 설정
+
+Tomcat의 webapps 디렉토리 외부에 위치한 디렉토리를 파일 저장 경로로 설정합니다. 예를 들어, /uploads_dir 또는 /tomcat/uploads_dir 경로를 사용할 수 있습니다.
+
+서블릿에서 파일 저장 경로 설정
+
+Java 서블릿에서 파일을 저장할 경로를 설정할 때, webapps 외부의 경로를 사용하여 파일을 저장합니다. 다음은 Java 서블릿 코드에서 파일 저장 경로를 설정하는 방법입니다:
+
+
+private static final String UPLOAD_DIRECTORY = "/uploads"; // 또는 "/tomcat/webapps/team3_uploads"
+
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String uploadPath = UPLOAD_DIRECTORY;
+    File uploadDir = new File(uploadPath);
+    
+    if (!uploadDir.exists()) {
+        uploadDir.mkdirs(); // Ensure directory creation
+    }
+
+    for (Part part : request.getParts()) {
+        if (part.getSubmittedFileName() != null) {
+            String fileName = part.getSubmittedFileName();
+            File file = new File(uploadPath + File.separator + fileName);
+            
+            // Write the file to the specified directory
+            part.write(file.getAbsolutePath());
+            System.out.println("File uploaded successfully: " + file.getAbsolutePath());
+        }
+    }
+}
+
+[디렉토리 권한 설정]
+디렉토리 권한을 적절히 설정하여 Tomcat 프로세스가 파일을 읽고 쓸 수 있도록 합니다. 
+755 권한은 디렉토리에 읽기, 쓰기, 실행 권한을 부여하여 Tomcat이 해당 디렉토리에 접근하고 파일을 저장할 수 있게 합니다. 
+예를 들어:
+/uploads_dir 디렉토리: 755 (읽기, 쓰기, 실행 권한)
+/tomcat/uploads_dir 디렉토리: 755 (읽기, 쓰기, 실행 권한)
+
+[파일 접근 및 테스트]
+애플리케이션에서 파일이 올바르게 저장되고 읽히는지 확인합니다. 외부 디렉토리에 저장된 파일이 애플리케이션에 의해 올바르게 접근될 수 있는지 테스트합니다.
+
+File file = new File(uploadPath, "example.txt");
+if (file.exists()) {
+    try (FileInputStream fis = new FileInputStream(file)) {
+        // 파일 읽기 로직
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+[요약]
+파일 저장 경로를 webapps 외부의 디렉토리로 설정하여 WAR 파일 배포와 무관하게 파일을 유지합니다.
+디렉토리 권한을 적절히 설정하여 Tomcat이 파일을 읽고 쓸 수 있도록 합니다.
+서블릿 코드에서 외부 경로를 사용하여 파일을 저장하고, 저장된 파일이 올바르게 접근되고 읽히는지 확인합니다.
+이 방법을 사용하면 WAR 파일을 업데이트해도 기존의 업로드된 파일이 삭제되지 않으며, 안정적으로 파일을 관리할 수 있습니다.
+
+그럼 goldberry app에서 /tomcat/uploads_dir 이곳에 저장된 파일을 읽어 오려면 어떻게 하면 될까?
+
+ChatGPT
+/tomcat/uploads_dir와 같은 외부 디렉토리에 저장된 파일을 읽어오려면, 다음과 같은 단계를 따라야 합니다. 
+이 방법은 Tomcat 애플리케이션에서 외부 디렉토리에 있는 파일을 안전하고 효율적으로 읽어오는 데 도움이 됩니다.
+
+1. 파일 경로 설정
+Tomcat 애플리케이션에서 외부 디렉토리의 파일을 읽기 위해, 해당 디렉토리에 대한 절대 경로를 설정합니다. 
+이를 위해 환경 변수나 설정 파일을 활용할 수 있습니다.
+
+예를 들어, 애플리케이션의 설정 파일(web.xml 또는 context.xml)에서 파일 경로를 설정하거나, Java 코드에서 직접 경로를 설정할 수 있습니다.
+
+
+private static final String FILE_DIRECTORY = "/tomcat/uploads_dir";
+
+2. 파일 읽기 코드 작성
+외부 디렉토리에서 파일을 읽어오는 서블릿 코드를 작성합니다. Java I/O를 사용하여 파일을 읽고 응답으로 반환하는 방법입니다.
+
+다음은 파일을 읽어 클라이언트에게 반환하는 예제 서블릿입니다:
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+@WebServlet("/download")
+public class FileDownloadServlet extends HttpServlet {
+    private static final String FILE_DIRECTORY = "/tomcat/uploads_dir";
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String fileName = request.getParameter("fileName");
+        if (fileName != null) {
+            File file = new File(FILE_DIRECTORY, fileName);
+            if (file.exists() && !file.isDirectory()) {
+                response.setContentType("application/octet-stream");
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+                try (FileInputStream fis = new FileInputStream(file);
+                    OutputStream os = response.getOutputStream()) {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        os.write(buffer, 0, bytesRead);
+                    }
+                }
+            } else {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found.");
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing file name parameter.");
+        }
+    }
+}
+
+3. 파일 접근 권한 설정
+외부 디렉토리의 파일을 읽을 수 있도록 Tomcat 프로세스에 대한 파일 권한을 적절히 설정해야 합니다. 755 권한은 일반적으로 디렉토리와 파일에 적절한 권한을 부여합니다.
+[sh]
+chmod 755 /tomcat/uploads_dir
+
+4. 보안 고려사항
+외부 디렉토리에서 파일을 읽어올 때는 보안 문제를 고려해야 합니다. 사용자가 파일 이름을 조작하여 민감한 파일에 접근하지 않도록 검증이 필요합니다.
+파일 경로 검증: 사용자 입력에서 파일 경로를 받는 경우, 경로 탐색 공격(Path Traversal) 등을 방지하기 위해 입력을 검증합니다.
+파일 형식 및 크기 제한: 적절한 파일 형식과 크기 제한을 설정하여 불필요한 리소스 소모를 방지합니다.
+
+5. 테스트
+외부 디렉토리에 저장된 파일을 올바르게 읽어오는지 테스트합니다. 브라우저에서 파일 다운로드 요청을 보내거나, 애플리케이션의 다른 부분에서 파일을 읽어오는 기능을 확인합니다.
+[sh]
+curl -O http://example.com/download?fileName=example.txt
+이 방법을 사용하면 Tomcat 애플리케이션에서 외부 디렉토리에 저장된 파일을 읽어 클라이언트에게 안전하게 전달할 수 있습니다.
+

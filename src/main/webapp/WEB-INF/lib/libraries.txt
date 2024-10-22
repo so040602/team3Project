@@ -1,0 +1,12 @@
+commons-fileupload2-core-2.0.0-M2.jar
+commons-io-2.9.0.jar
+jakarta.activation-2.0.0.jar
+jakarta.servlet.jsp.jstl-2.0.0.jar
+jakarta.servlet.jsp.jstl-api-2.0.0.jar
+jakarta.servlet-api-5.0.0.jar
+jakarta.xml.bind-api-3.0.0.jar
+
+Do Not Include:
+jakarta.el-api-4.0.0.jar: This is generally not needed since it's included with the Jakarta Servlet API.
+
+mariadb-java-client-3.3.3.jar

@@ -1,0 +1,32 @@
+package com.goldberry.utility;
+
+//import com.amazonaws.services.s3.AmazonS3;
+//import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+//import com.amazonaws.services.s3.model.PutObjectRequest;
+import java.io.File;
+
+public class HttpApiBucket {
+//    private final AmazonS3 s3Client;
+//    private final String bucketName = "your-bucket-name"; // 외부 저장소의 버킷 이름
+//
+//    public FileUploadService() {
+//        this.s3Client = AmazonS3ClientBuilder.standard().build();
+//    }
+//
+//    public void uploadFile(File file) {
+//        s3Client.putObject(new PutObjectRequest(bucketName, file.getName(), file));
+//    }
+}
+
+/*
+외부 저장소 API 사용 / Java 예제 (AWS S3): 
+가장 일반적인 방법은 외부 저장소 서비스에서 제공하는 API를 사용하는 것입니다. 
+이 방법은 API를 통해 파일 업로드, 다운로드, 관리 등을 수행할 수 있게 해줍니다. 여기서는 S3 호환 저장소를 예로 설명하겠습니다.
+
+예제: AWS S3와 같은 외부 저장소 사용
+외부 저장소에 버킷 생성: abc999.co.kr 서버에서 AWS S3, Google Cloud Storage, 또는 Azure Blob Storage 등의 버킷을 생성합니다.
+
+SDK 또는 HTTP API 설정: 외부 저장소의 SDK 또는 HTTP API를 사용하여 파일을 업로드합니다.
+ 
+HTTP API를 사용하는 경우에는 HttpURLConnection 또는 Apache HttpClient를 사용하여 파일을 업로드할 수 있습니다. 
+*/

@@ -1,0 +1,511 @@
+-- 회원 추가
+insert into members values('admin', '어드민', 'abc123', '남자', '2024/09/05', '미혼', 100, '마포', null, 0); 
+insert into members values('hong', '홍길동', 'abc#123', '남자', '2024/08/15', '결혼', 200, '용산', null, 0); 
+commit ;
+
+-- 게시물 테이블 생성
+-- possword는 password의 오타
+-- handphone은 컬럼 삭제 예정
+
+create table boards(
+	no number primary key,
+	id varchar2(30) not null,	
+	possword varchar2(30) not null,
+	subject varchar2(30) not null,
+	contents varchar2(30) not null,
+	readhit number,
+	regdate date default sysdate,
+	groupno number default 0,
+	orderno number default 0,
+	depth number default 0,
+	handphone varchar2(50)
+);
+
+-- likes, hates는 테이블 생성 후 alter로 추가 예정
+alter table boards add (likes number default 0) ;
+alter table boards add (hates number default 0) ;
+
+-- possword는 password의 오타
+alter table boards rename column possword to password ;
+
+-- 미사용 컬럼 삭제 
+alter table boards drop column handphone ;
+
+-- readhit의 기본 값 변경
+alter table boards modify(readhit default 0) ;
+
+
+-- 테이블 구조 확인
+desc boards ;
+
+
+-- 게시물을 위한 시퀀스 작성하기
+-- drop sequence seqboard ; 
+create sequence seqboard start with 1 increment by 1 nocache ;
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, 'hong', 'abc123', '자바', '잼있어요', default, '2024/09/10') ;
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, 'adim', 'abc123', 'jsp', '어려워요', default, '2024/11/11') ;
+
+commit ;
+select * from boards ;
+
+-- 카테고리 테이블 생성
+create table categories(
+	module varchar2(20),
+	type varchar2(20),
+	ordering number,
+	engname varchar2(255),
+	korname varchar2(255)
+);
+
+insert into categories values('product', 'select', 1, '-', '카테고리를 선택해 주세요.');
+insert into categories values('product', 'select', 2, 'bread', '빵');
+insert into categories values('product', 'select', 3, 'beverage', '음료수');
+insert into categories values('product', 'select', 4, 'cake', '케익');
+
+commit ;
+
+select * from categories ;
+
+select * from categories
+where module = 'product' and type = 'select'
+order by ordering asc ;
+
+
+
+
+
+-- 상품 관련
+-- 시퀀스 생성
+-- drop sequence seqproduct ; 
+create sequence seqproduct start with 1 increment by 1 nocache ;
+
+-- 테이블 생성
+create table products(
+	pnum number primary key,
+	name varchar2(30) not null,
+	company varchar2(1024) not null,
+	image01 varchar2(255) not null,
+	image02 varchar2(255),
+	image03 varchar2(255),
+	stock number default 0,
+	price number default 0,
+	category varchar2(30),
+	contents varchar2(30),	
+	point number default 0,
+	inputdate date default sysdate
+);
+
+
+alter table products modify (contents varchar2(255)); 
+
+
+
+insert into products(pnum, name, company, image01, stock, price, category, contents, point, inputdate)
+values(seqproduct.nextval, '브리오슈', '빵샘', 'brioche_01.png', 100, 1000, 'bread', '프랑스의 전통적인 달콤한 빵으로, 기름과 계란이 많이 들어가서 부드럽고 고소한 맛과 부드러운 식감이 특징입니다.', 10, sysdate );
+
+insert into products(pnum, name, company, image01, stock, price, category, contents, point, inputdate)
+values(seqproduct.nextval, '크로와상', '프랑스', 'croissant_01.png', 100, 1000, 'bread', '프랑스의 대표적인 베이커리 중 하나로, 층층이 쌓인 반죽에 버터를 추가하여 구워낸 과자입니다.', 10, sysdate );
+
+insert into products(pnum, name, company, image01, stock, price, category, contents, point, inputdate)
+values(seqproduct.nextval, '프렌치 바게트', '프랑스', 'french_baguette_01.png', 100, 1000, 'bread', '프랑스의 대표적인 빵 중 하나로, 길쭉하고 얇은 형태의 식빵입니다. 바삭하면서도 촉촉한 식감과 진한 맛이 특징입니다.', 10, sysdate );
+
+insert into products(pnum, name, company, image01, stock, price, category, contents, point, inputdate)
+values(seqproduct.nextval, '치아바타', '프랑스', 'ciabatta_01.png', 100, 1000, 'bread', '빵 자체는 비교적 폭이 넓은 직사각형 모양을 띠며, 바삭하면서도 촉촉하고 부드러운 식감이 특징입니다.', 10, sysdate );
+
+
+insert into products(pnum, name, company, image01, stock, price, category, contents, point, inputdate)
+values(seqproduct.nextval, '아메리카노', '빵샘', 'americano01.png', 50, 2000, 'beverage', '에스프레소의 쓴 맛과 향을 좋아하는 사람들이 물을 추가해서 즐기는 음료로, 물과 에스프레소의 비율에 따라서 쓴 맛과 진하게 즐길 수 있습니다.', 20, sysdate );
+
+insert into products(pnum, name, company, image01, stock, price, category, contents, point, inputdate)
+values(seqproduct.nextval, '카푸치노', '빵샘', 'cappuccino01.png', 50, 2000, 'beverage', '스팀 밀크와 거품을 올린 것을 섞어 만든 이탈리아의 전통적인 커피 음료입니다.', 20, sysdate );	
+
+commit ;
+
+
+-- 참조 무결성 제약 조건 만들기
+-- alter table 보조테이블 add constraint 제약조건이름
+-- foreign key(fk이름) references 주테이블(pk이름) ;
+
+alter table boards add constraint boards_id_fk
+foreign key(id) references members(id);
+
+-- 게시물이 있는 회원 탈퇴
+delete from members where id = 'hong';
+
+-- 존재하지 않는 회원으로 변경
+update boards set id = 'kang' ;
+
+-- 아이디에 널 값 허용할수 있도록 변경
+alter table boards modify (id varchar2(30) null) ;
+
+
+-- null 값
+
+update boards set id = null ;  
+
+select * from boards ;
+
+rollback ; 
+
+
+-- 이전 제약 조건 삭제
+alter table boards drop constraint boards_id_fk ;
+
+-- 제약 조건 다시 만들기
+alter table boards add constraint boards_id_fk
+foreign key(id) references members(id)
+on delete set null ;
+
+select * from boards ;
+
+delete from members where id = 'hong' ;
+
+select * from boards ;
+
+rollback ;
+
+
+
+
+
+alter table boards drop constraint boards_id_fk ;
+
+
+alter table boards add constraint boards_id_fk
+foreign key(id) references members(id)
+on delete cascade ;
+
+select * from boards ;
+
+delete from members where id = 'hong' ;
+
+select * from boards ;
+
+rollback ;
+
+
+
+-- 우리 쇼핑몰은 회원 탈퇴시 작성한 게시물을 남기도록 하겠습니다.
+alter table boards drop constraint boards_id_fk ;
+
+alter table boards add constraint boards_id_fk
+foreign key(id) references members(id)
+
+-- 주문 관련 시퀀스
+-- drop sequence seqoid ;
+create sequence seqoid start with 1 increment by 1 nocache nocycle;
+
+-- 주문 테이블 생성
+-- 회원이 탈퇴하더라도 과거의 주문 내역은 지우지 않습니다.
+create table orders(
+	oid number primary key,
+	id varchar2(30),
+	orderdate date default sysdate,
+	constraint orders_id_fk foreign key(id)
+	references members(id)	
+	on delete set null
+);
+
+-- 주문 상세 테이블 관련 시퀀스
+-- drop sequence seqodid  ; 
+create sequence seqodid start with 1 increment by 1 nocache nocycle ;
+
+
+-- 주문 상세 테이블 생성
+create table orderdetails(
+	odid number,
+	oid number,
+	pnum number,
+	qty number
+);
+
+
+-- 기본 키 추가
+alter table orderdetails 
+add constraint orderdetails_odid_pk 
+primary key(odid) ;
+
+-- 주문 취소시 주문 상세 내역은 모두 취소 됩니다.
+alter table orderdetails
+add constraint orderdetails_oid_fk
+foreign key(oid) references orders(oid)
+on delete cascade ;
+
+-- 상품 삭제시 이전 구매 내역은 null으로 변경합니다.
+alter table orderdetails
+add constraint orderdetails_pnum_fk
+foreign key(pnum) references products(pnum)
+on delete set null ;
+
+
+
+-- 결제하기 로직
+-- 고객 hong이 상품 1번 3개, 2번 5개를 구매합니다.
+-- 회원 마일리지 확인(0원 확인)
+select id, mpoint from members where id = 'hong';
+
+-- 상품들의 재고 수량 확인
+select pnum, stock, point from products where pnum in(1, 2) ;
+
+-- 주문 테이블 확인
+select * from orders ;
+
+-- 주문 상세 테이블 확인
+select * from orderdetails ;
+
+-- 결제시 처리할 내용
+-- 01. 상품 재고 감소
+update products set stock = stock - 3 where pnum = 1 ;
+update products set stock = stock - 5 where pnum = 2 ;
+
+-- 02. 회원 마일리지 적립
+-- sum(수량*포인트) = 3*10 + 5*10 = 80
+update members set mpoint = mpoint + 80 where id = 'hong' ;
+
+-- 03. 주문 데이터 추가(일련_송장_번호, 구매자아이디, 구매일자)
+insert into orders values(seqoid.nextval, 'hong', sysdate) ;
+
+-- 04. 주문 상세 데이터 추가(일련번호, 송장번호, 상품번호, 구매수량)
+-- 송장번호는 다음 구문을 실행하면 알 수 있습니다.
+select max(oid) from orders ; 
+
+insert into orderdetails values(seqodid.nextval, 1, 1, 3);
+
+insert into orderdetails values(seqodid.nextval, 1, 2, 5);
+
+commit ;
+
+-- 모든 테이블 확인
+select id, mpoint from members where id = 'hong';
+
+select pnum, stock, point from products where pnum in(1, 2) ;
+
+select * from orders ;
+
+select * from orderdetails ;
+
+
+-- 결제하기 로직
+-- 고객 park이 상품 1번 6개, 3번 4개, 4번 3개를 구매합니다.
+
+
+-- 조인 사전 작업
+insert into members values('lee', '이만수', 'abc#123', '남자', '2024/08/15', '결혼', 200, '용산', null, 0); 
+insert into members values('shin', '신경식', 'abc#123', '남자', '2024/08/15', '결혼', 200, '용산', null, 0);
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, 'lee', 'abc123', '삼성', '라이온즈', default, '2024/09/10') ;
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, 'lee', 'abc123', '기아', '타이거즈', default, '2024/09/10') ;
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, 'lee', 'abc123', '두산', '베어스', default, '2024/09/10') ;
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, 'shin', 'abc123', 'Lg', '트윈스', default, '2024/09/10') ;
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, 'shin', 'abc123', 'ssg', '트윈스', default, '2024/09/10') ;
+
+
+commit ;
+
+-- 게시물을 작성하신 분의 이름과 글제목을 조회하세요.
+
+-- equi 조인, inner
+-- 오라클 조인
+select members.name, boards.subject
+from members, boards
+where members.id = boards.id ;
+
+-- Ansi 조인
+select members.name, boards.subject
+from members inner join boards
+on members.id = boards.id ;
+
+
+-- 테이블에 별칭 주기
+select m.name, b.subject
+from members m inner join boards b
+on m.id = b.id ;
+
+
+-- 등급 테이블 생성
+create table grades(
+	glevel varchar2(2),
+	lowsal number,
+	highsal number
+);
+insert into grades values('A', 0, 99);
+insert into grades values('B', 100, 199);
+insert into grades values('C', 200, 299);
+insert into grades values('D', 300, 499);
+insert into grades values('E', 500, 2000);
+commit ;
+
+select * from grades ;
+
+
+-- non-equi join
+select m.name, m.salary, g.glevel
+from members m, grades g
+where m.salary between g.lowsal and g.highsal ;
+
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, null, 'abc123', 'hello', 'world', default, '2024/09/10') ;
+
+insert into boards(no, id, password, subject, contents, readhit, regdate)
+values(seqboard.nextval, null, 'abc123', 'asdf', 'qwert', default, '2024/09/10') ;
+
+
+commit ;
+
+
+-- 게시물을 남기지 않은 사람도 포함
+select m.name, b.subject
+from members m, boards b
+where m.id = b.id(+) ;
+
+
+select m.name, b.subject
+from members m left outer join boards b
+on m.id = b.id ;
+
+
+-- 과거에 탈퇴한 고객들이 작성한 게시물도 포함
+select m.name, b.subject
+from members m, boards b
+where m.id(+) = b.id ;
+
+
+select m.name, b.subject
+from members m right outer join boards b
+on m.id = b.id ;
+
+-- full outer join(오라클은 지원 하지 않음)
+select m.name, b.subject
+from members m, boards b
+where m.id(+) = b.id(+) ;
+
+
+select m.name, b.subject
+from members m full outer join boards b
+on m.id = b.id ;
+
+
+-- self join(왼쪽 사원, 오른쪽 관리자)
+-- || 기호는 문자열 결합입니다.(concat 함수)
+select emp.name || '의 관리자는 ' || mgr.name || '입니다.' as result 
+from members emp inner join members mgr
+on emp.manager = mgr.id ;
+
+-- nvl(a, '대체값') : a가 null이면 '대체값'으로 대체 합니다.
+select emp.name || '의 관리자는 ' || nvl(mgr.name, '관리자') || '입니다.' as result 
+from members emp left outer join members mgr
+on emp.manager = mgr.id ;
+
+
+select p.pnum, p.name as pname, od.qty, p.price, p.point, p.image01
+from (orders o join orderdetails od 
+on o.oid = od.oid) join products p
+on od.pnum = p.pnum and o.oid = 2 ;
+
+
+-- 데이터 보기
+-- View01 : 게시물을 작성한 회원의 이름, 글제목, 글내용, 작성 일자를 조회
+select m.name, b.subject, b.contents, b.regdate
+from members m inner join boards b 
+on m.id = b.id
+order by m.name ;
+
+-- 오라클내 그룹 함수 : min, max, sum, avg, count
+
+-- View02 : 회원들이 게시물을 얼마나 작성했나?
+select m.name, count(*) as cnt
+from members m inner join boards b 
+on m.id = b.id
+group by m.name
+order by m.name ;
+
+-- View03 : 회원별 이름, 상품명, 주문일자, 상품 가격, 구매 수량, 총금액
+select m.name mname, p.name as pname, o.orderdate, p.price, od.qty, p.price * od.qty as amount
+from ((members m join orders o 
+on m.id = o.id) join orderdetails od
+on o.oid = od.oid) join products p
+on od.pnum = p.pnum
+order by p.name desc, m.name asc ;
+
+-- View04 : 회원별 각 매출 총액
+select m.name, sum(p.price * od.qty) as sumtotal
+from ((members m join orders o 
+on m.id = o.id) join orderdetails od
+on o.oid = od.oid) join products p
+on od.pnum = p.pnum
+group by m.name ;
+
+
+-- View05 : 회원별 주문 건수 집계, 주문이 없는 고객도 포함하기
+select m.id, count(o.id) as cnt  
+from members m left outer join orders o
+on m.id = o.id
+group by m.id
+order by cnt desc, m.id asc ;
+
+
+
+-- sql 문장 
+
+-- 데이터 보기
+-- View01 : 게시물을 작성한 회원의 이름, 글제목, 글내용, 작성 일자를 조회
+String sql = " select m.name, b.subject, b.contents, b.regdate " ;
+sql += " from members m inner join boards b  " ;
+sql += " on m.id = b.id " ;
+sql += " order by m.name " ;
+
+-- 오라클내 그룹 함수 : min, max, sum, avg, count
+
+-- View02 : 회원들이 게시물을 얼마나 작성했나?
+String sql = " select m.name, count(*) as cnt  " ;
+sql += " from members m inner join boards b   " ;
+sql += " on m.id = b.id  " ;
+sql += " group by m.name  " ;
+sql += " order by m.name  " ;
+
+-- View03 : 회원별 이름, 상품명, 주문일자, 상품 가격, 구매 수량, 총금액
+String sql = " select m.name mname, p.name as pname, o.orderdate, p.price, od.qty, p.price * od.qty as amount  " ;
+sql += " from ((members m join orders o   " ;
+sql += " on m.id = o.id) join orderdetails od  " ;
+sql += " on o.oid = od.oid) join products p  " ;
+sql += " on od.pnum = p.pnum  " ;
+sql += " order by p.name desc, m.name asc  " ;
+
+-- View04 : 회원별 각 매출 총액
+String sql = " select m.name, sum(p.price * od.qty) as sumtotal  " ;
+from ((members m join orders o   " ;
+on m.id = o.id) join orderdetails od  " ;
+on o.oid = od.oid) join products p  " ;
+on od.pnum = p.pnum  " ;
+group by m.name  " ;
+
+
+-- View05 : 회원별 주문 건수 집계, 주문이 없는 고객도 포함하기
+String sql = " select m.id, count(o.id) as cnt    " ;
+sql += " from members m left outer join orders o  " ;
+sql += " on m.id = o.id  " ;
+sql += " group by m.id  " ;
+sql += " order by cnt desc, m.id asc  " ;
+
+
+
+
+
+
+
+
+

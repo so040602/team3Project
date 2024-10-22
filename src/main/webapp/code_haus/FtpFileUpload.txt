@@ -1,0 +1,49 @@
+package com.goldberry.utility;
+
+//import org.apache.commons.net.ftp.FTP;
+//import org.apache.commons.net.ftp.FTPClient;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class FtpFileUpload {
+    private final String server = "ftp.abc999.co.kr";
+    private final String user = "your-ftp-username";
+    private final String pass = "your-ftp-password";
+
+    public void uploadFile(String localFilePath, String remoteFilePath) {
+        //FTPClient ftpClient = new FTPClient();
+        try {
+            //ftpClient.connect(server);
+            //ftpClient.login(user, pass);
+            //ftpClient.enterLocalPassiveMode();
+            //ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            try (FileInputStream fis = new FileInputStream(localFilePath)) {
+                //boolean done = ftpClient.storeFile(remoteFilePath, fis);
+                //if (done) {
+                //    System.out.println("The file is uploaded successfully.");
+                //} else {
+                //    System.out.println("Could not upload the file.");
+                //}
+            }
+
+            //ftpClient.logout();
+            //ftpClient.disconnect();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+/*
+ FTP/SFTP를 통한 파일 전송 / Java 예제 (Apache Commons Net을 사용한 FTP):
+외부 서버가 FTP 또는 SFTP 서버를 제공하는 경우, 해당 프로토콜을 사용하여 파일을 전송할 수 있습니다.
+
+FTP 라이브러리 의존성 추가: Maven을 사용하는 경우 pom.xml에 다음 의존성을 추가합니다.
+
+<dependency>
+    <groupId>commons-net</groupId>
+    <artifactId>commons-net</artifactId>
+    <version>3.8.0</version>
+</dependency>
+
+*/
