@@ -28,7 +28,7 @@ public class BookListController extends SuperClass {
 		
 		String pageNumber = (pageNumberParam == null || pageNumberParam.isEmpty()) ? "1" : pageNumberParam;
 		
-		Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, mode, keyword);
+		Paging pageInfo = new Paging(pageNumber, "18", totalCount, url, mode, keyword);
 		
 		List<Book> bookList = dao.getPaginationData(pageInfo);
 		

@@ -178,5 +178,231 @@ public class BookDao extends SuperDao{
 		
 		return bean ;
 	}
+	
+	
+	public List<Book> getBestSellers() throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<Book> lists = new ArrayList<Book>();
+	    
+	    String sql = "SELECT * FROM booklist WHERE rating >= 4.0 "
+	               + "ORDER BY rating DESC, cnt DESC LIMIT 25";
+	    
+	    try {
+	        conn = super.getConnection();
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+	        
+	        while(rs.next()) {
+	            Book bean = this.getBeanData(rs);
+	            lists.add(bean);
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        throw ex;
+	    } finally {
+	        try {
+	            if(rs != null) {rs.close();}
+	            if(pstmt != null) {pstmt.close();}
+	            if(conn != null) {conn.close();}
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return lists;
+	}
+
+	public List<Book> getNewBooks() throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<Book> lists = new ArrayList<Book>();
+	    
+	    String sql = "SELECT * FROM booklist "
+	               + "ORDER BY data DESC LIMIT 12";
+	    
+	    try {
+	        conn = super.getConnection();
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+	        
+	        while(rs.next()) {
+	            Book bean = this.getBeanData(rs);
+	            lists.add(bean);
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        throw ex;
+	    } finally {
+	        try {
+	            if(rs != null) {rs.close();}
+	            if(pstmt != null) {pstmt.close();}
+	            if(conn != null) {conn.close();}
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return lists;
+	}
+
+	public List<Book> getPopularBooks() throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<Book> lists = new ArrayList<Book>();
+	    
+	    String sql = "SELECT * FROM booklist "
+	               + "ORDER BY rating DESC LIMIT 12";
+	    
+	    try {
+	        conn = super.getConnection();
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+	        
+	        while(rs.next()) {
+	            Book bean = this.getBeanData(rs);
+	            lists.add(bean);
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        throw ex;
+	    } finally {
+	        try {
+	            if(rs != null) {rs.close();}
+	            if(pstmt != null) {pstmt.close();}
+	            if(conn != null) {conn.close();}
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return lists;
+	}
+
+	public List<Book> getPickBooks() throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<Book> lists = new ArrayList<Book>();
+	    
+	    // PICK 도서는 평점이 4.5 이상이면서 최신인 도서들
+	    String sql = "SELECT * FROM booklist WHERE rating >= 4.5 "
+	               + "ORDER BY data DESC LIMIT 12";
+	    
+	    try {
+	        conn = super.getConnection();
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+	        
+	        while(rs.next()) {
+	            Book bean = this.getBeanData(rs);
+	            lists.add(bean);
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        throw ex;
+	    } finally {
+	        try {
+	            if(rs != null) {rs.close();}
+	            if(pstmt != null) {pstmt.close();}
+	            if(conn != null) {conn.close();}
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return lists;
+	}
+
+	public List<Book> getRecentSearched() throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<Book> lists = new ArrayList<Book>();
+	    
+	    // 최근 7일 동안 조회된 도서들
+	    String sql = "SELECT * FROM booklist "
+	               + "WHERE data >= DATE_SUB(NOW(), INTERVAL 7 DAY) "
+	               + "ORDER BY cnt DESC LIMIT 12";
+	    
+	    try {
+	        conn = super.getConnection();
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+	        
+	        while(rs.next()) {
+	            Book bean = this.getBeanData(rs);
+	            lists.add(bean);
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        throw ex;
+	    } finally {
+	        try {
+	            if(rs != null) {rs.close();}
+	            if(pstmt != null) {pstmt.close();}
+	            if(conn != null) {conn.close();}
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return lists;
+	}
+
+	public List<Book> searchBooks(String keyword, String category) throws Exception {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    List<Book> lists = new ArrayList<Book>();
+	    
+	    String sql = "SELECT * FROM booklist WHERE 1=1 ";
+	    
+	    if (keyword != null && !keyword.trim().isEmpty()) {
+	        sql += "AND (name LIKE ? OR description LIKE ?) ";
+	    }
+	    
+	    if (category != null && !category.trim().isEmpty()) {
+	        sql += "AND category = ? ";
+	    }
+	    
+	    sql += "ORDER BY cnt DESC";
+	    
+	    try {
+	        conn = super.getConnection();
+	        pstmt = conn.prepareStatement(sql);
+	        
+	        int parameterIndex = 1;
+	        if (keyword != null && !keyword.trim().isEmpty()) {
+	            String searchKeyword = "%" + keyword + "%";
+	            pstmt.setString(parameterIndex++, searchKeyword);
+	            pstmt.setString(parameterIndex++, searchKeyword);
+	        }
+	        
+	        if (category != null && !category.trim().isEmpty()) {
+	            pstmt.setString(parameterIndex, category);
+	        }
+	        
+	        rs = pstmt.executeQuery();
+	        
+	        while(rs.next()) {
+	            Book bean = this.getBeanData(rs);
+	            lists.add(bean);
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        throw ex;
+	    } finally {
+	        try {
+	            if(rs != null) {rs.close();}
+	            if(pstmt != null) {pstmt.close();}
+	            if(conn != null) {conn.close();}
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return lists;
+	}
+	
+	
+
 
 }

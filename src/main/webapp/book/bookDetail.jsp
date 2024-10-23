@@ -25,6 +25,7 @@
         }
         
         .container {
+       		max-width: 1400px;
             background-color: white;
             padding: 30px;
             border-radius: 10px;
@@ -172,7 +173,7 @@
                 <div class="rating-stars mb-3">
                     <%
                         float rating = book.getRating();
-                        for(int i = 1; i <= 5; i++) {
+                        for(int i = 1; i <= 10; i++) {
                             if(i <= rating) {
                                 out.print("<i class='fas fa-star'></i>");
                             } else if(i - rating < 1) {
@@ -196,19 +197,16 @@
                     </div>
                 </div>
                 
-                <div class="shipping-info">
-                    <i class="fas fa-truck"></i> 배송비 2,500원 (<%=String.format("%,d", 50000)%>원 이상 무료배송)
-                </div>
                 
                 <div class="action-buttons">
                     <button class="btn btn-lg btn-buy">
-                        <i class="fas fa-credit-card"></i> 대출하기
+                        <i class="fas fa-book"></i> 대출
                     </button>
                     <button class="btn btn-lg btn-cart">
                         <i class="fas fa-shopping-cart"></i> 장바구니
                     </button>
                     <button class="btn btn-lg btn-wishlist">
-                        <i class="fas fa-heart"></i> 찜하기
+                         <i class="fas fa-calendar-check"></i> 대출 예약
                     </button>
                 </div>
                 

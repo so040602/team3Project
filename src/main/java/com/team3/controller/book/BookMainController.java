@@ -1,4 +1,4 @@
-package com.team3.controller;
+package com.team3.controller.book;
 
 import java.util.List;
 import com.team3.controller.SuperClass;
@@ -7,7 +7,7 @@ import com.team3.model.dao.BookDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class HomeController extends SuperClass {
+public class BookMainController extends SuperClass {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
         super.doGet(request, response);

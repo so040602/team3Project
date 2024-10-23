@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Team 3 도서관</title>
+    <title>모두의 도서관</title>
     <style>
         * {
             margin: 0;
@@ -163,7 +163,7 @@
     <div class="container">
         <header class="header">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-                <a href="#" class="logo">Team 3 도서관</a>
+                <a href="#" class="logo">모두의 도서관</a>
                 <div style="display: flex; gap: 20px;">
                     <a href="#"><img src="notification.png" alt="로그인" width="24"></a>
                     <a href="#"><img src="cart.png" alt="회원가입" width="24"></a>
@@ -178,11 +178,7 @@
             <ul>
                 <li><a href="#">베스트 도서</a></li>
                 <li><a href="#">신간 도서</a></li>
-                <li><a href="#">방금검색</a></li>
-                <li><a href="#">인기 도서관</a></li>
-                <li><a href="#">주목신</a></li>
-                <li><a href="#">중고마켓</a></li>
-                <li><a href="#">PICK</a></li>
+                <li><a href="#">추천 도서</a></li>
             </ul>
         </nav>
         

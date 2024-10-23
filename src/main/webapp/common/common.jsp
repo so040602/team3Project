@@ -152,7 +152,8 @@
 						class="nav-link dropdown-toggle" href="#" role="button"
 						data-bs-toggle="dropdown">도서</a>
 						<ul class="dropdown-menu">												
-							<li><a class="dropdown-item" href="<%=getEnvs%>bookList">도서 목록</a></li>							
+							<li><a class="dropdown-item" href="<%=getEnvs%>bookList">도서 목록</a></li>	
+							<li><a class="dropdown-item" href="<%=getEnvs%>bookMain">도서 메인페이지</a></li>						
 							<c:if test="${whologin eq 2}">
 								<li><a class="dropdown-item" href="<%=getEnvs%>bookEndowment">기증 하기</a></li>
 							</c:if>	
