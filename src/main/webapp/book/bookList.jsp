@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./../common/common.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -123,7 +122,13 @@
             border: 1px solid #ddd;
             text-decoration: none;
         }
-        .page-item a:
+        .page-item a:hover {
+            background-color: #f0f0f0;
+        }
+        .page-item.active a {
+            background-color: #0066c0;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -133,10 +138,10 @@
         <div class="book-list">
             <c:forEach var="bean" items="${requestScope.datalist}">
                 <div class="book-item">
-                    <img class="book-image" src="${bean.img}" alt="${bean.name}">
+                    <img class="book-image" src="${bean.img}" alt="${bean.book_name}">
                     <div class="book-details">
                         <div class="book-title">
-                            <a href="<%=getEnvs%>bookDetail&cnt=${bean.cnt}">${bean.name}</a>
+                            <a href="<%=getEnvs%>bookDetail&cnt=${bean.cnt}">${bean.book_name}</a>
                         </div>
                         <div class="book-category">카테고리: ${bean.category}</div>
                         <div class="book-description">

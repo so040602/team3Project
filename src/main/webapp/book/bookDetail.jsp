@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%=book.getName()%></title>
+    <title><%=book.getBook_name()%></title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
         }
         
         .container {
-       		max-width: 1400px;
+            max-width: 1400px;
             background-color: white;
             padding: 30px;
             border-radius: 10px;
@@ -80,13 +80,6 @@
         .point-info {
             font-size: 0.9rem;
             color: #28a745;
-        }
-        
-        .shipping-info {
-            font-size: 0.9rem;
-            color: #666;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
         }
         
         .action-buttons {
@@ -156,7 +149,7 @@
         <div class="row">
             <!-- 왼쪽 영역: 도서 이미지 -->
             <div class="col-md-4 mb-4">
-                <img src="<%=book.getImg()%>" alt="<%=book.getName()%>" class="book-cover">
+                <img src="<%=book.getImg()%>" alt="<%=book.getBook_name()%>" class="book-cover">
                 <div class="rank-badge mt-3">
                     <%=book.getCategory()%> 주간 베스트
                 </div>
@@ -164,10 +157,10 @@
             
             <!-- 오른쪽 영역: 도서 정보 -->
             <div class="col-md-8">
-                <h1 class="book-title"><%=book.getName()%></h1>
+                <h1 class="book-title"><%=book.getBook_name()%></h1>
                 
                 <div class="meta-info">
-                    출판일: <%=book.getData()%> | 카테고리: <%=book.getCategory()%>
+                    저자: <%=book.getPerson_name()%> | 출판사: <%=book.getPublisher()%> | 출판일: <%=book.getDate()%> | 카테고리: <%=book.getCategory()%>
                 </div>
                 
                 <div class="rating-stars mb-3">
@@ -196,7 +189,6 @@
                         <i class="fas fa-coins"></i> <%=String.format("%,d", (int)(book.getPrice() * 0.05))%>원 적립
                     </div>
                 </div>
-                
                 
                 <div class="action-buttons">
                     <button class="btn btn-lg btn-buy">

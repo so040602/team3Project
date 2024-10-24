@@ -2,11 +2,13 @@ package com.team3.model.bean;
 
 public class Book {
 	private int cnt; //도서번호
-	private String name; //도서 제목
+	private String book_name; //도서 제목
 	private int price; //가격
 	private String category; // 도서 카테고리
 	private float rating; //평점
-	private	String data; //출판일자
+	private	String date; //출판일자
+	private String person_name; //저자
+	private String publisher; //출판사
 	private String img; // 도서 이미지
 	private String description; // 도서 내용
 		
@@ -15,15 +17,24 @@ public class Book {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Book(int cnt, String name, int price, String category, float rating, String data, String img,
-			String description) {
+	@Override
+	public String toString() {
+		return "Book [cnt=" + cnt + ", book_name=" + book_name + ", price=" + price + ", category=" + category
+				+ ", rating=" + rating + ", date=" + date + ", person_name=" + person_name + ", publisher=" + publisher
+				+ ", img=" + img + ", description=" + description + "]";
+	}
+
+	public Book(int cnt, String book_name, int price, String category, float rating, String date, String person_name,
+			String publisher, String img, String description) {
 		super();
 		this.cnt = cnt;
-		this.name = name;
+		this.book_name = book_name;
 		this.price = price;
 		this.category = category;
 		this.rating = rating;
-		this.data = data;
+		this.date = date;
+		this.person_name = person_name;
+		this.publisher = publisher;
 		this.img = img;
 		this.description = description;
 	}
@@ -36,12 +47,12 @@ public class Book {
 		this.cnt = cnt;
 	}
 
-	public String getName() {
-		return name;
+	public String getBook_name() {
+		return book_name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setBook_name(String book_name) {
+		this.book_name = book_name;
 	}
 
 	public int getPrice() {
@@ -68,12 +79,28 @@ public class Book {
 		this.rating = rating;
 	}
 
-	public String getData() {
-		return data;
+	public String getDate() {
+		return date;
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getPerson_name() {
+		return person_name;
+	}
+
+	public void setPerson_name(String person_name) {
+		this.person_name = person_name;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
 	}
 
 	public String getImg() {
@@ -90,5 +117,7 @@ public class Book {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}				
+	}
+
+	
 }

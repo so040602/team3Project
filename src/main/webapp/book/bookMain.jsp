@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./../common/common.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -165,12 +164,12 @@
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
                 <a href="#" class="logo">모두의 도서관</a>
                 <div style="display: flex; gap: 20px;">
-                    <a href="#"><img src="notification.png" alt="로그인" width="24"></a>
-                    <a href="#"><img src="cart.png" alt="회원가입" width="24"></a>
+                    <a href="#"><img src="notification.png" alt="알림" width="24"></a>
+                    <a href="#"><img src="cart.png" alt="장바구니" width="24"></a>
                 </div>
             </div>
             <div class="search-bar">
-                <input type="text" class="search-input" placeholder="제목, 작가,로 검색해 보세요">
+                <input type="text" class="search-input" placeholder="제목, 작가로 검색해 보세요">
             </div>
         </header>
         
@@ -184,7 +183,7 @@
         
         <div class="main-banner">
             <div class="banner-content">
-                <h1 class="banner-title">첫 방문 위한<br>GUIDE</h1>
+                <h1 class="banner-title">첫 방문을 위한<br>GUIDE</h1>
                 <p class="banner-subtitle">처음 방문하셨다면,<br>가이드를 따라오세요!</p>
             </div>
         </div>
@@ -198,9 +197,9 @@
             <div class="book-grid">
                 <c:forEach var="book" items="${bestSellers}">
                     <div class="book-card">
-                        <img src="${book.img}" alt="${book.name}" class="book-image">
+                        <img src="${book.img}" alt="${book.book_name}" class="book-image">
                         <div class="book-info">
-                            <h3 class="book-title">${book.name}</h3>
+                            <h3 class="book-title">${book.book_name}</h3>
                             <p class="book-price">${book.price}원</p>
                             <div class="book-rating">
                                 <span>★</span>

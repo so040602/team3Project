@@ -56,6 +56,7 @@ public class BookMainController extends SuperClass {
         BookDao dao = new BookDao();
         
         try {
+            // 검색된 도서 목록 가져오기
             List<Book> searchResults = dao.searchBooks(searchKeyword, category);
             request.setAttribute("searchResults", searchResults);
             request.setAttribute("searchKeyword", searchKeyword);
