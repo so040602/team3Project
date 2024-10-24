@@ -33,7 +33,7 @@
 	// FrontController.java 파일의 url Pattern과 동일해야 합니다.
 	// 서블릿 매핑을 위한 문자열 이름입니다.
 	String mappingName = "/coolapp" ;
-		//풀 푸쉬 연습용 아아아아아아아아아아아아아아아아아
+	
 	// form 태그에서 변수 값 전달
 	String postForm = appName + mappingName ; 
 	

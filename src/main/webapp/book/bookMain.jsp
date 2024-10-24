@@ -1,7 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="./../common/common.jsp"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
+
+<%
+	// 나의 프로젝트(애플리케이션 이름) 이름이며, 컨텍스트 이름이라고 합니다.
+	String appName = request.getContextPath() ;
+	
+	// FrontController.java 파일의 url Pattern과 동일해야 합니다.
+	// 서블릿 매핑을 위한 문자열 이름입니다.
+	String mappingName = "/coolapp" ;
+	
+	// form 태그에서 변수 값 전달
+	String postForm = appName + mappingName ; 
+	
+	// get url에서 변수 값 전달
+	String getEnvs = appName + mappingName + "?opsmode=" ;
+	
+	// out.println(getEnvs);
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -164,8 +184,8 @@
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
                 <a href="#" class="logo">모두의 도서관</a>
                 <div style="display: flex; gap: 20px;">
-                    <a href="#"><img src="notification.png" alt="알림" width="24"></a>
-                    <a href="#"><img src="cart.png" alt="장바구니" width="24"></a>
+                    <a href="#"><img src="notification.png" alt="로그인" width="24"></a>
+                    <a href="#"><img src="cart.png" alt="회원가입" width="24"></a>
                 </div>
             </div>
             <div class="search-bar">
@@ -175,9 +195,14 @@
         
         <nav class="nav">
             <ul>
+               <li><a href="#">공지사항</a></li>
                 <li><a href="#">베스트 도서</a></li>
                 <li><a href="#">신간 도서</a></li>
-                <li><a href="#">추천 도서</a></li>
+                <li><a href="#">추천 도서</a></li>     
+                <li><a href="#">도서 리뷰</a></li>
+                <li><a href="#">관심 도서</a></li>
+                <li><a href="#">대출 현황</a></li>
+                <li><a href="#">마이페이지</a></li>
             </ul>
         </nav>
         
@@ -200,7 +225,7 @@
                         <img src="${book.img}" alt="${book.book_name}" class="book-image">
                         <div class="book-info">
                             <h3 class="book-title">${book.book_name}</h3>
-                            <p class="book-price">${book.price}원</p>
+                            <p class="book-person">${book.person_name}</p>
                             <div class="book-rating">
                                 <span>★</span>
                                 <span>${book.rating}</span>
