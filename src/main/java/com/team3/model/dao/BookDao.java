@@ -12,86 +12,124 @@ import com.team3.model.bean.Paging;
 public class BookDao extends SuperDao {
 
     public int getTotalCount(String mode) {
-        int totalcount = 0;
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        String sql = "SELECT COUNT(*) AS mycnt FROM booklist";
-        boolean bool = mode == null || mode.equals("all");
-        if (!bool) {
-            // Additional filtering can be added here if necessary
-        }
-        try {
-            conn = super.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                totalcount = rs.getInt("mycnt");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) { rs.close(); }
-                if (pstmt != null) { pstmt.close(); }
-                if (conn != null) { conn.close(); }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        return totalcount;
+    	int totalcount = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) as mycnt from booklist";
+		boolean bool = mode == null || mode.equals("all");
+		if(!bool) {
+			sql += " where category = ?";
+		}
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			if(!bool) {
+				pstmt.setString(1, mode);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totalcount = rs.getInt("mycnt");
+			}
+			
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception ex) {
+				// TODO: handle exception
+				ex.printStackTrace();
+			}
+		}
+		return totalcount;
     }
 
     public List<Book> getPaginationData(Paging pageInfo) {
-        Connection conn = null;
-        String sql = "SELECT cnt, book_name, price, category, rating, date, person_name, publisher, img, description " +
-                     "FROM (SELECT cnt, book_name, price, category, rating, date, person_name, publisher, img, description, " +
-                     "ROW_NUMBER() OVER (ORDER BY cnt ASC) AS ranking " +
-                     "FROM booklist) AS ranked_books " +
-                     "WHERE ranking BETWEEN ? AND ?";
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        List<Book> lists = new ArrayList<>();
-        try {
-            conn = super.getConnection();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, pageInfo.getBeginRow());
-            pstmt.setInt(2, pageInfo.getEndRow());
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Book bean = getBeanData(rs);
-                lists.add(bean);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) { rs.close(); }
-                if (pstmt != null) { pstmt.close(); }
-                if (conn != null) { conn.close(); }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        return lists;
+		Connection conn = null;
+		String mode = pageInfo.getMode() ;
+        boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");
+		String sql = " SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description";
+		sql += " FROM (SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description,";
+		sql += " ROW_NUMBER() OVER (ORDER BY cnt ASC) AS ranking";
+		sql += " FROM booklist";
+		if(!bool) {
+			sql += " WHERE category = ?";
+		}
+		sql += " ) AS ranked_books";
+		sql += " WHERE ranking BETWEEN ? AND ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		List<Book> lists = new ArrayList<Book>();
+		
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			if(!bool) {
+				pstmt.setString(1, mode);
+				pstmt.setInt(2, pageInfo.getBeginRow());
+				pstmt.setInt(3, pageInfo.getEndRow());
+			}
+			else {
+				pstmt.setInt(1, pageInfo.getBeginRow());
+				pstmt.setInt(2, pageInfo.getEndRow());
+			}
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Book bean = this.getBeanData(rs);
+				lists.add(bean);
+			}
+			
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+				
+			} catch (Exception ex) {
+				// TODO: handle exception
+				ex.printStackTrace();
+			}
+		}
+		
+		
+		return lists;
     }
 
     private Book getBeanData(ResultSet rs) {
         Book bean = new Book();
         try {
-            String priceString = rs.getString("price").replace(",", "");
-            int price = Integer.parseInt(priceString);
-            bean.setCnt(rs.getInt("cnt"));
+        	String priceString = rs.getString("price").replace(",", "");
+			int price = Integer.parseInt(priceString);
+			String book_rating = rs.getString("rating");
+			if(book_rating == null || book_rating.trim().isEmpty()) {
+				
+				book_rating = "0.0";
+			}
+			String descrip = rs.getString("description");
+			if(descrip == null) {
+				descrip = "";
+			}			
+			bean.setCnt(rs.getInt("cnt"));
             bean.setBook_name(rs.getString("book_name"));
-            bean.setPrice(price);
-            bean.setCategory(rs.getString("category"));
-            bean.setRating(rs.getFloat("rating"));
+			bean.setPrice(price);
+			bean.setCategory(rs.getString("category"));
+			bean.setRating(Float.parseFloat(book_rating));
             bean.setDate(rs.getString("date"));
+			bean.setImg(rs.getString("img"));
             bean.setPerson_name(rs.getString("person_name"));
             bean.setPublisher(rs.getString("publisher"));
-            bean.setImg(rs.getString("img"));
-            bean.setDescription(rs.getString("description"));
+			bean.setDescription(descrip);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,18 +166,27 @@ public class BookDao extends SuperDao {
     private Book getBookBeanData(ResultSet rs) {
         Book bean = new Book();
         try {
-            bean.setCnt(rs.getInt("cnt"));
+        	String priceString = rs.getString("price").replace(",", "");
+			int price = Integer.parseInt(priceString);
+			String book_rating = rs.getString("rating");
+			if(book_rating == null || book_rating.trim().isEmpty()) {
+				
+				book_rating = "0.0";
+			}
+			String descrip = rs.getString("description");
+			if(descrip == null) {
+				descrip = "";
+			}			
+			bean.setCnt(rs.getInt("cnt"));
             bean.setBook_name(rs.getString("book_name"));
-            String priceString = rs.getString("price").replace(",", "");
-            int price = Integer.parseInt(priceString);
-            bean.setPrice(price);
-            bean.setCategory(rs.getString("category"));
-            bean.setRating(rs.getFloat("rating"));
+			bean.setPrice(price);
+			bean.setCategory(rs.getString("category"));
+			bean.setRating(Float.parseFloat(book_rating));
             bean.setDate(rs.getString("date"));
+			bean.setImg(rs.getString("img"));
             bean.setPerson_name(rs.getString("person_name"));
             bean.setPublisher(rs.getString("publisher"));
-            bean.setImg(rs.getString("img"));
-            bean.setDescription(rs.getString("description"));
+			bean.setDescription(descrip);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -232,4 +279,39 @@ public class BookDao extends SuperDao {
         // ...
         return lists;
     }
+
+	public List<String> getCategory() {
+		// TODO Auto-generated method stub
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				String sql = "select distinct category from booklist";
+				List<String> categoryList = null;
+				
+				try{
+					conn = super.getConnection();
+					pstmt = conn.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+					categoryList = new ArrayList<String>();
+					
+					while(rs.next()) {
+						categoryList.add(rs.getString("category"));
+					}
+					
+				}catch (Exception e1) {
+					// TODO: handle exception
+					e1.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) {rs.close();}
+						if(pstmt!=null) {pstmt.close();}
+						if(conn!=null) {conn.close();}
+					}catch (Exception e2) {
+						// TODO: handle exception
+						e2.printStackTrace();
+					}
+				}
+				
+				return categoryList;
+	}	
 }
