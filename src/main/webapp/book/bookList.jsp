@@ -20,6 +20,19 @@ body {
 	padding: 20px;
 	background-color: #ffffff;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	position: relative; /* 상대 위치 설정 */
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	list-style-type: none;
+	padding: 0;
+	margin-top: 30px;
+	position: absolute; /* 절대 위치 설정 */
+	bottom: 0; /* 맨 아래 위치 */
+	left: 50%; /* 수평 중앙 */
+	transform: translateX(-50%); /* 중앙 정렬 */
 }
 
 h2 {
@@ -35,6 +48,7 @@ h2 {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 20px;
+	margin-bottom: 60px; /* 아래쪽 여백 추가 */
 }
 
 .book-item {
@@ -126,13 +140,6 @@ h2 {
 	background-color: #45a049;
 }
 
-.pagination {
-	display: flex;
-	justify-content: center;
-	list-style-type: none;
-	padding: 0;
-	margin-top: 30px;
-}
 
 .page-item {
 	margin: 0 5px;
@@ -143,6 +150,7 @@ h2 {
 	padding: 8px 12px;
 	border: 1px solid #ddd;
 	text-decoration: none;
+	font-size: 0.8em;
 }
 
 .page-item a:hover {
@@ -158,14 +166,19 @@ h2 {
 <body>
 	<div class="container">
 		<h2>도서 목록</h2>
-		<select id="categorySelect" onchange="goToCategory()">
-			<option>전체보기</option>
-			<c:forEach var="category" items="${requestScope.category_List}">
-				<option value="${category}">${category}</option>
-			</c:forEach>
-		</select>
+		<form id="categoryForm" action="<%=getEnvs%>bookCategory" method="POST">
+			<select id="categorySelect" name="category" onchange="document.getElementById('categoryForm').submit()">
+				<option value="전체보기">전체보기</option>
+				<c:forEach var="category" items="${requestScope.category_List}">
+					<option value="${category}" 
+						<c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
+						${category}
+					</option>
+				</c:forEach>
+			</select>
+		</form>
 
-		<div class="book-list">
+		<div class="book-list" id="dataContainer">
 			<c:forEach var="bean" items="${requestScope.datalist}">
 				<div class="book-item">
 					<img class="book-image" src="${bean.img}" alt="${bean.book_name}">
@@ -191,45 +204,50 @@ h2 {
 					</div>
 				</div>
 			</c:forEach>
-		</div>
-			<ul class="pagination">
+			
+			<ul class="pagination justify-content-center">
+				<c:if test="${pagelist.beginPage > 10}">
+					<li class="page-item"><a class="page-link"
+						href="<%=getEnvs%>bookList&pageNumber=1&currCategory=${requestScope.selectedCategory}">처음</a></li>
+				</c:if>
+				<c:if test="${pagelist.beginPage <= 10}">
+					<li class="page-item"><span class="page-link disabled">처음</span>
+					</li>
+				</c:if>
 				<c:if test="${pagelist.beginPage > 1}">
 					<li class="page-item"><a class="page-link"
-						href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}">이전</a></li>
+						href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}">이전</a></li>
 				</c:if>
-				<c:forEach var="i" begin="${pagelist.beginPage}"
-				end="${pagelist.endPage}">
-					<li
-						class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>">
-						<a class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}">${i}</a>
+				<c:if test="${pagelist.beginPage <= 1}">
+					<li class="page-item disabled"><span class="page-link">이전</span>
 					</li>
-				</c:forEach>
+				</c:if>
+				<c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+					<c:forEach var="i" begin="${pagelist.beginPage}"
+						end="${pagelist.endPage}">
+						<li
+							class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+							class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+					</c:forEach>
+				</c:if>
 				<c:if test="${pagelist.endPage < pagelist.totalPage}">
 					<li class="page-item"><a class="page-link"
-						href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}">다음</a></li>
+							href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}">다음</a></li>
 				</c:if>
-			</ul>
+				<c:if test="${pagelist.endPage >= pagelist.totalPage}">
+					<li class="page-item disabled"><span class="page-link">다음</span>
+					</li>
+				</c:if>
+				<c:if test="${pagelist.endPage < pagelist.totalPage}">
+					<li class="page-item"><a class="page-link"
+						href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
+				</c:if>
+				<c:if test="${pagelist.endPage >= pagelist.totalPage}">
+					<li class="page-item disabled"><span class="page-link">맨끝</span>
+					</li>
+				</c:if>
+			</ul>			
 		</div>
-	<script>
-		function goToCategory() {
-		const category = document.getElementById('categorySelect').value;
-		const currentUrl = window.location.href;
-		const opsmode = new URL(currentUrl).searchParams.get('opsmode'); // opsmode 값 가져오기
-		console.log("Current URL:", currentUrl);
-		console.log("opsmode:", opsmode);
-		if (category) {
-		    // AJAX 요청		      
-		    const url = "<%=getEnvs%>bookList&category=" + category;
-			console.log("Request URL:", url); // 요청 URL 확인
-		    fetch("<%=getEnvs%>bookList&category=" + category)
-		         .then(response => response.text())
-		         .then(data => {
-		             // 데이터 컨테이너에 새로운 데이터 삽입
-		             document.getElementById('dataContainer').innerHTML = data;
-		         })
-		         .catch(error => console.error('Error:', error));
-		    }
-		}
-	</script>
+	</div>
 </body>
 </html>
