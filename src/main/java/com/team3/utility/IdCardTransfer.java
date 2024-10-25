@@ -17,6 +17,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.team3.utility.PythonApiUtil;
+
 public class IdCardTransfer {
 
     private String fileUploadPath = AppConfig.getInstance().getFileUploadPath();
@@ -30,7 +32,7 @@ public class IdCardTransfer {
 
         if (file.exists()) {
             try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-                HttpPost uploadFile = new HttpPost(TeamUtility.getIdCardUploadUrl());
+                HttpPost uploadFile = new HttpPost(PythonApiUtil.getIdCardUploadUrl());
 
                 // MultipartEntityBuilder 사용
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create();
