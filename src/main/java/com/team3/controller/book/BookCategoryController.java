@@ -24,7 +24,7 @@ public class BookCategoryController extends SuperClass{
 		if(mode == null || mode.equals("전체보기")) {
 			mode = "all";
 		}
-				
+		
 		BookDao dao = new BookDao();
 		
 		List<String> category_List = new ArrayList<String>();
@@ -46,12 +46,14 @@ public class BookCategoryController extends SuperClass{
 		
 		int beginpage = pageInfo.getBeginPage();
 		
+		if(bookList.size() == 0 ) {System.out.println("실패하였습니다.");}
+		
 		request.setAttribute("source", "BookCategoryController");
 		request.setAttribute("selectedCategory", mode);
 		request.setAttribute("category_List", category_List);
 		request.setAttribute("datalist", bookList);	
 		request.setAttribute("pagelist", pageInfo);
 				
-		super.gotoPage("book/bookList.jsp"); 
+		super.gotoPage("book/bookList.jsp");  
 	}
 }

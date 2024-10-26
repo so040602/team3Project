@@ -33,7 +33,6 @@ public class BookListController extends SuperClass {
 		}else {
 			totalCount = dao.getSearchTotalCount(mode, keyword);
 		}
-						
 		
 		List<String> category_List = new ArrayList<String>();
 		
@@ -58,7 +57,7 @@ public class BookListController extends SuperClass {
 		request.setAttribute("datalist", bookList);	
 		request.setAttribute("pagelist", pageInfo);
 				
-		super.gotoPage("book/bookList.jsp"); 
+		super.gotoPage("book/bookList.jsp");  
 	}
 
 }

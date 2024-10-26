@@ -301,7 +301,7 @@ h2 {
 							href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
 					</c:if>
 					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
-						<li class="page-item disabled"><span class="page-link">맨끝</span>
+						<li class="page-item disabled"><span class="page-link">맨끝</span> 
 						</li>
 					</c:if>
 				</c:if>
@@ -309,4 +309,4 @@ h2 {
 		</div>
 	</div>
 </body>
-</html>
+</html> 
