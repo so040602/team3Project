@@ -6,160 +6,224 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#birth').datepicker({dateFormat:"yy-mm-dd"});
-	});
-	
-	function validCheck(){ /* form validation check */
-		
-		var memid = $('#memid').val();
-		if(memid.length < 4 || memid.length > 12){
-			alert('아이디는 4글자 이상 12글자 이하로 입력해 주세요.');
-			$('#memid').focus(); 
-			return false ; /* 이벤트 전파 방지 */
-		}
-				
-		var memname = $('#memname').val();  			
-		if(memname.length < 3 || memname.length > 15){
-			alert('이름은 3자리 이상 15자리 이하로 입력해 주세요.');
-			$('#memname').focus();			
-			return false ;
-		}	
-		
-		var mempwd = $('#mempwd').val();  			
-		if(mempwd.length < 5 || mempwd.length > 12){
-			alert('비밀 번호는 5자리 이상 12자리 이하로 입력해 주세요.');
-			$('#mempwd').focus();			
-			return false ;
-		}	
-		
-		var regex = /^[a-z]\S{4,11}$/;
-		var result = regex.test(password);
-		
-		if(result == false){
-			alert('비밀 번호의 첫 글자는 반드시 소문자이어야 합니다.');
-			$('#mempwd').focus();			
-			return false ;
-		}
-		
-		if(mempwd.indexOf('@') <= 0 && mempwd.indexOf('#') <= 0 && 
-				mempwd.indexOf('$') <= 0 ){
-			alert('특수 문자 #@$ 중에서 최소 1개가 포함이 되어야 합니다.');
-			$('#mempwd').focus();			
-			return false ;
-		}
-		
-		var radioList = $('input[type="radio"]:checked');
-		
-		if(radioList.length == 0){
-			alert('성별은 반드시 선택이 되어야 합니다.');
-			$('#gender').focus();			
-			return false ;
-		}
-		
-		// 체크 박스에 대한 코드를 지웠습니다.	
-		
-		var birth = $('#birth').val() ;
-		
-		// 슬래시를 인식 시키기 위하여 역슬래시를 앞에 붙여 주세요.
-		regex = /^\d{4}[\/-][01]\d[\/-][0123]\d$/;
-		
-		if(result == false){
-			alert('생일은 반드시 yyyy/mm/dd 형식 또는 yyyy-mm-dd 형식으로 입력해 주셔야 합니다.');
-			$('#birth').focus();			
-			return false ;
-		}
-				
-		/* jQuery UI Plugin Date Picker 설정 */
-		
-		/* alert('유효성 검사 성공'); */ 
-		return true ; 
-	}
-</script>
-<style type="text/css">
-.container {
-	margin-top: 100px;
-}
-
-.input-group {
-	margin-top: 7px;
-}
-
-#buttonset {
-	margin-top: 20px;
-}
-
-.radio_gender, .checkbox_hobby {
-	font-size: 1.1rem;
-} /* 주위 글꼴의 1.1배 */
-.input-group-text {
-	display: inline-block;
-	width: 120px;
-	text-align: center; /* 텍스트를 가운데 정렬 */
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>회원 가입</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .container {
+            max-width: 800px;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .page-title {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .sub-title {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .input-group-text {
+            width: 120px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            border: 1px solid #ddd;
+            padding: 12px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+        
+        .radio-group {
+            padding: 10px 15px;
+        }
+        
+        .radio_gender {
+            margin-right: 20px;
+            font-size: 1rem;
+        }
+        
+        .radio-inline input[type="radio"] {
+            margin-right: 5px;
+        }
+        
+        #buttonset {
+            margin-top: 30px;
+            gap: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-reset {
+            background-color: #6c757d;
+            border: none;
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        /* 반응형 스타일 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin-top: 20px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .input-group-text {
+                width: 100%;
+                border-radius: 8px 8px 0 0;
+                padding: 8px;
+            }
+            
+            .form-control {
+                border-radius: 0 0 8px 8px;
+            }
+            
+            .radio-group {
+                padding: 15px;
+            }
+            
+            #buttonset {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-	<div class="container mt-3">
-		<h2>회원 가입</h2>
-		<p>신규 회원이 가입하는 페이지입니다.</p>
-		<form action="<%=postForm%>" method="post"> 
-			<input type="hidden" name="opsmode" value="memInsert">		
-			<div class="input-group">
-				<span class="input-group-text">아이디</span> <input type="text"
-					class="form-control" id="memid" name="memid">
-			</div>
-			<div class="input-group">
-				<span class="input-group-text">이름</span> <input type="text"
-					class="form-control" id="memname" name="memname" value="<%=request.getAttribute("parsedName") %>">
-			</div>
-			<div class="input-group">
-				<span class="input-group-text">비밀번호</span> <input type="password"
-					class="form-control" id="mempwd" name="mempwd">
-			</div>
-			
-			<div class="input-group">
-		        <span class="input-group-text">성별</span>
-		        <div class="form-control">
-		            <label class="radio-inline radio_gender"> 
-		                <input type="radio" name="gender" id="gender1" value="남자" <%= "남자".equals(request.getAttribute("parsedGender")) ? "checked" : "" %>>남자
-		            </label> 
-		            <label class="radio-inline radio_gender ml-2"> 
-		                <input type="radio" name="gender" id="gender2" value="여자" <%= "여자".equals(request.getAttribute("parsedGender")) ? "checked" : "" %>>여자
-		            </label>
-		        </div>
-		    </div>
+    <div class="container">
+        <h2 class="page-title">회원 가입</h2>
+        <p class="sub-title">신규 회원이 가입하는 페이지입니다.</p>
+        
+        <form action="<%=postForm%>" method="post">
+            <input type="hidden" name="opsmode" value="memInsert">
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user me-2"></i>아이디</span>
+                <input type="text" class="form-control" id="memid" name="memid" placeholder="4~12자 사이로 입력해주세요">
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-signature me-2"></i>이름</span>
+                <input type="text" class="form-control" id="memname" name="memname" value="<%=request.getAttribute("parsedName")%>" placeholder="이름을 입력해주세요">
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock me-2"></i>비밀번호</span>
+                <input type="password" class="form-control" id="mempwd" name="mempwd" placeholder="5~12자 사이로 입력해주세요">
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-venus-mars me-2"></i>성별</span>
+                <div class="form-control radio-group">
+                    <label class="radio-inline radio_gender">
+                        <input type="radio" name="gender" id="gender1" value="남자" <%= "남자".equals(request.getAttribute("parsedGender")) ? "checked" : "" %>>
+                        <i class="fas fa-male me-1"></i>남자
+                    </label>
+                    <label class="radio-inline radio_gender">
+                        <input type="radio" name="gender" id="gender2" value="여자" <%= "여자".equals(request.getAttribute("parsedGender")) ? "checked" : "" %>>
+                        <i class="fas fa-female me-1"></i>여자
+                    </label>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-calendar me-2"></i>생일</span>
+                <input type="datetime" class="form-control" id="birth" name="birth" value="<%=request.getAttribute("parsedBirth")%>">
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-mobile-alt me-2"></i>휴대폰</span>
+                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="휴대폰 번호를 입력해주세요">
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope me-2"></i>이메일</span>
+                <input type="email" class="form-control" id="email" name="email" placeholder="이메일 주소를 입력해주세요">
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-map-marker-alt me-2"></i>주소</span>
+                <input type="text" class="form-control" id="addr01" name="addr01" value="<%=request.getAttribute("parsedAddr01")%>" placeholder="기본 주소를 입력해주세요">
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-home me-2"></i>상세주소</span>
+                <input type="text" class="form-control" id="addr02" name="addr02" value="<%=request.getAttribute("parsedAddr02")%>" placeholder="상세 주소를 입력해주세요">
+            </div>
+            
+            <div id="buttonset">
+                <button type="submit" class="btn btn-primary" onclick="return validCheck();">
+                    <i class="fas fa-user-plus me-2"></i>가입하기
+                </button>
+                <button type="reset" class="btn btn-reset">
+                    <i class="fas fa-redo me-2"></i>초기화
+                </button>
+            </div>
+        </form>
+    </div>
 
-			<div class="input-group">
-				<span class="input-group-text">생일</span> 
-				<input type="datetime" class="form-control" id="birth" name="birth" value="<%=request.getAttribute("parsedBirth") %>">
-			</div>
-			<div class="input-group">
-				<span class="input-group-text">휴대폰</span> <input class="form-control"
-					type="text" id="mobile" name="mobile">
-			</div>
-			<div class="input-group">
-				<span class="input-group-text">이메일</span> <input class="form-control"
-					type="text" id="email" name="email">
-			</div>
-			<div class="input-group">
-				<span class="input-group-text">주소</span> <input class="form-control"
-					type="text" id="addr01" name="addr01" value="<%=request.getAttribute("parsedAddr01") %>">
-			</div>
-			<div class="input-group">
-				<span class="input-group-text">상세주소</span> <input class="form-control"
-					type="text" id="addr02" name="addr02" value="<%=request.getAttribute("parsedAddr02") %>">
-			</div>
-			<div id="buttonset" class="input-group">
-				<button type="submit" class="btn btn-primary"
-					onclick="return validCheck();">등록</button>
-				&nbsp;&nbsp;&nbsp;
-				<button type="reset" class="btn btn-primary">초기화</button>
-			</div>
-		</form>
-	</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
