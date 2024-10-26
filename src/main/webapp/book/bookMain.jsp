@@ -176,6 +176,97 @@
             color: #ffd700;
             margin-top: 5px;
         }
+        
+        
+        //서평
+        .articles-section {
+            max-width: 1200px;
+            margin: 54px auto;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        .articles-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .articles-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .article-card {
+            min-width: 280px;
+            max-width: 280px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .article-content {
+            padding: 15px;
+        }
+        
+        .article-tag {
+            display: inline-block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .article-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .article-source {
+            font-size: 12px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+        
+        .scroll-left {
+            left: 0;
+        }
+        
+        .scroll-right {
+            right: 0;
+        }
+        
+        
+        
+        
     </style>
 </head>
 <body>
@@ -184,8 +275,10 @@
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
                 <a href="#" class="logo">모두의 도서관</a>
                 <div style="display: flex; gap: 20px;">
-                    <a href="#"><img src="notification.png" alt="로그인" width="24"></a>
-                    <a href="#"><img src="cart.png" alt="회원가입" width="24"></a>
+                    <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">로그인</i></a>
+                    <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">회원가입</i></a>
+                    <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">마이페이지</i></a>
+                    <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">북마크</i></a>
                 </div>
             </div>
             <div class="search-bar">
@@ -197,12 +290,10 @@
             <ul>
                <li><a href="#">공지사항</a></li>
                 <li><a href="#">베스트 도서</a></li>
-                <li><a href="#">신간 도서</a></li>
-                <li><a href="#">추천 도서</a></li>     
-                <li><a href="#">도서 리뷰</a></li>
-                <li><a href="#">관심 도서</a></li>
+                <li><a href="#">신간 도서</a></li>   
+                <li><a href="#">서평 & 추천</a></li>
                 <li><a href="#">대출 현황</a></li>
-                <li><a href="#">마이페이지</a></li>
+      
             </ul>
         </nav>
         
@@ -235,8 +326,100 @@
                 </c:forEach>
             </div>
         </section>
+        
 
-        <!-- 다른 도서 섹션도 추가 가능 -->
+        <section class="book-section">
+            <div class="section-header">
+                <h2>신간 도서</h2>
+                <a href="<%=getEnvs%>bookList">더보기 ></a>
+            </div>
+            
+            <div class="book-grid">
+                <c:forEach var="book" items="${newBooks}">
+                    <div class="book-card">
+                        <img src="${book.img}" alt="${book.book_name}" class="book-image">
+                        <div class="book-info">
+                            <h3 class="book-title">${book.book_name}</h3>
+                            <p class="book-person">${book.person_name}</p>
+                            <div class="book-rating">
+                                <span>★</span>
+                                <span>${book.rating}</span>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </section>
+        
+        
+        <section class="articles-section">
+        <div class="section-header">
+            <h2>&nbsp;&nbsp;서평&추천의 글</h2>
+            <a href="#">더보기 ></a>
+        </div>
+        
+        <div style="position: relative;">
+            <div class="articles-container">
+                <div class="article-card">
+                    <div class="article-content">
+                        <span class="article-tag">주목할만합니다</span>
+                        <h3 class="article-title">60대가진 온티부부가 이는날 설비아파트에 임대...</h3>
+                        <div class="article-source">
+                            <span>카타리나의집 님의 서평</span>
+                            <span>조회 8,206</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="article-card">
+                    <div class="article-content">
+                        <span class="article-tag">베스트셀러</span>
+                        <h3 class="article-title">연예인같은 정장 사바 미쓰하코, 편의점 주변의...</h3>
+                        <div class="article-source">
+                            <span>카타리나의집 님의 서평</span>
+                            <span>조회 7,890</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="article-card">
+                    <div class="article-content">
+                        <span class="article-tag">신간리뷰</span>
+                        <h3 class="article-title">유치원 프로젝트 책이었고 내용이 아이들 수준...</h3>
+                        <div class="article-source">
+                            <span>조이북스 님의 서평</span>
+                            <span>조회 6,543</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="article-card">
+                    <div class="article-content">
+                        <span class="article-tag">추천도서</span>
+                        <h3 class="article-title">영화도 재밌지만 시간 안에 내용을 담아야하니...</h3>
+                        <div class="article-source">
+                            <span>북커버 님의 서평</span>
+                            <span>조회 5,721</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="article-card">
+                    <div class="article-content">
+                        <span class="article-tag">북리뷰</span>
+                        <h3 class="article-title">좋주는 학철이 공상자 5)용돈...</h3>
+                        <div class="article-source">
+                            <span>독서의 즐거움 님의 서평</span>
+                            <span>조회 4,932</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-arrow scroll-left">❮</div>
+            <div class="scroll-arrow scroll-right">❯</div>
+        </div>
+    </section>
+        
     </div>
 </body>
 </html>

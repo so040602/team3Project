@@ -218,8 +218,8 @@ public class BookDao extends SuperDao {
 
     public List<Book> getBestSellers() throws Exception {
         List<Book> lists = new ArrayList<>();
-        String sql = "SELECT * FROM booklist WHERE rating >= 4.0 " +
-                     "ORDER BY rating DESC, cnt DESC LIMIT 25";
+        String sql = "SELECT * FROM booklist WHERE rating >= 9.0 " +
+                     "ORDER BY rating DESC, cnt DESC LIMIT 10";
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -250,12 +250,36 @@ public class BookDao extends SuperDao {
     }
 
     public List<Book> getNewBooks() throws Exception {
-        String sql = "SELECT * FROM booklist " +
-                     "ORDER BY date DESC LIMIT 12";
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
+    	List<Book> lists = new ArrayList<>();
+    	String sql = "SELECT * FROM booklist " +
+                "ORDER BY date DESC LIMIT 10";
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection conn = null;
+
+        try {
+            conn = super.getConnection(); // 데이터베이스 연결
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Book book = getBookBeanData(rs); // ResultSet에서 Book 객체 생성
+                lists.add(book); // 리스트에 추가
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e; // 예외 발생 시 상위로 전달
+        } finally {
+            try {
+                if (rs != null) { rs.close(); }
+                if (pstmt != null) { pstmt.close(); }
+                if (conn != null) { conn.close(); }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        
+        return lists; // 베스트셀러 도서 목록 반환
     }
 
     public List<Book> getPopularBooks() throws Exception {
