@@ -114,30 +114,28 @@
 			</div>
 			<div class="input-group">
 				<span class="input-group-text">이름</span> <input type="text"
-					class="form-control" id="memname" name="memname">
+					class="form-control" id="memname" name="memname" value="<%=request.getAttribute("parsedName") %>">
 			</div>
 			<div class="input-group">
 				<span class="input-group-text">비밀번호</span> <input type="password"
 					class="form-control" id="mempwd" name="mempwd">
 			</div>
-
-			<div class="input-group">
-				<span class="input-group-text">성별</span>
-				<div class="form-control">
-					<label class="radio-inline radio_gender"> &nbsp; <input
-						type="radio" name="gender" id="gender1" value="남자">남자
-					</label> &nbsp; 
-					<label class="radio-inline radio_gender"> &nbsp; <input
-						type="radio" name="gender" id="gender2" value="여자">여자
-					</label>
-				</div>
-			</div>
 			
-			<!-- 취미는 삭제했습니다. -->
+			<div class="input-group">
+		        <span class="input-group-text">성별</span>
+		        <div class="form-control">
+		            <label class="radio-inline radio_gender"> 
+		                <input type="radio" name="gender" id="gender1" value="남자" <%= "남자".equals(request.getAttribute("parsedGender")) ? "checked" : "" %>>남자
+		            </label> 
+		            <label class="radio-inline radio_gender ml-2"> 
+		                <input type="radio" name="gender" id="gender2" value="여자" <%= "여자".equals(request.getAttribute("parsedGender")) ? "checked" : "" %>>여자
+		            </label>
+		        </div>
+		    </div>
 
 			<div class="input-group">
 				<span class="input-group-text">생일</span> 
-				<input type="datetime" class="form-control" id="birth" name="birth">
+				<input type="datetime" class="form-control" id="birth" name="birth" value="<%=request.getAttribute("parsedBirth") %>">
 			</div>
 			<div class="input-group">
 				<span class="input-group-text">휴대폰</span> <input class="form-control"
@@ -149,11 +147,11 @@
 			</div>
 			<div class="input-group">
 				<span class="input-group-text">주소</span> <input class="form-control"
-					type="text" id="addr01" name="addr01">
+					type="text" id="addr01" name="addr01" value="<%=request.getAttribute("parsedAddr01") %>">
 			</div>
 			<div class="input-group">
 				<span class="input-group-text">상세주소</span> <input class="form-control"
-					type="text" id="addr02" name="addr02">
+					type="text" id="addr02" name="addr02" value="<%=request.getAttribute("parsedAddr02") %>">
 			</div>
 			<div id="buttonset" class="input-group">
 				<button type="submit" class="btn btn-primary"

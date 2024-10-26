@@ -86,6 +86,10 @@ public class BookDao extends SuperDao {
 				pstmt.setInt(2, pageInfo.getBeginRow());
 				pstmt.setInt(3, pageInfo.getEndRow());
 			}
+			else {
+				pstmt.setInt(1, pageInfo.getBeginRow());
+				pstmt.setInt(2, pageInfo.getEndRow());
+			}
 			if(!bool1) {
 				if(bool) {
 					pstmt.setString(1, "%" + keyword + "%");
@@ -97,11 +101,7 @@ public class BookDao extends SuperDao {
 					pstmt.setInt(3, pageInfo.getBeginRow());
 					pstmt.setInt(4, pageInfo.getEndRow());
 				}
-			}
-			else {
-				pstmt.setInt(1, pageInfo.getBeginRow());
-				pstmt.setInt(2, pageInfo.getEndRow());
-			}
+			}			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {

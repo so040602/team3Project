@@ -3,6 +3,8 @@ package com.team3.controller.member;
 import java.io.File;
 import java.util.Enumeration;
 
+import org.json.JSONObject;
+
 import com.team3.controller.SuperClass;
 import com.team3.controller.SuperController;
 import com.team3.utility.IdCardTransfer;
@@ -49,9 +51,55 @@ public class UserCardAuthController extends SuperClass {
 	    }
 		
 	    String jsonData = "{\"userName\":\"" + userName + "\", \"cardType\":\"" + cardType + "\"}";
-
 	    String responseJsonData = sendFileAndData(idCardFileName, jsonData);
-	    System.out.println(responseJsonData); 
+	    System.out.println("responseJsonData : " + responseJsonData);
+
+        try {
+            // JSON 객체 생성
+            JSONObject jsonObject = new JSONObject(responseJsonData);
+            
+        	// 결과 값 가져오기
+            String resResult = jsonObject.getString("result");
+            //String resFileName = jsonObject.getString("file");
+            //String resCardType = jsonObject.getString("cardType");
+            //String resUserName = jsonObject.getString("userName");
+
+    	    if(resResult.equalsIgnoreCase("FAILURE")) {
+    			String message = "사용자 인증 정보가 잘못 되었습니다.";
+    			super.setAlertMessage(message);
+    	    	super.gotoPage("member/userAuthStartForm.jsp");
+
+    	    } else {
+
+                // cardData 객체 가져오기
+                JSONObject cardData = jsonObject.getJSONObject("cardData");
+    	    	
+    	        // 각 키에 해당하는 값 가져오기
+    	        String username = cardData.getString("username");
+    	        String birth = cardData.getString("birth");
+    	        String gender = cardData.isNull("gender") ? null : cardData.getString("gender");
+    	        String addr01 = cardData.getString("addr01");
+    	        String addr02 = cardData.getString("addr02");
+    	        String issued = cardData.getString("issued");
+    	        String office = cardData.getString("office");
+    	        
+    		    request.setAttribute("parsedName", username);
+    		    request.setAttribute("parsedBirth", birth);
+    		    request.setAttribute("parsedGender", gender);
+    		    request.setAttribute("parsedAddr01", addr01);
+    		    request.setAttribute("parsedAddr02", addr02);
+    		    
+    	    	super.gotoPage("member/memInsertForm.jsp");
+    	    } 	
+			
+		} catch (Exception e) {
+			
+			String message = "사용자 인증 서버가 작동중이지 않습니다.";
+			super.setAlertMessage(message);
+	    	super.gotoPage("member/userAuthStartForm.jsp");
+	    	
+			e.printStackTrace();
+		}
 	    
 	}
 	
