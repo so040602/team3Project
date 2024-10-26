@@ -32,6 +32,11 @@
 			<a href="<%=getEnvs%>memLogout">로그아웃</a>
 		</div>
 		
+		<div class="input-group mt-2"> 
+			<span class="input-group-text spanTitle">회원가입</span> 
+			<a href="<%=getEnvs%>userAuthStart">회원가입</a>
+		</div>
+		
 		<div class="input-group mt-2">
 			<form action="<%=postForm%>" method="post">
 				<input type="hidden" name="opsmode" value="memLogin">
