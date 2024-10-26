@@ -194,13 +194,24 @@ public class TeamUtility {
 		opsMap.put("memLogin",  "com.team3.controller.member.MemberLoginController");
 		opsMap.put("memLogout", "com.team3.controller.member.MemberLogoutController");
 				
+		// user auth section
+		opsMap.put("userAuthStart", "com.team3.controller.member.UserAuthStartController");
+		opsMap.put("userCardParse", "com.team3.controller.member.UserCardAuthController");
+
+		// aibbs section
+		opsMap.put("aibbsInsert", "com.team3.controller.aibbs.AibbsInsertController");
+		opsMap.put("aibbsDetail", "com.team3.controller.aibbs.AibbsDetailController");
+		opsMap.put("aibbsUpdate", "com.team3.controller.aibbs.AibbsUpdateController");
+		opsMap.put("aibbsDelete", "com.team3.controller.aibbs.AibbsDeleteController");
+		opsMap.put("aibbsList",   "com.team3.controller.aibbs.AibbsListController");
+		
 		// board section
 		opsMap.put("brdInsert", "com.team3.controller.board.BoardInsertController");
 		opsMap.put("brdDetail", "com.team3.controller.board.BoardDetailController");
 		opsMap.put("brdUpdate", "com.team3.controller.board.BoardUpdateController");
 		opsMap.put("brdDelete", "com.team3.controller.board.BoardDeleteController");
 		opsMap.put("brdList",   "com.team3.controller.board.BoardListController");
-		
+	
 		// product section
 		opsMap.put("prdInsert", "com.team3.controller.product.ProductInsertController");
 		opsMap.put("prdDetail", "com.team3.controller.product.ProductDetailController");
