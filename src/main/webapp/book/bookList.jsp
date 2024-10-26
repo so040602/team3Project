@@ -166,6 +166,21 @@ h2 {
 <body>
 	<div class="container">
 		<h2>도서 목록</h2>
+		<form id="bookSearch" action="<%=getEnvs%>bookSearch" method="POST">
+			<span>
+				<select id="categorySelect" name="category">
+					<option value="전체보기">전체보기</option>
+					<c:forEach var="category" items="${requestScope.category_List}">
+						<option value="${category}" 
+							<c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
+							${category}
+						</option>
+					</c:forEach>
+				</select>				
+			</span>
+			<input type="text" name="keyword" placeholder="여기에 찾으실 도서를 입력하세요.">
+			<button type="submit">검색</button>
+		</form>
 		<form id="categoryForm" action="<%=getEnvs%>bookCategory" method="POST">
 			<select id="categorySelect" name="category" onchange="document.getElementById('categoryForm').submit()">
 				<option value="전체보기">전체보기</option>
