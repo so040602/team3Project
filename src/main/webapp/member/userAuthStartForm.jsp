@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./../common/common.jsp"%>
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript">
         $(document).ready(function() {
             // Initialize tooltips
@@ -24,22 +26,22 @@
     </script>
     
     <script>
-		function setThumbnail(event) {
-	    	var uploadWrap = event.target.parentNode; 
-	        //이벤트 대상자의 부모
-	        var reader = new FileReader();
-	 
-	        reader.onload = function(event) {
-	        	console.log(uploadWrap);
-	            var newImg = document.createElement("img");
-	            uploadWrap.appendChild(newImg);
-	            newImg.setAttribute("src", event.target.result);
-	            newImg.setAttribute("width", "100%");
-	            newImg.setAttribute("class", "previewImg");
-	        }; 
-	        reader.readAsDataURL(event.target.files[0]);
+		function setThumbnail(event) {
+	    	var uploadWrap = event.target.parentNode; 
+	        //이벤트 대상자의 부모
+	        var reader = new FileReader();
+	 
+	        reader.onload = function(event) {
+	        	console.log(uploadWrap);
+	            var newImg = document.createElement("img");
+	            uploadWrap.appendChild(newImg);
+	            newImg.setAttribute("src", event.target.result);
+	            newImg.setAttribute("width", "100%");
+	            newImg.setAttribute("class", "previewImg");
+	        }; 
+	        reader.readAsDataURL(event.target.files[0]);
 			document.getElementById("btnAuth").focus();
-	    }
+	    }
 	</script>
 	
     <style type="text/css">
@@ -59,7 +61,6 @@
 
 	<style>
 	    .auth-box {
-	        width: 600px;
 	        margin: 0 auto; /* 가운데 정렬 */
 	        border: 1px solid #cdcdcd;
 	        padding: 30px;
@@ -69,53 +70,58 @@
 	    	width: 120px;
 	    }
 	</style>
+</head>
 
-<div class="container mt-3">
-    <div class="auth-box">
-        <h3 class="text-center" style="margin-bottom: 20px;">회원 가입 사용자 인증</h3>
-        <form action="<%= postForm %>" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="opsmode" value="userCardParse">
-            
-            <div class="input-group mb-3">
-                <span class="input-group-text col-1 d-flex justify-content-center align-items-center">성명</span>
-                <input type="text" class="form-control" id="userName" 
-                    placeholder="성명을 입력해 주세요." name="userName"
-                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="성명을 입력해 주세요">
-            </div>
+<body>
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="auth-box">
+                    <h3 class="text-center mb-4">회원 가입 사용자 인증</h3>
+                    <form action="<%= postForm %>" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="opsmode" value="userCardParse">
+                        
+                        <div class="input-group mb-3">
+                            <span class="input-group-text col-3 col-md-2 d-flex justify-content-center align-items-center">성명</span>
+                            <input type="text" class="form-control" id="userName" 
+                                placeholder="성명을 입력해 주세요." name="userName"
+                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                title="성명을 입력해 주세요">
+                        </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text col-1 d-flex justify-content-center align-items-center">신분증 첨부</span> 
-          		<input id="idCardFile" name="idCardFile" type="file" class="form-control" onchange="setThumbnail(event)">
-            </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text col-3 col-md-2 d-flex justify-content-center align-items-center">신분증 첨부</span> 
+                            <input id="idCardFile" name="idCardFile" type="file" class="form-control" onchange="setThumbnail(event)">
+                        </div>
 
-            <div class="input-group uploadWrap"></div>
-        
-            <div class="input-group mb-3">
-                <span class="input-group-text col-1 d-flex justify-content-center align-items-center">신분증 종류</span>
-                <div class="d-flex align-items-center col" style="padding-left:10px; border:1px solid #dedede;">
-                    <div class="form-check me-3">
-                        <input class="form-check-input" type="radio" name="cardType" id="cardType" value="residentCard" checked>
-                        <label class="form-check-label" for="recard">
-                            주민등록증
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cardType" id="driverLicence" value="driverLicence">
-                        <label class="form-check-label" for="drcard">
-                            운전면허증
-                        </label>
-                    </div>
+                        <div class="input-group uploadWrap"></div>
+                    
+                        <div class="input-group mb-3">
+                            <span class="input-group-text col-3 col-md-2 d-flex justify-content-center align-items-center">신분증 종류</span>
+                            <div class="d-flex align-items-center col" style="padding-left:10px; border:1px solid #dedede;">
+                                <div class="form-check me-3">
+                                    <input class="form-check-input" type="radio" name="cardType" id="cardType" value="residentCard" checked>
+                                    <label class="form-check-label" for="recard">
+                                        주민등록증
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cardType" id="driverLicence" value="driverLicence">
+                                    <label class="form-check-label" for="drcard">
+                                        운전면허증
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="bottomBtnGroup text-center"> 
+                            <button type="submit" class="btn btn-primary" id="btnAuth" onclick="return validCheck();">본인 인증</button>
+                            <button type="button" class="btn btn-info" onclick="location.assign('index.jsp');">메인으로</button>
+                        </div>			
+                    </form>
                 </div>
             </div>
-        
-            <div class="bottomBtnGroup text-center"> 
-                <button type="submit" class="btn btn-primary" id="btnAuth" onclick="return validCheck();">본인 인증</button>
-                <button type="button" class="btn btn-info" onclick="location.assign('index.jsp');">메인으로</button>
-            </div>			
-        </form>
+        </div>
     </div>
-</div>
-
-
+</body>
 </html>
