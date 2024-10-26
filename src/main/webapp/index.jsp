@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="./common/common.jsp" %>     
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Welcome to Team3 JSP Home!</title>
-<style>
-	.spanTitle { width: 100px; dispaly:inline-block; text-align:center; margin-right: 10px;}
-</style>
-</head>
 <body>
 	
 	<div class="container mt-3">
