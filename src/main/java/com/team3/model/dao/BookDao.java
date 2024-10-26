@@ -197,7 +197,7 @@ public class BookDao extends SuperDao {
     public List<Book> getBestSellers() throws Exception {
         List<Book> lists = new ArrayList<>();
         String sql = "SELECT * FROM booklist WHERE rating >= 4.0 " +
-                     "ORDER BY rating DESC, cnt DESC LIMIT 10";
+                     "ORDER BY rating DESC, cnt DESC LIMIT 25";
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -313,5 +313,115 @@ public class BookDao extends SuperDao {
 				}
 				
 				return categoryList;
+	}
+
+	public List<Book> getCategorySearch(Paging pageInfo, String text) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet  rs = null;
+		List<Book> blist = null;
+		String mode = pageInfo.getMode() ;
+        boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");				
+		
+        String sql = "SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, DESCRIPTION";
+		sql +=" FROM(SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, DESCRIPTION,";
+		sql +=" ROW_NUMBER() OVER (ORDER BY cnt ASC) AS ranking";
+		sql +=" FROM booklist";
+		if(!bool) {
+			sql += " WHERE category = ? AND book_name LIKE ?";
+		}
+		else {
+			sql += " WHERE book_name LIKE ?";
+		}
+		sql += " ) AS ranked_books";
+		sql += " WHERE ranking BETWEEN ? AND ?";
+		
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			if(!bool) {
+				pstmt.setString(1, pageInfo.getMode());
+				pstmt.setString(2, "%" + text + "%");
+				pstmt.setInt(3, pageInfo.getBeginRow());
+				pstmt.setInt(4, pageInfo.getEndRow());
+			}
+			else {
+				pstmt.setString(1, "%" + text + "%");
+				pstmt.setInt(2, pageInfo.getBeginRow());
+				pstmt.setInt(3, pageInfo.getEndRow());
+			}
+			rs = pstmt.executeQuery();
+			blist = new ArrayList<Book>();
+			
+			while(rs.next()) {
+				Book bean = this.getBeanData(rs);
+				blist.add(bean);
+				
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+				
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		
+		return blist;
+	}
+
+	public int getSearchTotalCount(String category, String text) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int tCount = 0;
+		boolean bool = category == null || category.equals("all");
+		String sql = "select count(*) AS cnt";
+		sql += " From booklist";
+		if(!bool) {
+			sql += " where category = ? AND book_name LIKE ?";
+		}
+		else {
+			sql += " where book_name LIKE ? ";
+		}
+		
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			if(!bool) {
+				pstmt.setString(1, category);
+				pstmt.setString(2, "%" + text + "%");
+			}
+			else {
+				pstmt.setString(1, "%" + text + "%");
+			}
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				tCount = rs.getInt("cnt");
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {rs.close();}
+				if(conn != null) {rs.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return tCount;
 	}	
 }
