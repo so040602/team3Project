@@ -21,6 +21,8 @@ public class BookSearchController extends SuperClass{
 		String category = request.getParameter("category");		
 		String text = request.getParameter("keyword");
 		
+		System.out.println(category);
+		System.out.println(text);
 		if(category == null || category.equals("전체보기")) {
 			category = "all";
 		}
@@ -42,6 +44,8 @@ public class BookSearchController extends SuperClass{
 		
 		List<Book> bookList = dao.getCategorySearch(pageInfo ,text);
 		
+		request.setAttribute("source", "BookSearchController");
+		request.setAttribute("keyword", text);
 		request.setAttribute("selectedCategory", category);
 		request.setAttribute("category_List", category_List);
 		request.setAttribute("datalist", bookList);	

@@ -53,7 +53,9 @@ public class BookDao extends SuperDao {
     public List<Book> getPaginationData(Paging pageInfo) {
 		Connection conn = null;
 		String mode = pageInfo.getMode() ;
+		String keyword = pageInfo.getKeyword();
         boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");
+        boolean bool1 = pageInfo.equals(null) || pageInfo.equals("null") || keyword.equals("");
 		String sql = " SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description";
 		sql += " FROM (SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description,";
 		sql += " ROW_NUMBER() OVER (ORDER BY cnt ASC) AS ranking";
@@ -61,10 +63,18 @@ public class BookDao extends SuperDao {
 		if(!bool) {
 			sql += " WHERE category = ?";
 		}
+		if(!bool1) {
+			if(bool) {
+				sql += " WHERE book_name LIKE ?";
+			}else {
+				sql += " AND book_name LIKE ?";
+			}
+		}
 		sql += " ) AS ranked_books";
 		sql += " WHERE ranking BETWEEN ? AND ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		System.out.println("sql is " + sql);
 		
 		List<Book> lists = new ArrayList<Book>();
 		
@@ -75,6 +85,18 @@ public class BookDao extends SuperDao {
 				pstmt.setString(1, mode);
 				pstmt.setInt(2, pageInfo.getBeginRow());
 				pstmt.setInt(3, pageInfo.getEndRow());
+			}
+			if(!bool1) {
+				if(bool) {
+					pstmt.setString(1, "%" + keyword + "%");
+					pstmt.setInt(2, pageInfo.getBeginRow());
+					pstmt.setInt(3, pageInfo.getEndRow());
+				}else {
+					pstmt.setString(1, mode);
+					pstmt.setString(2, "%" + keyword + "%");
+					pstmt.setInt(3, pageInfo.getBeginRow());
+					pstmt.setInt(4, pageInfo.getEndRow());
+				}
 			}
 			else {
 				pstmt.setInt(1, pageInfo.getBeginRow());

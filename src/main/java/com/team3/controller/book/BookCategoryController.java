@@ -45,7 +45,8 @@ public class BookCategoryController extends SuperClass{
 		List<Book> bookList = dao.getPaginationData(pageInfo);
 		
 		int beginpage = pageInfo.getBeginPage();
-						
+		
+		request.setAttribute("source", "BookCategoryController");
 		request.setAttribute("selectedCategory", mode);
 		request.setAttribute("category_List", category_List);
 		request.setAttribute("datalist", bookList);	

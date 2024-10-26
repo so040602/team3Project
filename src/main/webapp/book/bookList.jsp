@@ -221,45 +221,89 @@ h2 {
 			</c:forEach>
 			
 			<ul class="pagination justify-content-center">
-				<c:if test="${pagelist.beginPage > 10}">
-					<li class="page-item"><a class="page-link"
-						href="<%=getEnvs%>bookList&pageNumber=1&currCategory=${requestScope.selectedCategory}">처음</a></li>
+				<c:if test="${requestScope.keyword == ''}">
+					<c:if test="${pagelist.beginPage > 10}">
+						<li class="page-item"><a class="page-link"
+							href="<%=getEnvs%>bookList&pageNumber=1&currCategory=${requestScope.selectedCategory}">처음</a></li>
+					</c:if>
+					<c:if test="${pagelist.beginPage <= 10}">
+						<li class="page-item"><span class="page-link disabled">처음</span>
+						</li>
+					</c:if>
+					<c:if test="${pagelist.beginPage > 1}">
+						<li class="page-item"><a class="page-link"
+							href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}">이전</a></li>
+					</c:if>
+					<c:if test="${pagelist.beginPage <= 1}">
+						<li class="page-item disabled"><span class="page-link">이전</span>
+						</li>
+					</c:if>
+					<c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+						<c:forEach var="i" begin="${pagelist.beginPage}"
+							end="${pagelist.endPage}">
+							<li
+								class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+								class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+						</c:forEach>
+					</c:if>
+					<c:if test="${pagelist.endPage < pagelist.totalPage}">
+						<li class="page-item"><a class="page-link"
+								href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}">다음</a></li>
+					</c:if>
+					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
+						<li class="page-item disabled"><span class="page-link">다음</span>
+						</li>
+					</c:if>
+					<c:if test="${pagelist.endPage < pagelist.totalPage}">
+						<li class="page-item"><a class="page-link"
+							href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
+					</c:if>
+					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
+						<li class="page-item disabled"><span class="page-link">맨끝</span>
+						</li>
+					</c:if>
 				</c:if>
-				<c:if test="${pagelist.beginPage <= 10}">
-					<li class="page-item"><span class="page-link disabled">처음</span>
-					</li>
-				</c:if>
-				<c:if test="${pagelist.beginPage > 1}">
-					<li class="page-item"><a class="page-link"
-						href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}">이전</a></li>
-				</c:if>
-				<c:if test="${pagelist.beginPage <= 1}">
-					<li class="page-item disabled"><span class="page-link">이전</span>
-					</li>
-				</c:if>
-				<c:if test="${pagelist.beginPage <= pagelist.totalPage}">
-					<c:forEach var="i" begin="${pagelist.beginPage}"
-						end="${pagelist.endPage}">
-						<li
-							class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
-							class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
-					</c:forEach>
-				</c:if>
-				<c:if test="${pagelist.endPage < pagelist.totalPage}">
-					<li class="page-item"><a class="page-link"
-							href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}">다음</a></li>
-				</c:if>
-				<c:if test="${pagelist.endPage >= pagelist.totalPage}">
-					<li class="page-item disabled"><span class="page-link">다음</span>
-					</li>
-				</c:if>
-				<c:if test="${pagelist.endPage < pagelist.totalPage}">
-					<li class="page-item"><a class="page-link"
-						href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
-				</c:if>
-				<c:if test="${pagelist.endPage >= pagelist.totalPage}">
-					<li class="page-item disabled"><span class="page-link">맨끝</span>
-					</li>
+				<c:if test="${requestScope.keyword != ''}">
+					<c:if test="${pagelist.beginPage > 10}">
+						<li class="page-item"><a class="page-link"
+							href="<%=getEnvs%>bookList&pageNumber=1&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">처음</a></li>
+					</c:if>
+					<c:if test="${pagelist.beginPage <= 10}">
+						<li class="page-item"><span class="page-link disabled">처음</span>
+						</li>
+					</c:if>
+					<c:if test="${pagelist.beginPage > 1}">
+						<li class="page-item"><a class="page-link"
+							href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">이전</a></li>
+					</c:if>
+					<c:if test="${pagelist.beginPage <= 1}">
+						<li class="page-item disabled"><span class="page-link">이전</span>
+						</li>
+					</c:if>
+					<c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+						<c:forEach var="i" begin="${pagelist.beginPage}"
+							end="${pagelist.endPage}">
+							<li
+								class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+								class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+						</c:forEach>
+					</c:if>
+					<c:if test="${pagelist.endPage < pagelist.totalPage}">
+						<li class="page-item"><a class="page-link"
+								href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">다음</a></li>
+					</c:if>
+					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
+						<li class="page-item disabled"><span class="page-link">다음</span>
+						</li>
+					</c:if>
+					<c:if test="${pagelist.endPage < pagelist.totalPage}">
+						<li class="page-item"><a class="page-link"
+							href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
+					</c:if>
+					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
+						<li class="page-item disabled"><span class="page-link">맨끝</span>
+						</li>
+					</c:if>
 				</c:if>
 			</ul>			
 		</div>
