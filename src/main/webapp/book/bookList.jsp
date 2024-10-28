@@ -8,6 +8,7 @@
 <head>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style type="text/css">
+/* 기본 스타일 */
 body {
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f8f9fa;
@@ -24,11 +25,21 @@ body {
     border-radius: 15px;
 }
 
+h2 {
+    color: #333;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e1e1e1;
+}
+
+/* 카테고리 폼 스타일 */
 #categoryForm {
     margin-bottom: 20px;
 }
 
-#categoryForm .category-select {
+.category-select {
     padding: 12px 20px;
     border: 2px solid #e1e1e1;
     border-radius: 8px;
@@ -46,7 +57,7 @@ body {
     transition: all 0.3s ease;
 }
 
-#categoryForm .category-select:hover {
+.category-select:hover {
     border-color: #0066c0;
 }
 
@@ -121,42 +132,13 @@ button[type="submit"]:hover {
     transform: translateY(-1px);
 }
 
-@media (max-width: 768px) {
-    .search-wrapper {
-        flex-direction: column;
-        padding: 10px;
-    }
-
-    .search-wrapper select,
-    .search-wrapper input[type="text"] {
-        width: 100%;
-    }
-
-    #bookSearch {
-        flex-direction: column;
-    }
-
-    button[type="submit"] {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-h2 {
-    color: #333;
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #e1e1e1;
-}
-
+/* 도서 목록 스타일 */
 .book-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 25px;
-    margin-bottom: 120px; /* 페이지네이션을 위한 여백 증가 */
-    padding-bottom: 20px; 
+    margin-bottom: 120px;
+    padding-bottom: 20px;
 }
 
 .book-item {
@@ -177,13 +159,13 @@ h2 {
 
 .book-image {
     width: 100%;
-    height: 300px;
+    height: 250px;
     object-fit: cover;
     border-bottom: 1px solid #eee;
 }
 
 .book-details {
-    padding: 20px;
+    padding: 15px;
     flex-grow: 1;
 }
 
@@ -217,10 +199,11 @@ h2 {
     line-height: 1.5;
 }
 
+/* 버튼 스타일 */
 .button-group {
     display: flex;
     gap: 10px;
-    padding: 0 20px 20px 20px;
+    padding: 0 15px 15px;
 }
 
 .button-group button {
@@ -252,25 +235,27 @@ h2 {
     background-color: #004d8c;
 }
 
+/* 페이지네이션 스타일 */
 .pagination {
     display: flex;
     justify-content: center;
     list-style-type: none;
-    padding: 20px ;
+    padding: 20px 0;
     margin-top: 30px;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: max-content;
 }
 
 .page-item {
-    margin: 0 3px;
-    display: flex; 
-    align-items: center; 
+    margin: 0 4px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .page-link {
@@ -279,7 +264,8 @@ h2 {
     text-decoration: none;
     border: 1px solid #dee2e6;
     border-radius: 4px;
-    transition: all 0.3s;
+    transition: all 0.2s;
+    min-width: max-content;
 }
 
 .page-link:hover {
@@ -300,96 +286,55 @@ h2 {
     border-color: #dee2e6;
 }
 
+/* 반응형 스타일 */
 @media (max-width: 768px) {
     .container {
         margin: 20px;
         padding: 15px;
     }
 
-    #bookSearch {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
+    .search-wrapper {
+        flex-direction: column;
+        padding: 10px;
+        width: 100%;
+    }
 
-.search-wrapper {
-    display: flex;
-    flex: 1;
-    gap: 10px;
-    align-items: center;
-}
+    .search-wrapper select,
+    .search-wrapper input[type="text"] {
+        width: 100%;
+    }
 
-#categorySelect {
-    padding: 12px 20px;
-    border: 2px solid #e1e1e1;
-    border-radius: 8px;
-    font-size: 15px;
-    background-color: white;
-    cursor: pointer;
-    min-width: 150px;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 15px;
-    padding-right: 45px;
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-input[type="text"] {
-    flex: 1;
-    padding: 12px 20px;
-    border: 2px solid #e1e1e1;
-    border-radius: 8px;
-    font-size: 15px;
-    min-width: 200px;
-}
-
-button[type="submit"] {
-    padding: 12px 25px;
-    background: #0066c0;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-button[type="submit"] i {
-    font-size: 16px;
-}
-
-@media (max-width: 768px) {
     #bookSearch {
         flex-direction: column;
         padding: 15px;
     }
 
-    .search-wrapper {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    #categorySelect {
-        width: 100%;
-    }
-
-    input[type="text"] {
-        width: 100%;
-    }
-
     button[type="submit"] {
         width: 100%;
         justify-content: center;
+    }
+
+    .category-select {
+        width: 100%;
+    }
+
+    .book-list {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .book-image {
+        height: 200px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        padding: 10px;
+        position: static;
+        transform: none;
+        margin: 20px auto;
     }
 }
 </style>
@@ -422,7 +367,7 @@ button[type="submit"] i {
     <!-- 독립적인 카테고리 선택 -->
     <form id="categoryForm" action="<%=getEnvs%>bookCategory" method="POST">
         <select class="category-select" name="category" onchange="document.getElementById('categoryForm').submit()">
-            <option value="전체보기">전체 카테고리</option>
+            <option value="전체보기">전체</option>
             <c:forEach var="category" items="${requestScope.category_List}">
                 <option value="${category}" 
                     <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>

@@ -285,12 +285,12 @@ body {
 				<div class="action-buttons">
 					<button class="btn btn-lg btn-buy">
 						<i class="fas fa-book"></i> 대출
-					</button>
-					<button class="btn btn-lg btn-cart">
-						<i class="fas fa-shopping-cart"></i> 장바구니
-					</button>
+					</button>			
 					<button class="btn btn-lg btn-wishlist">
 						<i class="fas fa-calendar-check"></i> 대출 예약
+					</button>
+					<button class="btn btn-lg btn-cart">
+						<i class="fas fa-bookmark"></i> 북마크 
 					</button>
 				</div>
 
