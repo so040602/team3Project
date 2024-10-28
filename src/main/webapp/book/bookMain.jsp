@@ -409,7 +409,6 @@ String getEnvs = appName + mappingName + "?opsmode=";
     </style>
 </head>
 <body>
-<<<<<<< HEAD
 	<div class="container">
 		<header class="header">
 			<div
@@ -435,68 +434,8 @@ String getEnvs = appName + mappingName + "?opsmode=";
 					placeholder="제목, 작가로 검색해 보세요">
 			</div>
 		</header>
-=======
-    <div class="container">
-        <header class="header">
-            <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-                <a href="#" class="logo">모두의 도서관</a>
-                <div style="display: flex; gap: 20px;">
-                    <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">로그인</i></a>
-                    <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">회원가입</i></a>
-                    <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">마이페이지</i></a>
-                    <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">북마크</i></a>
-                </div>
-            </div>
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="제목, 작가로 검색해 보세요">
-            </div>
-        </header>
+ 
         
-        <nav class="nav">
-            <ul>
-               <li><a href="#">공지사항</a></li>
-                <li><a href="#">베스트 도서</a></li>
-                <li><a href="#">신간 도서</a></li>   
-                <li><a href="#">서평 & 추천</a></li>
-                <li><a href="#">대출 현황</a></li>
-      
-            </ul>
-        </nav>
-        
-        <div class="main-banner">
-            <div class="banner-content">
-                <h1 class="banner-title">첫 방문을 위한<br>GUIDE</h1>
-                <p class="banner-subtitle">처음 방문하셨다면,<br>가이드를 따라오세요!</p>
-            </div>
-        </div>
-        
-        <section class="book-section">
-            <div class="section-header">
-                <h2>베스트 도서</h2>
-                <a href="<%=getEnvs%>bookRaiting">더보기 ></a>
-            </div>
-            
-            <div class="book-grid">
-                <c:forEach var="book" items="${bestSellers}">
-                    <div class="book-card">
-                        <img src="${book.img}" alt="${book.book_name}" class="book-image">
-                        <div class="book-info">
-                            <h3 class="book-title">${book.book_name}</h3>
-                            <p class="book-person">${book.person_name}</p>
-                            <div class="book-subinfo">                               
-                                <span>${book.publisher}</span>                             
-                                <span>|</span>
-                               <span>${book.date}</span>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </section>
-        
->>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
-
-<<<<<<< HEAD
 		<nav class="nav">
 			<ul>
 				<li><a href="#"> <i class="fas fa-bullhorn"></i> 공지사항
