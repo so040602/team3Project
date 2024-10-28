@@ -8,6 +8,7 @@
 <head>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style type="text/css">
+/* 기본 스타일 */
 body {
     font-family: 'Noto Sans KR', sans-serif;
     background-color: #f8f9fa;
@@ -22,6 +23,7 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     position: relative;
     border-radius: 15px;
+<<<<<<< HEAD
 }
 
 #categoryForm {
@@ -140,6 +142,8 @@ button[type="submit"]:hover {
         width: 100%;
         justify-content: center;
     }
+=======
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
 }
 
 h2 {
@@ -151,11 +155,115 @@ h2 {
     border-bottom: 2px solid #e1e1e1;
 }
 
+/* 카테고리 폼 스타일 */
+#categoryForm {
+    margin-bottom: 20px;
+}
+
+.category-select {
+    padding: 12px 20px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: white;
+    cursor: pointer;
+    min-width: 200px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px;
+    padding-right: 45px;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: all 0.3s ease;
+}
+
+.category-select:hover {
+    border-color: #0066c0;
+}
+
+/* 검색 폼 스타일 */
+#bookSearch {
+    display: flex;
+    align-items: stretch;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.search-wrapper {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+}
+
+.search-wrapper select {
+    padding: 10px 15px;
+    border: none;
+    background-color: transparent;
+    font-size: 15px;
+    cursor: pointer;
+    min-width: 120px;
+    color: #495057;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 12px;
+    padding-right: 25px;
+}
+
+.search-wrapper input[type="text"] {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    outline: none;
+    min-width: 200px;
+}
+
+button[type="submit"] {
+    padding: 12px 25px;
+    background: #0066c0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+button[type="submit"]:hover {
+    background: #004d8c;
+    transform: translateY(-1px);
+}
+
+/* 도서 목록 스타일 */
 .book-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 25px;
+<<<<<<< HEAD
     margin-bottom: 80px;
+=======
+    margin-bottom: 120px;
+    padding-bottom: 20px;
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
 }
 
 .book-item {
@@ -176,13 +284,21 @@ h2 {
 
 .book-image {
     width: 100%;
+<<<<<<< HEAD
     height: 300px;
+=======
+    height: 250px;
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
     object-fit: cover;
     border-bottom: 1px solid #eee;
 }
 
 .book-details {
+<<<<<<< HEAD
     padding: 20px;
+=======
+    padding: 15px;
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
     flex-grow: 1;
 }
 
@@ -216,10 +332,15 @@ h2 {
     line-height: 1.5;
 }
 
+/* 버튼 스타일 */
 .button-group {
     display: flex;
     gap: 10px;
+<<<<<<< HEAD
     padding: 0 20px 20px 20px;
+=======
+    padding: 0 15px 15px;
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
 }
 
 .button-group button {
@@ -251,6 +372,7 @@ h2 {
     background-color: #004d8c;
 }
 
+<<<<<<< HEAD
 .pagination {
     display: flex;
     justify-content: center;
@@ -264,19 +386,51 @@ h2 {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+=======
+/* 페이지네이션 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 20px 0;
+    margin-top: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: max-content;
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
 }
 
 .page-item {
+<<<<<<< HEAD
     margin: 0 3px;
+=======
+    margin: 0 4px;
+    display: inline-flex;
+    align-items: center;
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
 }
 
 .page-link {
     color: #0066c0;
+<<<<<<< HEAD
     padding: 8px 16px;
     text-decoration: none;
     border: 1px solid #dee2e6;
     border-radius: 6px;
     transition: all 0.2s;
+=======
+    padding: 8px 12px;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: all 0.2s;
+    min-width: max-content;
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
 }
 
 .page-link:hover {
@@ -297,6 +451,7 @@ h2 {
     border-color: #dee2e6;
 }
 
+<<<<<<< HEAD
 @media (max-width: 768px) {
     .container {
         margin: 20px;
@@ -387,13 +542,103 @@ button[type="submit"] i {
     button[type="submit"] {
         width: 100%;
         justify-content: center;
+=======
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .search-wrapper {
+        flex-direction: column;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .search-wrapper select,
+    .search-wrapper input[type="text"] {
+        width: 100%;
+    }
+
+    #bookSearch {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .category-select {
+        width: 100%;
+    }
+
+    .book-list {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .book-image {
+        height: 200px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        padding: 10px;
+        position: static;
+        transform: none;
+        margin: 20px auto;
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
     }
 }
 </style>
 </head>
 <body>
 <div class="container">
+<<<<<<< HEAD
       <h2>도서 목록</h2>
+=======
+		<h2>도서 목록</h2>
+
+    <!-- 통합 검색 폼 -->
+    <form id="bookSearch" action="<%=getEnvs%>bookSearch" method="POST">
+        <div class="search-wrapper">
+            <select name="category">
+                <option value="전체보기">전체</option>
+                <c:forEach var="category" items="${requestScope.category_List}">
+                    <option value="${category}" 
+                        <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
+                        ${category}
+                    </option>
+                </c:forEach>
+            </select>
+            <input type="text" name="keyword" placeholder="도서명, 저자, 출판사를 검색해보세요">
+        </div>
+        <button type="submit">
+            <i class="fas fa-search"></i>
+            검색
+        </button>
+    </form>
+    
+    
+    <!-- 독립적인 카테고리 선택 -->
+    <form id="categoryForm" action="<%=getEnvs%>bookCategory" method="POST">
+        <select class="category-select" name="category" onchange="document.getElementById('categoryForm').submit()">
+            <option value="전체보기">전체</option>
+            <c:forEach var="category" items="${requestScope.category_List}">
+                <option value="${category}" 
+                    <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
+                    ${category}
+                </option>
+            </c:forEach>
+        </select>
+    </form>
+		
+>>>>>>> branch 'master' of https://github.com/so040602/team3Project.git
 
     <!-- 통합 검색 폼 -->
     <form id="bookSearch" action="<%=getEnvs%>bookList" method="POST">
