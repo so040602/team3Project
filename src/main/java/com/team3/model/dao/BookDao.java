@@ -218,8 +218,8 @@ public class BookDao extends SuperDao {
 
     public List<Book> getBestSellers() throws Exception {
         List<Book> lists = new ArrayList<>();
-        String sql = "SELECT * FROM booklist WHERE rating >= 4.0 " +
-                     "ORDER BY rating DESC, cnt DESC LIMIT 25";
+        String sql = "SELECT * FROM booklist WHERE rating >= 9.0 " +
+                     "ORDER BY rating DESC, cnt DESC LIMIT 10";
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -250,42 +250,40 @@ public class BookDao extends SuperDao {
     }
 
     public List<Book> getNewBooks() throws Exception {
-        String sql = "SELECT * FROM booklist " +
-                     "ORDER BY date DESC LIMIT 12";
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
+    	List<Book> lists = new ArrayList<>();
+    	String sql = "SELECT * FROM booklist " +
+                "ORDER BY date DESC LIMIT 10";
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection conn = null;
+
+        try {
+            conn = super.getConnection(); // 데이터베이스 연결
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Book book = getBookBeanData(rs); // ResultSet에서 Book 객체 생성
+                lists.add(book); // 리스트에 추가
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e; // 예외 발생 시 상위로 전달
+        } finally {
+            try {
+                if (rs != null) { rs.close(); }
+                if (pstmt != null) { pstmt.close(); }
+                if (conn != null) { conn.close(); }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        
+        return lists; // 신간 도서 목록 반환
     }
 
-    public List<Book> getPopularBooks() throws Exception {
-        String sql = "SELECT * FROM booklist " +
-                     "ORDER BY rating DESC LIMIT 12";
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
-    }
 
-    public List<Book> getPickBooks() throws Exception {
-        String sql = "SELECT * FROM booklist WHERE rating >= 4.5 " +
-                     "ORDER BY date DESC LIMIT 12";
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
-    }
-
-    public List<Book> getRecentSearched() throws Exception {
-        String sql = "SELECT * FROM booklist " +
-                     "WHERE date >= DATE_SUB(NOW(), INTERVAL 7 DAY) " +
-                     "ORDER BY cnt DESC LIMIT 12";
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
-    }
-
+   
     public List<Book> searchBooks(String keyword, String category) throws Exception {
         String sql = "SELECT * FROM booklist WHERE 1=1 ";
         if (keyword != null && !keyword.trim().isEmpty()) {
@@ -445,5 +443,161 @@ public class BookDao extends SuperDao {
 			}
 		}
 		return tCount;
+	}
+
+	public List<Book> getRatingPaginationData(Paging pageInfo) {
+		Connection conn = null;
+		String mode = pageInfo.getMode() ;
+		String keyword = pageInfo.getKeyword();
+        boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");
+        boolean bool1 = pageInfo.equals(null) || pageInfo.equals("null") || keyword.equals("");
+		String sql = " SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description";
+		sql += " FROM (SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description,";
+		sql += " ROW_NUMBER() OVER (ORDER BY rating DESC) AS ranking";
+		sql += " FROM booklist";
+		if(!bool) {
+			sql += " WHERE category = ?";
+		}
+		if(!bool1) {
+			if(bool) {
+				sql += " WHERE book_name LIKE ?";
+			}else {
+				sql += " AND book_name LIKE ?";
+			}
+		}
+		sql += " ) AS ranked_books";
+		sql += " WHERE ranking BETWEEN ? AND ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("sql is " + sql);
+		
+		List<Book> lists = new ArrayList<Book>();
+		
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			if(!bool) {
+				pstmt.setString(1, mode);
+				pstmt.setInt(2, pageInfo.getBeginRow());
+				pstmt.setInt(3, pageInfo.getEndRow());
+			}
+			else {
+				pstmt.setInt(1, pageInfo.getBeginRow());
+				pstmt.setInt(2, pageInfo.getEndRow());
+			}
+			if(!bool1) {
+				if(bool) {
+					pstmt.setString(1, "%" + keyword + "%");
+					pstmt.setInt(2, pageInfo.getBeginRow());
+					pstmt.setInt(3, pageInfo.getEndRow());
+				}else {
+					pstmt.setString(1, mode);
+					pstmt.setString(2, "%" + keyword + "%");
+					pstmt.setInt(3, pageInfo.getBeginRow());
+					pstmt.setInt(4, pageInfo.getEndRow());
+				}
+			}			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Book bean = this.getBeanData(rs);
+				lists.add(bean);
+			}
+			
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+				
+			} catch (Exception ex) {
+				// TODO: handle exception
+				ex.printStackTrace();
+			}
+		}
+		
+		
+		return lists;
+	}
+
+	public List<Book> getRecentPaginationData(Paging pageInfo) {
+		Connection conn = null;
+		String mode = pageInfo.getMode() ;
+		String keyword = pageInfo.getKeyword();
+        boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");
+        boolean bool1 = pageInfo.equals(null) || pageInfo.equals("null") || keyword.equals("");
+		String sql = " SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description";
+		sql += " FROM (SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description,";
+		sql += " ROW_NUMBER() OVER (ORDER BY date DESC) AS ranking";
+		sql += " FROM booklist";
+		if(!bool) {
+			sql += " WHERE category = ?";
+		}
+		if(!bool1) {
+			if(bool) {
+				sql += " WHERE book_name LIKE ?";
+			}else {
+				sql += " AND book_name LIKE ?";
+			}
+		}
+		sql += " ) AS ranked_books";
+		sql += " WHERE ranking BETWEEN ? AND ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("sql is " + sql);
+		
+		List<Book> lists = new ArrayList<Book>();
+		
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			if(!bool) {
+				pstmt.setString(1, mode);
+				pstmt.setInt(2, pageInfo.getBeginRow());
+				pstmt.setInt(3, pageInfo.getEndRow());
+			}
+			else {
+				pstmt.setInt(1, pageInfo.getBeginRow());
+				pstmt.setInt(2, pageInfo.getEndRow());
+			}
+			if(!bool1) {
+				if(bool) {
+					pstmt.setString(1, "%" + keyword + "%");
+					pstmt.setInt(2, pageInfo.getBeginRow());
+					pstmt.setInt(3, pageInfo.getEndRow());
+				}else {
+					pstmt.setString(1, mode);
+					pstmt.setString(2, "%" + keyword + "%");
+					pstmt.setInt(3, pageInfo.getBeginRow());
+					pstmt.setInt(4, pageInfo.getEndRow());
+				}
+			}			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Book bean = this.getBeanData(rs);
+				lists.add(bean);
+			}
+			
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+				
+			} catch (Exception ex) {
+				// TODO: handle exception
+				ex.printStackTrace();
+			}
+		}
+		
+		
+		return lists;
 	}	
 }

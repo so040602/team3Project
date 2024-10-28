@@ -393,10 +393,10 @@ button[type="submit"] i {
 </head>
 <body>
 <div class="container">
-      <h2>도서 목록</h2>
+      <h2>신작 도서 목록</h2>
 
     <!-- 통합 검색 폼 -->
-    <form id="bookSearch" action="<%=getEnvs%>bookList" method="POST">
+    <form id="bookSearch" action="<%=getEnvs%>bookRecent" method="POST">
         <div class="search-wrapper">
             <select name="category">
                 <option value="전체보기">전체</option>
@@ -416,7 +416,7 @@ button[type="submit"] i {
     </form>
     
     <!-- 독립적인 카테고리 선택 -->
-    <form id="categoryForm" action="<%=getEnvs%>bookList" method="POST">
+    <form id="categoryForm" action="<%=getEnvs%>bookRecent" method="POST">
         <select class="category-select" name="category" onchange="document.getElementById('categoryForm').submit()">
             <option value="전체보기">전체 카테고리</option>
             <c:forEach var="category" items="${requestScope.category_List}">
@@ -460,7 +460,7 @@ button[type="submit"] i {
             <c:if test="${requestScope.keyword == ''}">
                <c:if test="${pagelist.beginPage > 10}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=1&currCategory=${requestScope.selectedCategory}">처음</a></li>
+                     href="<%=getEnvs%>bookRecent&pageNumber=1&currCategory=${requestScope.selectedCategory}">처음</a></li>
                </c:if>
                <c:if test="${pagelist.beginPage <= 10}">
                   <li class="page-item"><span class="page-link disabled">처음</span>
@@ -468,7 +468,7 @@ button[type="submit"] i {
                </c:if>
                <c:if test="${pagelist.beginPage > 1}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}">이전</a></li>
+                     href="<%=getEnvs%>bookRecent&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}">이전</a></li>
                </c:if>
                <c:if test="${pagelist.beginPage <= 1}">
                   <li class="page-item disabled"><span class="page-link">이전</span>
@@ -479,12 +479,12 @@ button[type="submit"] i {
                      end="${pagelist.endPage}">
                      <li
                         class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
-                        class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+                        class="page-link" href="<%=getEnvs%>bookRecent&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
                   </c:forEach>
                </c:if>
                <c:if test="${pagelist.endPage < pagelist.totalPage}">
                   <li class="page-item"><a class="page-link"
-                        href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}">다음</a></li>
+                        href="<%=getEnvs%>bookRecent&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}">다음</a></li>
                </c:if>
                <c:if test="${pagelist.endPage >= pagelist.totalPage}">
                   <li class="page-item disabled"><span class="page-link">다음</span>
@@ -492,7 +492,7 @@ button[type="submit"] i {
                </c:if>
                <c:if test="${pagelist.endPage < pagelist.totalPage}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
+                     href="<%=getEnvs%>bookRecent&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
                </c:if>
                <c:if test="${pagelist.endPage >= pagelist.totalPage}">
                   <li class="page-item disabled"><span class="page-link">맨끝</span>
@@ -502,7 +502,7 @@ button[type="submit"] i {
             <c:if test="${requestScope.keyword != ''}">
                <c:if test="${pagelist.beginPage > 10}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=1&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">처음</a></li>
+                     href="<%=getEnvs%>bookRecent&pageNumber=1&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">처음</a></li>
                </c:if>
                <c:if test="${pagelist.beginPage <= 10}">
                   <li class="page-item"><span class="page-link disabled">처음</span>
@@ -510,7 +510,7 @@ button[type="submit"] i {
                </c:if>
                <c:if test="${pagelist.beginPage > 1}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">이전</a></li>
+                     href="<%=getEnvs%>bookRecent&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">이전</a></li>
                </c:if>
                <c:if test="${pagelist.beginPage <= 1}">
                   <li class="page-item disabled"><span class="page-link">이전</span>
@@ -521,12 +521,12 @@ button[type="submit"] i {
                      end="${pagelist.endPage}">
                      <li
                         class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
-                        class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+                        class="page-link" href="<%=getEnvs%>bookRecent&pageNumber=${i}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
                   </c:forEach>
                </c:if>
                <c:if test="${pagelist.endPage < pagelist.totalPage}">
                   <li class="page-item"><a class="page-link"
-                        href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">다음</a></li>
+                        href="<%=getEnvs%>bookRecent&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">다음</a></li>
                </c:if>
                <c:if test="${pagelist.endPage >= pagelist.totalPage}">
                   <li class="page-item disabled"><span class="page-link">다음</span>
@@ -534,7 +534,7 @@ button[type="submit"] i {
                </c:if>
                <c:if test="${pagelist.endPage < pagelist.totalPage}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
+                     href="<%=getEnvs%>bookRecent&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
                </c:if>
                <c:if test="${pagelist.endPage >= pagelist.totalPage}">
                   <li class="page-item disabled"><span class="page-link">맨끝</span> 

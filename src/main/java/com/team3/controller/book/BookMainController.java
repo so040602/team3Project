@@ -23,17 +23,9 @@ public class BookMainController extends SuperClass {
             List<Book> newBooks = dao.getNewBooks();
             request.setAttribute("newBooks", newBooks);
             
-            // 인기 도서 가져오기 (평점 기준)
-            List<Book> popularBooks = dao.getPopularBooks();
-            request.setAttribute("popularBooks", popularBooks);
+           
             
-            // PICK 도서 가져오기 (추천 도서)
-            List<Book> pickBooks = dao.getPickBooks();
-            request.setAttribute("pickBooks", pickBooks);
-            
-            // 최근 검색된 도서 가져오기
-            List<Book> recentSearched = dao.getRecentSearched();
-            request.setAttribute("recentSearched", recentSearched);
+           
             
             // 페이지 이동
             super.gotoPage("book/bookMain.jsp");

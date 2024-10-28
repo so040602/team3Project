@@ -241,8 +241,8 @@ public class TeamUtility {
 		opsMap.put("bookList", "com.team3.controller.book.BookListController");
 		opsMap.put("bookDetail", "com.team3.controller.book.BookDetailController");
 		opsMap.put("bookMain", "com.team3.controller.book.BookMainController");
-		opsMap.put("bookCategory", "com.team3.controller.book.BookCategoryController");
-		opsMap.put("bookSearch", "com.team3.controller.book.BookSearchController");
+		opsMap.put("bookRaiting", "com.team3.controller.book.BookratingListController");
+		opsMap.put("bookRecent", "com.team3.controller.book.BookRecentController");
 		// big data section
 		//opsMap.put("bigCorr01","com.team3.controller.bigdata.corr01Controller");
 		
