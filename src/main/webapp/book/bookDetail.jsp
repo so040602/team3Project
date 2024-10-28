@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.team3.model.bean.Book"%>
 <%@ page import="com.team3.model.dao.BookDao"%>
 
@@ -7,226 +6,225 @@
 int bookCnt = Integer.parseInt(request.getParameter("cnt"));
 BookDao dao = new BookDao();
 Book book = dao.getDataByPk(bookCnt);
+float rating = book.getRating();
+double convertedRating = (rating / 10) * 5;
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function() {
-    const toggleButton = document.getElementById("toggleButton");
-    const description = document.getElementById("bookDescription");
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%=book.getBook_name()%></title>
 
-    toggleButton.addEventListener("click", function() {
-        description.classList.toggle("expanded");
-        toggleButton.classList.toggle("expanded");
-        toggleButton.textContent = description.classList.contains("expanded") ? "접기" : "더보기";
-    });
-});
-</script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <style>
+        /* 기본 스타일 */
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title><%=book.getBook_name()%></title>
+        .container {
+            max-width: 1400px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
 
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-	rel="stylesheet">
+        /* 책 커버 스타일 */
+        .book-cover {
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
 
-<style>
-body {
-	background-color: #f8f9fa;
-	font-family: 'Noto Sans KR', sans-serif;
-}
+        .rank-badge {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            display: inline-block;
+        }
 
-.container {
-	max-width: 1400px;
-	background-color: white;
-	padding: 30px;
-	border-radius: 10px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+        /* 책 정보 스타일 */
+        .book-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 1rem;
+        }
 
-.book-cover {
-	max-width: 100%;
-	height: auto;
-	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-	border-radius: 5px;
-}
+        .meta-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
 
-.book-title {
-	font-size: 24px;
-	font-weight: bold;
-	color: #333;
-	border-bottom: 1px solid #eee;
-	padding-bottom: 15px;
-}
+        /* 평점 스타일 */
+        .rating-stars {
+            color: #ff6b6b;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
 
-.rating-stars {
-	color: #ff6b6b;
-	font-size: 1.1rem;
-}
+        .rating-stars i {
+            margin-right: 2px;
+        }
 
-.bookdetail-info {
-	background-color: #f8f9fa;
-    padding: 30px;
-    border-radius: 12px;
-    margin: 20px 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
+        /* 책 상세 정보 영역 */
+        .bookdetail-info {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
 
-.original-price {
-	color: #666;
-	text-decoration: line-through;
-	font-size: 0.9rem;
-}
+        .book-details {
+            position: relative;
+            padding-bottom: 40px;
+        }
 
-.discount-price {
-	font-size: 1.8rem;
-	color: #E64938;
-	font-weight: bold;
-}
+        .detail-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
 
-.discount-rate {
-	color: #E64938;
-	font-weight: bold;
-	font-size: 1.2rem;
-}
+        .detail-content {
+            line-height: 1.8;
+            color: #555;
+            max-height: 200px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            word-break: keep-all;
+            position: relative;
+        }
 
-.point-info {
-	font-size: 0.9rem;
-	color: #28a745;
-}
+        .detail-content.expanded {
+            max-height: none;
+        }
 
-.action-buttons {
-	display: flex;
-	gap: 10px;
-	margin: 20px 0;
-}
+        /* 더보기 버튼 스타일 */
+        .toggle-button {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: none;
+            border: none;
+            color: #0066c0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
 
-.btn-buy {
-	background-color: #E64938;
-	color: white;
-	border: none;
-	flex: 2;
-}
+        .toggle-button:hover {
+            background-color: #f0f7ff;
+            text-decoration: underline;
+        }
 
-.btn-cart {
-	background-color: #666;
-	color: white;
-	border: none;
-	flex: 1;
-}
+        .toggle-button::after {
+            content: '';
+            display: inline-block;
+            margin-left: 5px;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid #0066c0;
+            border-bottom: 2px solid #0066c0;
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
 
-.btn-wishlist {
-	background-color: white;
-	color: #666;
-	border: 1px solid #666;
-	flex: 1;
-}
+        .toggle-button.expanded::after {
+            transform: rotate(-135deg);
+        }
 
-.book-details {
-	margin-top: 0;
-    position: relative;
-    padding-bottom: 40px;
-}
+        /* 버튼 그룹 스타일 */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
 
-.detail-header {
-	font-size: 20px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #eee;
-}
+        .action-buttons .btn {
+            flex: 1;
+            padding: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
 
-.detail-content {
-	line-height: 1.8;
-    color: #555;
-    max-height: 100px;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    margin-bottom: 10px;
-    font-size: 1rem;
-    word-break: keep-all;
-}
+        .btn-buy {
+            background-color: #E64938;
+            color: white;
+            border: none;
+            flex: 2 !important;
+        }
 
- .detail-content.expanded {
-    max-height: none;
-}
+        .btn-buy:hover {
+            background-color: #d43b2a;
+        }
 
-.toggle-button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background: none;
-    border: none;
-    color: #0066c0;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 8px 16px;
-    border-radius: 20px;
-    transition: all 0.2s ease;
-}
+        .btn-wishlist {
+            background-color: white;
+            color: #666;
+            border: 1px solid #666;
+        }
 
-.toggle-button:hover {
-    background-color: #f0f7ff;
-    text-decoration: underline;
-}
+        .btn-wishlist:hover {
+            background-color: #f8f9fa;
+            color: #333;
+        }
 
-.toggle-button::after {
-    content: '';
-    display: inline-block;
-    margin-left: 5px;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid #0066c0;
-    border-bottom: 2px solid #0066c0;
-    transform: rotate(45deg);
-    transition: transform 0.2s ease;
-}
+        .btn-cart {
+            background-color: #666;
+            color: white;
+            border: none;
+        }
 
-.toggle-button.expanded::after {
-    transform: rotate(-135deg);
-}
+        .btn-cart:hover {
+            background-color: #555;
+        }
 
-.meta-info {
-	font-size: 0.9rem;
-	color: #666;
-	margin-bottom: 10px;
-}
+        /* 반응형 스타일 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 1rem;
+            }
 
-.rank-badge {
-	background-color: #007bff;
-	color: white;
-	padding: 5px 10px;
-	border-radius: 20px;
-	font-size: 0.8rem;
-	margin-bottom: 10px;
-	display: inline-block;
-}
+            .action-buttons {
+                flex-direction: column;
+            }
 
-.detail-content {
-    line-height: 1.8;
-    color: #555;
-    max-height: 200px; /* 초기 높이 증가 */
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    margin-bottom: 20px; /* 하단 여백 증가 */
-    font-size: 1rem;
-    word-break: keep-all;
-    position: relative;
-}
-
-.detail-content.expanded {
-	max-height: none; /* 전체 높이 표시 */
-}
-</style>
+            .action-buttons .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 	<div class="container my-5">
@@ -257,20 +255,19 @@ body {
 				</div>
 
 				<div class="rating-stars mb-3">
-					<%
-					float rating = book.getRating();
-					for (int i = 1; i <= 10; i++) {
-						if (i <= rating) {
-							out.print("<i class='fas fa-star'></i>");
-						} else if (i - rating < 1) {
-							out.print("<i class='fas fa-star-half-alt'></i>");
-						} else {
-							out.print("<i class='far fa-star'></i>");
-						}
-					}
-					%>
-					<span class="ms-2"><%=rating%>/10</span>
-				</div>
+    <%
+    for (int i = 1; i <= 5; i++) {
+        if (i <= convertedRating) {
+            out.print("<i class='fas fa-star'></i>");
+        } else if (i - convertedRating < 1) {
+            out.print("<i class='fas fa-star-half-alt'></i>");
+        } else {
+            out.print("<i class='far fa-star'></i>");
+        }
+    }
+    %>
+    <span class="ms-2"><%=String.format("%.1f", rating)%></span>
+</div>
 
 				<div class="bookdetail-info">
 					<div class="book-details">
@@ -285,12 +282,12 @@ body {
 				<div class="action-buttons">
 					<button class="btn btn-lg btn-buy">
 						<i class="fas fa-book"></i> 대출
-					</button>			
+					</button>
 					<button class="btn btn-lg btn-wishlist">
 						<i class="fas fa-calendar-check"></i> 대출 예약
 					</button>
 					<button class="btn btn-lg btn-cart">
-						<i class="fas fa-bookmark"></i> 북마크 
+						<i class="fas fa-bookmark"></i> 북마크
 					</button>
 				</div>
 
@@ -299,27 +296,33 @@ body {
 		</div>
 	</div>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script>
-        // 장바구니 버튼 클릭 이벤트
-        document.querySelector('.btn-cart').addEventListener('click', function() {
-            alert('장바구니에 추가되었습니다.');
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // DOM 로드 이벤트와 버튼 이벤트를 하나의 스크립트로 통합
+        document.addEventListener("DOMContentLoaded", function() {
+            // 더보기 버튼 기능
+            const toggleButton = document.getElementById("toggleButton");
+            const description = document.getElementById("bookDescription");
+
+            toggleButton.addEventListener("click", function() {
+                description.classList.toggle("expanded");
+                toggleButton.classList.toggle("expanded");
+                toggleButton.textContent = description.classList.contains("expanded") ? "접기" : "더보기";
+            });
+
+            // 버튼 클릭 이벤트
+            document.querySelector('.btn-cart').addEventListener('click', function() {
+                alert('북마크에 추가되었습니다.');
+            });
+            
+            document.querySelector('.btn-wishlist').addEventListener('click', function() {
+                alert('대출 예약이 완료되었습니다.');
+            });
+            
+            document.querySelector('.btn-buy').addEventListener('click', function() {
+                location.href = '<%=request.getContextPath()%>/order/orderForm.jsp?cnt=<%=bookCnt%>';
+            });
         });
-        
-        // 찜하기 버튼 클릭 이벤트
-        document.querySelector('.btn-wishlist').addEventListener('click', function() {
-            alert('찜 목록에 추가되었습니다.');
-        });
-        
-        // 바로구매 버튼 클릭 이벤트
-        document.querySelector('.btn-buy').addEventListener('click', function() {
-            location.href = '<%=request.getContextPath()%>
-		/order/orderForm.jsp?cnt='
-									+
-	<%=bookCnt%>
-		;
-						});
-	</script>
+    </script>
 </body>
 </html>
