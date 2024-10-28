@@ -1,315 +1,549 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./../common/common.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style type="text/css">
-	body {
-		font-family: 'Roboto', 'Arial', sans-serif;
-		background-color: #f3f3f3;
-		color: #333;
-	}
-	
-	.container {
-		max-width: 1400px;
-		margin: 40px auto;
-		padding: 20px;
-		background-color: #ffffff;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-		position: relative; /* 상대 위치 설정 */
-	}
-	
-	.pagination {
-		display: flex;
-		justify-content: center;
-		list-style-type: none;
-		padding: 0;
-		margin-top: 30px;
-		position: absolute; /* 절대 위치 설정 */
-		bottom: 0; /* 맨 아래 위치 */
-		left: 50%; /* 수평 중앙 */
-		transform: translateX(-50%); /* 중앙 정렬 */
-	}
-	
-	h2 {
-		color: #333;
-		text-align: left;
-		margin-bottom: 30px;
-		font-size: 24px;
-		border-bottom: 1px solid #e1e1e1;
-		padding-bottom: 10px;
-	}
-	
-	.book-list {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		gap: 20px;
-		margin-bottom: 60px; /* 아래쪽 여백 추가 */
-	}
-	
-	.book-item {
-		display: flex;
-		flex-direction: column;
-		border: none;
-		border-radius: 0;
-		padding: 10px;
-		transition: transform 0.2s;
-		background-color: #fff;
-	}
-	
-	.book-item:hover {
-		transform: translateY(-5px);
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
-	
-	.book-image {
-		width: 100%;
-		height: 250px;
-		object-fit: cover;
-		margin-bottom: 10px;
-	}
-	
-	.book-details {
-		flex-grow: 1;
-	}
-	
-	.book-title {
-		font-weight: bold;
-		font-size: 1em;
-		color: #0066c0;
-		margin-bottom: 5px;
-		line-height: 1.2;
-	}
-	
-	.book-title a {
-		text-decoration: none;
-		color: inherit;
-	}
-	
-	.book-title a:hover {
-		text-decoration: underline;
-	}
-	
-	.book-category {
-		font-size: 0.8em;
-		color: #555;
-		margin-bottom: 5px;
-	}
-	
-	.book-description {
-		font-size: 0.9em;
-		color: #333;
-		margin-bottom: 10px;
-	}
-	
-	.button-group {
-		display: flex;
-		justify-content: space-between;
-	}
-	
-	.button-group button {
-		flex: 1;
-		padding: 8px 12px;
-		border: none;
-		border-radius: 3px;
-		color: white;
-		cursor: pointer;
-		transition: background-color 0.2s;
-		font-size: 0.9em;
-	}
-	
-	.reserve-button {
-		background-color: #f0c14b;
-		color: #111;
-		margin-right: 5px;
-	}
-	
-	.reserve-button:hover {
-		background-color: #ddb347;
-	}
-	
-	.borrow-button {
-		background-color: #4CAF50;
-	}
-	
-	.borrow-button:hover {
-		background-color: #45a049;
-	}
-	
-	
-	.page-item {
-		margin: 0 5px;
-	}
-	
-	.page-item a {
-		color: #0066c0;
-		padding: 8px 12px;
-		border: 1px solid #ddd;
-		text-decoration: none;
-		font-size: 0.8em;
-	}
-	
-	.page-item a:hover {
-		background-color: #f0f0f0;
-	}
-	
-	.page-item.active a {
-		background-color: #0066c0;
-		color: white;
-	}
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
 
+.container {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    position: relative;
+    border-radius: 15px;
+}
+
+#categoryForm {
+    margin-bottom: 20px;
+}
+
+#categoryForm .category-select {
+    padding: 12px 20px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: white;
+    cursor: pointer;
+    min-width: 200px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px;
+    padding-right: 45px;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: all 0.3s ease;
+}
+
+#categoryForm .category-select:hover {
+    border-color: #0066c0;
+}
+
+/* 검색 폼 스타일 */
+#bookSearch {
+    display: flex;
+    align-items: stretch;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.search-wrapper {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+}
+
+.search-wrapper select {
+    padding: 10px 15px;
+    border: none;
+    background-color: transparent;
+    font-size: 15px;
+    cursor: pointer;
+    min-width: 120px;
+    color: #495057;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 12px;
+    padding-right: 25px;
+}
+
+.search-wrapper input[type="text"] {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    outline: none;
+    min-width: 200px;
+}
+
+button[type="submit"] {
+    padding: 12px 25px;
+    background: #0066c0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+button[type="submit"]:hover {
+    background: #004d8c;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .search-wrapper {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .search-wrapper select,
+    .search-wrapper input[type="text"] {
+        width: 100%;
+    }
+
+    #bookSearch {
+        flex-direction: column;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+h2 {
+    color: #333;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e1e1e1;
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 80px;
+}
+
+.book-item {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 0;
+}
+
+.book-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+}
+
+.book-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+
+.book-details {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.book-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.book-title a {
+    text-decoration: none;
+    color: #2c3e50;
+    transition: color 0.2s;
+}
+
+.book-title a:hover {
+    color: #0066c0;
+}
+
+.book-category {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.book-description {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    padding: 0 20px 20px 20px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.reserve-button {
+    background-color: #fff;
+    color: #0066c0;
+    border: 1px solid #0066c0 !important;
+}
+
+.reserve-button:hover {
+    background-color: #f0f7ff;
+}
+
+.borrow-button {
+    background-color: #0066c0;
+    color: white;
+}
+
+.borrow-button:hover {
+    background-color: #004d8c;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 20px 0;
+    margin-top: 30px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.page-item {
+    margin: 0 3px;
+}
+
+.page-link {
+    color: #0066c0;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.page-link:hover {
+    background-color: #f8f9fa;
+    border-color: #0066c0;
+}
+
+.page-item.active .page-link {
+    background-color: #0066c0;
+    color: white;
+    border-color: #0066c0;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    #bookSearch {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.search-wrapper {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    align-items: center;
+}
+
+#categorySelect {
+    padding: 12px 20px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: white;
+    cursor: pointer;
+    min-width: 150px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 15px;
+    padding-right: 45px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 15px;
+    min-width: 200px;
+}
+
+button[type="submit"] {
+    padding: 12px 25px;
+    background: #0066c0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button[type="submit"] i {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    #bookSearch {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .search-wrapper {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #categorySelect {
+        width: 100%;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        justify-content: center;
+    }
+}
 </style>
 </head>
 <body>
-	<div class="container">
-		<h2>도서 목록</h2>
-		<form id="bookSearch" action="<%=getEnvs%>bookSearch" method="POST">
-			<span>
-				<select id="categorySelect" name="category">
-					<option value="전체보기">전체보기</option>
-					<c:forEach var="category" items="${requestScope.category_List}">
-						<option value="${category}" 
-							<c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
-							${category}
-						</option>
-					</c:forEach>
-				</select>				
-			</span>
-			<input type="text" name="keyword" placeholder="여기에 찾으실 도서를 입력하세요.">
-			<button type="submit">검색</button>
-		</form>
-		<form id="categoryForm" action="<%=getEnvs%>bookCategory" method="POST">
-			<select id="categorySelect" name="category" onchange="document.getElementById('categoryForm').submit()">
-				<option value="전체보기">전체보기</option>
-				<c:forEach var="category" items="${requestScope.category_List}">
-					<option value="${category}" 
-						<c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
-						${category}
-					</option>
-				</c:forEach>
-			</select>
-		</form>
+<div class="container">
+      <h2>도서 목록</h2>
 
-		<div class="book-list" id="dataContainer">
-			<c:forEach var="bean" items="${requestScope.datalist}">
-				<div class="book-item">
-					<img class="book-image" src="${bean.img}" alt="${bean.book_name}">
-					<div class="book-details">
-						<div class="book-title">
-							<a href="<%=getEnvs%>bookDetail&cnt=${bean.cnt}">${bean.book_name}</a>
-						</div>
-						<div class="book-category">카테고리: ${bean.category}</div>
-						<div class="book-description">
-							<c:choose>
-								<c:when test="${fn:length(bean.description) > 50}">
+    <!-- 통합 검색 폼 -->
+    <form id="bookSearch" action="<%=getEnvs%>bookList" method="POST">
+        <div class="search-wrapper">
+            <select name="category">
+                <option value="전체보기">전체</option>
+                <c:forEach var="category" items="${requestScope.category_List}">
+                    <option value="${category}" 
+                        <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
+                        ${category}
+                    </option>
+                </c:forEach>
+            </select>
+            <input type="text" name="keyword" placeholder="도서명, 저자, 출판사를 검색해보세요">
+        </div>
+        <button type="submit">
+            <i class="fas fa-search"></i>
+            검색
+        </button>
+    </form>
+    
+    
+    <!-- 독립적인 카테고리 선택 -->
+    <form id="categoryForm" action="<%=getEnvs%>bookList" method="POST">
+        <select class="category-select" name="category" onchange="document.getElementById('categoryForm').submit()">
+            <option value="전체보기">전체 카테고리</option>
+            <c:forEach var="category" items="${requestScope.category_List}">
+                <option value="${category}" 
+                    <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
+                    ${category}
+                </option>
+            </c:forEach>
+        </select>
+    </form>
+      
+
+      <div class="book-list" id="dataContainer">
+         <c:forEach var="bean" items="${requestScope.datalist}">
+            <div class="book-item">
+               <img class="book-image" src="${bean.img}" alt="${bean.book_name}">
+               <div class="book-details">
+                  <div class="book-title">
+                     <a href="<%=getEnvs%>bookDetail&cnt=${bean.cnt}">${bean.book_name}</a>
+                  </div>
+                  <div class="book-category">카테고리: ${bean.category}</div>
+                  <div class="book-description">
+                     <c:choose>
+                        <c:when test="${fn:length(bean.description) > 50}">
                                     ${fn:substring(bean.description, 0, 50)}...
                                 </c:when>
-								<c:otherwise>
+                        <c:otherwise>
                                     ${bean.description}
                                 </c:otherwise>
-							</c:choose>
-						</div>
-					</div>
-					<div class="button-group">
-						<button class="reserve-button">대출 예약</button>
-						<button class="borrow-button">대출하기</button>
-					</div>
-				</div>
-			</c:forEach>
-			
-			<ul class="pagination justify-content-center">
-				<c:if test="${requestScope.keyword == ''}">
-					<c:if test="${pagelist.beginPage > 10}">
-						<li class="page-item"><a class="page-link"
-							href="<%=getEnvs%>bookList&pageNumber=1&currCategory=${requestScope.selectedCategory}">처음</a></li>
-					</c:if>
-					<c:if test="${pagelist.beginPage <= 10}">
-						<li class="page-item"><span class="page-link disabled">처음</span>
-						</li>
-					</c:if>
-					<c:if test="${pagelist.beginPage > 1}">
-						<li class="page-item"><a class="page-link"
-							href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}">이전</a></li>
-					</c:if>
-					<c:if test="${pagelist.beginPage <= 1}">
-						<li class="page-item disabled"><span class="page-link">이전</span>
-						</li>
-					</c:if>
-					<c:if test="${pagelist.beginPage <= pagelist.totalPage}">
-						<c:forEach var="i" begin="${pagelist.beginPage}"
-							end="${pagelist.endPage}">
-							<li
-								class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
-								class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
-						</c:forEach>
-					</c:if>
-					<c:if test="${pagelist.endPage < pagelist.totalPage}">
-						<li class="page-item"><a class="page-link"
-								href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}">다음</a></li>
-					</c:if>
-					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
-						<li class="page-item disabled"><span class="page-link">다음</span>
-						</li>
-					</c:if>
-					<c:if test="${pagelist.endPage < pagelist.totalPage}">
-						<li class="page-item"><a class="page-link"
-							href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
-					</c:if>
-					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
-						<li class="page-item disabled"><span class="page-link">맨끝</span>
-						</li>
-					</c:if>
-				</c:if>
-				<c:if test="${requestScope.keyword != ''}">
-					<c:if test="${pagelist.beginPage > 10}">
-						<li class="page-item"><a class="page-link"
-							href="<%=getEnvs%>bookList&pageNumber=1&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">처음</a></li>
-					</c:if>
-					<c:if test="${pagelist.beginPage <= 10}">
-						<li class="page-item"><span class="page-link disabled">처음</span>
-						</li>
-					</c:if>
-					<c:if test="${pagelist.beginPage > 1}">
-						<li class="page-item"><a class="page-link"
-							href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">이전</a></li>
-					</c:if>
-					<c:if test="${pagelist.beginPage <= 1}">
-						<li class="page-item disabled"><span class="page-link">이전</span>
-						</li>
-					</c:if>
-					<c:if test="${pagelist.beginPage <= pagelist.totalPage}">
-						<c:forEach var="i" begin="${pagelist.beginPage}"
-							end="${pagelist.endPage}">
-							<li
-								class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
-								class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
-						</c:forEach>
-					</c:if>
-					<c:if test="${pagelist.endPage < pagelist.totalPage}">
-						<li class="page-item"><a class="page-link"
-								href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">다음</a></li>
-					</c:if>
-					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
-						<li class="page-item disabled"><span class="page-link">다음</span>
-						</li>
-					</c:if>
-					<c:if test="${pagelist.endPage < pagelist.totalPage}">
-						<li class="page-item"><a class="page-link"
-							href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
-					</c:if>
-					<c:if test="${pagelist.endPage >= pagelist.totalPage}">
-						<li class="page-item disabled"><span class="page-link">맨끝</span> 
-						</li>
-					</c:if>
-				</c:if>
-			</ul>			
-		</div>
-	</div>
+                     </c:choose>
+                  </div>
+               </div>
+               <div class="button-group">
+                  <button class="reserve-button">대출 예약</button>
+                  <button class="borrow-button">대출하기</button>
+               </div>
+            </div>
+         </c:forEach>
+         
+         <ul class="pagination justify-content-center">
+            <c:if test="${requestScope.keyword == ''}">
+               <c:if test="${pagelist.beginPage > 10}">
+                  <li class="page-item"><a class="page-link"
+                     href="<%=getEnvs%>bookList&pageNumber=1&currCategory=${requestScope.selectedCategory}">처음</a></li>
+               </c:if>
+               <c:if test="${pagelist.beginPage <= 10}">
+                  <li class="page-item"><span class="page-link disabled">처음</span>
+                  </li>
+               </c:if>
+               <c:if test="${pagelist.beginPage > 1}">
+                  <li class="page-item"><a class="page-link"
+                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}">이전</a></li>
+               </c:if>
+               <c:if test="${pagelist.beginPage <= 1}">
+                  <li class="page-item disabled"><span class="page-link">이전</span>
+                  </li>
+               </c:if>
+               <c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+                  <c:forEach var="i" begin="${pagelist.beginPage}"
+                     end="${pagelist.endPage}">
+                     <li
+                        class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+                        class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+                  </c:forEach>
+               </c:if>
+               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+                  <li class="page-item"><a class="page-link"
+                        href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}">다음</a></li>
+               </c:if>
+               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+                  <li class="page-item disabled"><span class="page-link">다음</span>
+                  </li>
+               </c:if>
+               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+                  <li class="page-item"><a class="page-link"
+                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
+               </c:if>
+               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+                  <li class="page-item disabled"><span class="page-link">맨끝</span>
+                  </li>
+               </c:if>
+            </c:if>
+            <c:if test="${requestScope.keyword != ''}">
+               <c:if test="${pagelist.beginPage > 10}">
+                  <li class="page-item"><a class="page-link"
+                     href="<%=getEnvs%>bookList&pageNumber=1&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">처음</a></li>
+               </c:if>
+               <c:if test="${pagelist.beginPage <= 10}">
+                  <li class="page-item"><span class="page-link disabled">처음</span>
+                  </li>
+               </c:if>
+               <c:if test="${pagelist.beginPage > 1}">
+                  <li class="page-item"><a class="page-link"
+                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">이전</a></li>
+               </c:if>
+               <c:if test="${pagelist.beginPage <= 1}">
+                  <li class="page-item disabled"><span class="page-link">이전</span>
+                  </li>
+               </c:if>
+               <c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+                  <c:forEach var="i" begin="${pagelist.beginPage}"
+                     end="${pagelist.endPage}">
+                     <li
+                        class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+                        class="page-link" href="<%=getEnvs%>bookList&pageNumber=${i}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+                  </c:forEach>
+               </c:if>
+               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+                  <li class="page-item"><a class="page-link"
+                        href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">다음</a></li>
+               </c:if>
+               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+                  <li class="page-item disabled"><span class="page-link">다음</span>
+                  </li>
+               </c:if>
+               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+                  <li class="page-item"><a class="page-link"
+                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
+               </c:if>
+               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+                  <li class="page-item disabled"><span class="page-link">맨끝</span> 
+                  </li>
+               </c:if>
+            </c:if>
+         </ul>         
+      </div>
+   </div>
 </body>
 </html> 
