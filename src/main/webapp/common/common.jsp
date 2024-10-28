@@ -176,8 +176,6 @@
 		<%-- 사용자에게 보여 주었던 Alert Box를 세션에서 제거하도록 합니다. --%>
 		<c:remove var="alertMessage" scope="session"/>	
 	</c:if>	 
-</body>
-</html>
 
 
 

@@ -48,7 +48,6 @@ public class BookCategoryController extends SuperClass{
 		
 		if(bookList.size() == 0 ) {System.out.println("실패하였습니다.");}
 		
-		request.setAttribute("source", "BookCategoryController");
 		request.setAttribute("selectedCategory", mode);
 		request.setAttribute("category_List", category_List);
 		request.setAttribute("datalist", bookList);	

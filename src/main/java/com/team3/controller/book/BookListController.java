@@ -59,5 +59,5 @@ public class BookListController extends SuperClass {
 				
 		super.gotoPage("book/bookList.jsp");  
 	}
-
+	
 }

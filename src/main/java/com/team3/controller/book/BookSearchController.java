@@ -44,7 +44,6 @@ public class BookSearchController extends SuperClass{
 		
 		List<Book> bookList = dao.getCategorySearch(pageInfo ,text);
 		
-		request.setAttribute("source", "BookSearchController");
 		request.setAttribute("keyword", text);
 		request.setAttribute("selectedCategory", category);
 		request.setAttribute("category_List", category_List);
