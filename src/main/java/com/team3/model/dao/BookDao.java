@@ -218,7 +218,7 @@ public class BookDao extends SuperDao {
 
     public List<Book> getBestSellers() throws Exception {
         List<Book> lists = new ArrayList<>();
-        String sql = "SELECT * FROM booklist WHERE rating >= 9.0 " +
+        String sql = "SELECT * FROM booklist " +
                      "ORDER BY rating DESC, cnt DESC LIMIT 10";
         PreparedStatement pstmt = null;
         ResultSet rs = null;

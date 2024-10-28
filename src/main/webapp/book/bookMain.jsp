@@ -440,9 +440,11 @@ String getEnvs = appName + mappingName + "?opsmode=";
 			<ul>
 				<li><a href="#"> <i class="fas fa-bullhorn"></i> 공지사항
 				</a></li>
-				<li><a href="#"> <i class="fas fa-crown"></i> 베스트 도서
+				<li><a href="<%=getEnvs%>bookList"> <i class="fas fa-book"></i> 전체 도서
 				</a></li>
-				<li><a href="#"> <i class="fas fa-book-open"></i> 신간 도서
+				<li><a href="<%=getEnvs%>bookRaiting"> <i class="fas fa-crown"></i> 베스트 도서
+				</a></li>
+				<li><a href="<%=getEnvs%>bookRecent"> <i class="fas fa-book-open"></i> 신간 도서
 				</a></li>
 				<li><a href="#"> <i class="fas fa-pen-fancy"></i> 서평 & 추천
 				</a></li>
@@ -466,7 +468,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
 		<section class="book-section">
 			<div class="section-header">
 				<h2>베스트 도서</h2>
-				<a href="<%=getEnvs%>bookList">더보기 ></a>
+				<a href="<%=getEnvs%>bookRaiting">더보기 ></a>
 			</div>
 
 			<div class="book-grid">
@@ -489,7 +491,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
 		<section class="book-section">
 			<div class="section-header">
 				<h2>신간 도서</h2>
-				<a href="<%=getEnvs%>bookList">더보기 ></a>
+				<a href="<%=getEnvs%>bookRecent">더보기 ></a>
 			</div>
 
 			<div class="book-grid">
