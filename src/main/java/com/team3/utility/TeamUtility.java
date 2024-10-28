@@ -242,7 +242,7 @@ public class TeamUtility {
 		opsMap.put("bookDetail", "com.team3.controller.book.BookDetailController");
 		opsMap.put("bookMain", "com.team3.controller.book.BookMainController");
 		opsMap.put("bookCategory", "com.team3.controller.book.BookCategoryController");
-		opsMap.put("bookSearch", "com.team3.controller.book.BookSearchController");
+		opsMap.put("bookSearch", "com.team3.controller.book.BookSearchController");	
 		// big data section
 		//opsMap.put("bigCorr01","com.team3.controller.bigdata.corr01Controller");
 		

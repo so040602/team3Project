@@ -279,37 +279,11 @@ public class BookDao extends SuperDao {
             }
         }
         
-        return lists; // 베스트셀러 도서 목록 반환
+        return lists; // 신간 도서 목록 반환
     }
 
-    public List<Book> getPopularBooks() throws Exception {
-        String sql = "SELECT * FROM booklist " +
-                     "ORDER BY rating DESC LIMIT 12";
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
-    }
 
-    public List<Book> getPickBooks() throws Exception {
-        String sql = "SELECT * FROM booklist WHERE rating >= 4.5 " +
-                     "ORDER BY date DESC LIMIT 12";
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
-    }
-
-    public List<Book> getRecentSearched() throws Exception {
-        String sql = "SELECT * FROM booklist " +
-                     "WHERE date >= DATE_SUB(NOW(), INTERVAL 7 DAY) " +
-                     "ORDER BY cnt DESC LIMIT 12";
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
-    }
-
+   
     public List<Book> searchBooks(String keyword, String category) throws Exception {
         String sql = "SELECT * FROM booklist WHERE 1=1 ";
         if (keyword != null && !keyword.trim().isEmpty()) {

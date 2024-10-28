@@ -153,7 +153,7 @@
         
         .book-image {
             width: 100%;
-            height: 250px;
+            height: 200px;
             object-fit: cover;
         }
         
@@ -172,8 +172,8 @@
             font-weight: bold;
         }
         
-        .book-rating {
-            color: #ffd700;
+        .book-subinfo {
+            color: #ff0000;;
             margin-top: 5px;
         }
         
@@ -317,9 +317,10 @@
                         <div class="book-info">
                             <h3 class="book-title">${book.book_name}</h3>
                             <p class="book-person">${book.person_name}</p>
-                            <div class="book-rating">
-                                <span>★</span>
-                                <span>${book.rating}</span>
+                            <div class="book-subinfo">                               
+                                <span>${book.publisher}</span>                             
+                                <span>|</span>
+                               <span>${book.date}</span>
                             </div>
                         </div>
                     </div>
@@ -341,9 +342,10 @@
                         <div class="book-info">
                             <h3 class="book-title">${book.book_name}</h3>
                             <p class="book-person">${book.person_name}</p>
-                            <div class="book-rating">
-                                <span>★</span>
-                                <span>${book.rating}</span>
+                            <div class="book-subinfo">                               
+                                <span>${book.publisher}</span>                             
+                                <span>|</span>
+                               <span>${book.date}</span>
                             </div>
                         </div>
                     </div>
