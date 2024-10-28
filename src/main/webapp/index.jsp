@@ -51,7 +51,7 @@
 		// 바닐라 Ajax 코드
         function sendData() {
             const xhr = new XMLHttpRequest();
-            const url = "AjaxFaceApi"; // 요청할 Servlet URL
+            const url = "AjaxFaceApi"; // 중요! 요청할 Servlet URL
             const data = "name=" + document.getElementById("testName").value;
 
             xhr.open("POST", url, true);
