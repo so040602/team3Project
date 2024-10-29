@@ -21,7 +21,7 @@ public class BookNoticeController extends SuperClass {
             request.setAttribute("notices", notices);
             
             // 페이지 이동
-            super.gotoPage("book/notice.jsp");
+            super.gotoPage("notice/noticeMain.jsp");
             
         } catch (Exception e) {
             e.printStackTrace();
