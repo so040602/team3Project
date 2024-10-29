@@ -261,10 +261,11 @@ button[type="submit"]:hover {
     left: 50%;
     transform: translateX(-50%);
     min-width: max-content;
+    flex-wrap: wrap; 
 }
 
 .page-item {
-    margin: 0 4px;
+    margin: 4px;
     display: inline-flex;
     align-items: center;
 }
@@ -339,6 +340,7 @@ button[type="submit"]:hover {
         transform: none;
         margin: 20px 0;
         flex-wrap: wrap;
+        justify-content: center;
     }
 }
 </style>
@@ -371,7 +373,7 @@ button[type="submit"]:hover {
     <!-- 독립적인 카테고리 선택 -->
     <form id="categoryForm" action="<%=getEnvs%>bookList" method="POST">
         <select class="category-select" name="category" onchange="document.getElementById('categoryForm').submit()">
-            <option value="전체보기">전체 카테고리</option>
+            <option value="전체보기">전체</option>
             <c:forEach var="category" items="${requestScope.category_List}">
                 <option value="${category}" 
                     <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
@@ -409,7 +411,7 @@ button[type="submit"]:hover {
             </div>
          </c:forEach>
          
-         <ul class="pagination justify-content-center">
+         <ul class="pagination">
             <c:if test="${requestScope.keyword == ''}">
                <c:if test="${pagelist.beginPage > 10}">
                   <li class="page-item"><a class="page-link"

@@ -3,7 +3,7 @@ package com.team3.controller.board;
 import com.team3.controller.HomeController;
 import com.team3.controller.SuperClass;
 import com.team3.model.bean.Board;
-import com.team3.model.dao.BoardDao;
+import com.team3.model.dao.ReviewDao;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +32,7 @@ public class BoardInsertController extends SuperClass {
 		bean.setAttach03((String)request.getAttribute("attach03"));
 		bean.setAttach04((String)request.getAttribute("attach04"));
 		
-		BoardDao dao = new BoardDao() ;
+		ReviewDao dao = new ReviewDao() ;
 		int cnt = -999999;
 		try {
 			cnt = dao.insertBoardData(bean);	

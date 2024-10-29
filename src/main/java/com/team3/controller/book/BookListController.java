@@ -7,7 +7,7 @@ import com.team3.controller.SuperClass;
 import com.team3.model.bean.Book;
 import com.team3.model.bean.Paging;
 import com.team3.model.bean.ResponseData;
-import com.team3.model.dao.BoardDao;
+import com.team3.model.dao.ReviewDao;
 import com.team3.model.dao.BookDao;
 
 import jakarta.servlet.http.HttpServletRequest;

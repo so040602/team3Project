@@ -2,7 +2,7 @@ package com.team3.aibbs;
 
 import com.team3.controller.SuperClass;
 import com.team3.model.bean.Board;
-import com.team3.model.dao.BoardDao;
+import com.team3.model.dao.ReviewDao;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ public class AibbsUpdateController extends SuperClass{
 		super.doGet(request, response);
 		// 수정할 게시물 번호를 우선 챙깁니다.
 		int brdidx = Integer.parseInt(request.getParameter("brdidx"));
-		BoardDao dao = new BoardDao() ;
+		ReviewDao dao = new ReviewDao() ;
 		Board bean = dao.getBoardDataByPk(brdidx);
 		request.setAttribute("bean", bean); 
 		
@@ -38,12 +38,12 @@ public class AibbsUpdateController extends SuperClass{
 		bean.setAttach03((String)request.getAttribute("attach03"));
 		bean.setAttach04((String)request.getAttribute("attach04"));
 		
-		BoardDao dao = new BoardDao() ;
-		int book_idx = -999999;
+		ReviewDao dao = new ReviewDao() ;
+		int cnt = -999999;
 		try {
-			book_idx = dao.updateBoardData(bean);	
+			cnt = dao.updateBoardData(bean);	
 			
-			if(book_idx == -999999) { // 등록 실패
+			if(cnt == -999999) { // 등록 실패
 				new AibbsUpdateController().doGet(request, response);
 				
 			} else { // 성공
