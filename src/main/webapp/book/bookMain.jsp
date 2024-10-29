@@ -273,7 +273,7 @@
     <div class="container">
         <header class="header">
             <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-                <a href="#" class="logo">모두의 도서관</a>
+                <a href="<%=getEnvs%>bookMain" class="logo">모두의 도서관</a>
                 <div style="display: flex; gap: 20px;">
                     <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">로그인</i></a>
                     <a href="#"><i class="fas fa-sign-in-alt" style="font-size: 15px;">회원가입</i></a>
@@ -289,8 +289,8 @@
         <nav class="nav">
             <ul>
                <li><a href="#">공지사항</a></li>
-                <li><a href="#">베스트 도서</a></li>
-                <li><a href="#">신간 도서</a></li>   
+                <li><a href="<%=getEnvs%>bookRaiting">베스트 도서</a></li>
+                <li><a href="<%=getEnvs%>bookRecent">신간 도서</a></li>   
                 <li><a href="#">서평 & 추천</a></li>
                 <li><a href="#">대출 현황</a></li>
       

@@ -393,7 +393,7 @@ button[type="submit"] i {
 </head>
 <body>
 <div class="container">
-      <h2>도서 목록</h2>
+      <h2>베스트 도서 목록</h2>
 
     <!-- 통합 검색 폼 -->
     <form id="bookSearch" action="<%=getEnvs%>bookRaiting" method="POST">
