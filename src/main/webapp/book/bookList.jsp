@@ -409,7 +409,7 @@ button[type="submit"]:hover {
             </div>
          </c:forEach>
          
-         <ul class="pagination justify-content-center">
+         <ul class="pagination">
             <c:if test="${requestScope.keyword == ''}">
                <c:if test="${pagelist.beginPage > 10}">
                   <li class="page-item"><a class="page-link"
