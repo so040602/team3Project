@@ -16,7 +16,7 @@ public class BookDao extends SuperDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) as mycnt from booklist";
+		String sql = "select count(*) as mybook_idx from booklist";
 		boolean bool = mode == null || mode.equals("all");
 		if(!bool) {
 			sql += " where category = ?";
@@ -31,7 +31,7 @@ public class BookDao extends SuperDao {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				totalcount = rs.getInt("mycnt");
+				totalcount = rs.getInt("mybook_idx");
 			}
 			
 		} catch (Exception ex) {
@@ -56,9 +56,9 @@ public class BookDao extends SuperDao {
 		String keyword = pageInfo.getKeyword();
         boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");
         boolean bool1 = pageInfo.equals(null) || pageInfo.equals("null") || keyword.equals("");
-		String sql = " SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description";
-		sql += " FROM (SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description,";
-		sql += " ROW_NUMBER() OVER (ORDER BY cnt ASC) AS ranking";
+		String sql = " SELECT book_idx, book_name, price, category, rating, date, person_name , publisher, img, description";
+		sql += " FROM (SELECT book_idx, book_name, price, category, rating, date, person_name , publisher, img, description,";
+		sql += " ROW_NUMBER() OVER (ORDER BY book_idx ASC) AS ranking";
 		sql += " FROM booklist";
 		if(!bool) {
 			sql += " WHERE category = ?";
@@ -142,7 +142,7 @@ public class BookDao extends SuperDao {
 			if(descrip == null) {
 				descrip = "";
 			}			
-			bean.setCnt(rs.getInt("cnt"));
+			bean.setbook_idx(rs.getInt("book_idx"));
             bean.setBook_name(rs.getString("book_name"));
 			bean.setPrice(price);
 			bean.setCategory(rs.getString("category"));
@@ -158,15 +158,15 @@ public class BookDao extends SuperDao {
         return bean;
     }
 
-    public Book getDataByPk(int cnt) {
+    public Book getDataByPk(int book_idx) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;		
-        String sql = "SELECT * FROM booklist WHERE cnt = ?";
+        String sql = "SELECT * FROM booklist WHERE book_idx = ?";
         Book bean = null;
         try {
             conn = super.getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, cnt);
+            pstmt.setInt(1, book_idx);
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 bean = getBookBeanData(rs);
@@ -199,7 +199,7 @@ public class BookDao extends SuperDao {
 			if(descrip == null) {
 				descrip = "";
 			}			
-			bean.setCnt(rs.getInt("cnt"));
+			bean.setbook_idx(rs.getInt("book_idx"));
             bean.setBook_name(rs.getString("book_name"));
 			bean.setPrice(price);
 			bean.setCategory(rs.getString("category"));
@@ -219,7 +219,7 @@ public class BookDao extends SuperDao {
     public List<Book> getBestSellers() throws Exception {
         List<Book> lists = new ArrayList<>();
         String sql = "SELECT * FROM booklist " +
-                     "ORDER BY rating DESC, cnt DESC LIMIT 10";
+                     "ORDER BY rating DESC, book_idx DESC LIMIT 10";
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -292,7 +292,7 @@ public class BookDao extends SuperDao {
         if (category != null && !category.trim().isEmpty()) {
             sql += "AND category = ? ";
         }
-        sql += "ORDER BY cnt DESC";
+        sql += "ORDER BY book_idx DESC";
 
         List<Book> lists = new ArrayList<>();
         // Logic remains the same...
@@ -344,9 +344,9 @@ public class BookDao extends SuperDao {
 		String mode = pageInfo.getMode() ;
         boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");				
 		
-        String sql = "SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, DESCRIPTION";
-		sql +=" FROM(SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, DESCRIPTION,";
-		sql +=" ROW_NUMBER() OVER (ORDER BY cnt ASC) AS ranking";
+        String sql = "SELECT book_idx, book_name, price, category, rating, date, person_name , publisher, img, DESCRIPTION";
+		sql +=" FROM(SELECT book_idx, book_name, price, category, rating, date, person_name , publisher, img, DESCRIPTION,";
+		sql +=" ROW_NUMBER() OVER (ORDER BY book_idx ASC) AS ranking";
 		sql +=" FROM booklist";
 		if(!bool) {
 			sql += " WHERE category = ? AND book_name LIKE ?";
@@ -404,7 +404,7 @@ public class BookDao extends SuperDao {
 		ResultSet rs = null;
 		int tCount = 0;
 		boolean bool = category == null || category.equals("all");
-		String sql = "select count(*) AS cnt";
+		String sql = "select count(*) AS book_idx";
 		sql += " From booklist";
 		if(!bool) {
 			sql += " where category = ? AND book_name LIKE ?";
@@ -426,7 +426,7 @@ public class BookDao extends SuperDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				tCount = rs.getInt("cnt");
+				tCount = rs.getInt("book_idx");
 			}
 			
 		} catch (Exception e) {
@@ -451,8 +451,8 @@ public class BookDao extends SuperDao {
 		String keyword = pageInfo.getKeyword();
         boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");
         boolean bool1 = pageInfo.equals(null) || pageInfo.equals("null") || keyword.equals("");
-		String sql = " SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description";
-		sql += " FROM (SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description,";
+		String sql = " SELECT book_idx, book_name, price, category, rating, date, person_name , publisher, img, description";
+		sql += " FROM (SELECT book_idx, book_name, price, category, rating, date, person_name , publisher, img, description,";
 		sql += " ROW_NUMBER() OVER (ORDER BY rating DESC) AS ranking";
 		sql += " FROM booklist";
 		if(!bool) {
@@ -529,8 +529,8 @@ public class BookDao extends SuperDao {
 		String keyword = pageInfo.getKeyword();
         boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");
         boolean bool1 = pageInfo.equals(null) || pageInfo.equals("null") || keyword.equals("");
-		String sql = " SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description";
-		sql += " FROM (SELECT cnt, book_name, price, category, rating, date, person_name , publisher, img, description,";
+		String sql = " SELECT book_idx, book_name, price, category, rating, date, person_name , publisher, img, description";
+		sql += " FROM (SELECT book_idx, book_name, price, category, rating, date, person_name , publisher, img, description,";
 		sql += " ROW_NUMBER() OVER (ORDER BY date DESC) AS ranking";
 		sql += " FROM booklist";
 		if(!bool) {

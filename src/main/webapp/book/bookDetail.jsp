@@ -3,7 +3,7 @@
 <%@ page import="com.team3.model.dao.BookDao"%>
 
 <%
-int bookCnt = Integer.parseInt(request.getParameter("cnt"));
+int bookCnt = Integer.parseInt(request.getParameter("book_idx"));
 BookDao dao = new BookDao();
 Book book = dao.getDataByPk(bookCnt);
 float rating = book.getRating();
@@ -320,7 +320,7 @@ double convertedRating = (rating / 10) * 5;
             });
             
             document.querySelector('.btn-buy').addEventListener('click', function() {
-                location.href = '<%=request.getContextPath()%>/order/orderForm.jsp?cnt=<%=bookCnt%>';
+                location.href = '<%=request.getContextPath()%>/order/orderForm.jsp?book_idx=<%=bookCnt%>';
             });
         });
     </script>

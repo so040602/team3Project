@@ -39,11 +39,11 @@ public class AibbsUpdateController extends SuperClass{
 		bean.setAttach04((String)request.getAttribute("attach04"));
 		
 		BoardDao dao = new BoardDao() ;
-		int cnt = -999999;
+		int book_idx = -999999;
 		try {
-			cnt = dao.updateBoardData(bean);	
+			book_idx = dao.updateBoardData(bean);	
 			
-			if(cnt == -999999) { // 등록 실패
+			if(book_idx == -999999) { // 등록 실패
 				new AibbsUpdateController().doGet(request, response);
 				
 			} else { // 성공

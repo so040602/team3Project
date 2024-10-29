@@ -12,10 +12,10 @@ public class BookDetailController extends SuperClass {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		super.doGet(request, response);
 		System.out.println(0);
-		int cnt = Integer.parseInt(request.getParameter("cnt"));
+		int book_idx = Integer.parseInt(request.getParameter("book_idx"));
 		
 		BookDao dao = new BookDao() ;
-		Book bean = dao.getDataByPk(cnt) ;
+		Book bean = dao.getDataByPk(book_idx) ;
 		
 
 		if(bean == null) {

@@ -434,7 +434,6 @@ String getEnvs = appName + mappingName + "?opsmode=";
                placeholder="제목, 작가로 검색해 보세요">
          </div>
       </header>
- 
         
       <nav class="nav">
          <ul>
@@ -453,7 +452,6 @@ String getEnvs = appName + mappingName + "?opsmode=";
             </a></li>
          </ul>
       </nav>
-
       <div class="main-banner">
          <div class="banner-content">
             <h1 class="banner-title">

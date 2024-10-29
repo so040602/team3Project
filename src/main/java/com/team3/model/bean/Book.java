@@ -1,7 +1,7 @@
 package com.team3.model.bean;
 
 public class Book {
-	private int cnt; //도서번호
+	private int book_idx; //도서번호
 	private String book_name; //도서 제목
 	private int price; //가격
 	private String category; // 도서 카테고리
@@ -19,15 +19,15 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [cnt=" + cnt + ", book_name=" + book_name + ", price=" + price + ", category=" + category
+		return "Book [book_idx=" + book_idx + ", book_name=" + book_name + ", price=" + price + ", category=" + category
 				+ ", rating=" + rating + ", date=" + date + ", person_name=" + person_name + ", publisher=" + publisher
 				+ ", img=" + img + ", description=" + description + "]";
 	}
 
-	public Book(int cnt, String book_name, int price, String category, float rating, String date, String person_name,
+	public Book(int book_idx, String book_name, int price, String category, float rating, String date, String person_name,
 			String publisher, String img, String description) {
 		super();
-		this.cnt = cnt;
+		this.book_idx = book_idx;
 		this.book_name = book_name;
 		this.price = price;
 		this.category = category;
@@ -39,12 +39,12 @@ public class Book {
 		this.description = description;
 	}
 
-	public int getCnt() {
-		return cnt;
+	public int getbook_idx() {
+		return book_idx;
 	}
 
-	public void setCnt(int cnt) {
-		this.cnt = cnt;
+	public void setbook_idx(int book_idx) {
+		this.book_idx = book_idx;
 	}
 
 	public String getBook_name() {
