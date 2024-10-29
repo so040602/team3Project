@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.team3.model.bean.Book"%>
 <%@ page import="com.team3.model.dao.BookDao"%>
+<%@ include file="./../common/common.jsp"%>
 
 <%
 int bookCnt = Integer.parseInt(request.getParameter("book_idx"));
@@ -286,7 +287,7 @@ double convertedRating = (rating / 10) * 5;
 					<button class="btn btn-lg btn-wishlist">
 						<i class="fas fa-calendar-check"></i> 대출 예약
 					</button>
-					<button class="btn btn-lg btn-cart">
+					<button class="btn btn-lg btn-cart" value="<%=bookCnt%>">
 						<i class="fas fa-bookmark"></i> 북마크
 					</button>
 				</div>
@@ -303,7 +304,7 @@ double convertedRating = (rating / 10) * 5;
             // 더보기 버튼 기능
             const toggleButton = document.getElementById("toggleButton");
             const description = document.getElementById("bookDescription");
-
+                       
             toggleButton.addEventListener("click", function() {
                 description.classList.toggle("expanded");
                 toggleButton.classList.toggle("expanded");
@@ -312,7 +313,27 @@ double convertedRating = (rating / 10) * 5;
 
             // 버튼 클릭 이벤트
             document.querySelector('.btn-cart').addEventListener('click', function() {
-                alert('북마크에 추가되었습니다.');
+                const bookCartIdx = this.value;
+				
+                fetch('<%=getEnvs%>bookOutCart', {
+                	method: 'POST',
+                	headers: {
+                		'Content-Type':'application/json'
+                	},
+                	body: JSON.stringify({bookId:bookCartIdx})
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // JSON으로 응답 받기
+                })
+                .then(data => {
+                    console.log(data); // 서버에서 받은 응답 처리
+                    alert('북마크에 추가되었습니다.'); // 알림 표시
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
             });
             
             document.querySelector('.btn-wishlist').addEventListener('click', function() {
