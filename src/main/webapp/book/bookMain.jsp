@@ -438,7 +438,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
         
 		<nav class="nav">
 			<ul>
-				<li><a href="#"> <i class="fas fa-bullhorn"></i> 공지사항
+				<li><a href="<%=getEnvs%>bookNotice"> <i class="fas fa-bullhorn"></i> 공지사항
 				</a></li>
 				<li><a href="<%=getEnvs%>bookList"> <i class="fas fa-book"></i> 전체 도서
 				</a></li>

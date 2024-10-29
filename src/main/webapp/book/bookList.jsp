@@ -252,8 +252,9 @@ h2 {
 }
 
 .pagination {
-    display: flex;
+    display: flex; /* flex로 변경 */
     justify-content: center;
+    align-items: center; /* 세로 정렬 방지 */
     list-style-type: none;
     padding: 20px 0;
     margin-top: 30px;
@@ -267,7 +268,7 @@ h2 {
 }
 
 .page-item {
-    margin: 0 3px;
+    margin: 0 5px;
 }
 
 .page-link {
@@ -277,6 +278,8 @@ h2 {
     border: 1px solid #dee2e6;
     border-radius: 6px;
     transition: all 0.2s;
+    line-height: normal;
+    writing-mode: horizontal-tb;
 }
 
 .page-link:hover {
