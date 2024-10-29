@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.team3.controller.SuperClass;
 import com.team3.model.bean.Board;
-import com.team3.model.dao.BoardDao;
+import com.team3.model.dao.ReviewDao;
 import com.team3.utility.AppConfig;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class BoardDetailController extends SuperClass {
 		// 상세하게 보고 싶은 게시물 번호
 		int brdidx = Integer.parseInt(request.getParameter("brdidx"));
 		
-		BoardDao dao = new BoardDao() ;
+		ReviewDao dao = new ReviewDao() ;
 		Board bean = null ;
 		
 		bean = dao.getBoardDataByPk(brdidx);

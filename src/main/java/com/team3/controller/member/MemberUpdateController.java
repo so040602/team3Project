@@ -5,7 +5,7 @@ import com.team3.controller.HomeController;
 import com.team3.controller.SuperClass;
 import com.team3.model.bean.Board;
 import com.team3.model.bean.Member;
-import com.team3.model.dao.BoardDao;
+import com.team3.model.dao.ReviewDao;
 import com.team3.model.dao.MemberDao;
 
 import jakarta.servlet.http.HttpServletRequest;
