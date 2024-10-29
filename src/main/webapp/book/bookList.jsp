@@ -371,7 +371,7 @@ button[type="submit"]:hover {
     <!-- 독립적인 카테고리 선택 -->
     <form id="categoryForm" action="<%=getEnvs%>bookList" method="POST">
         <select class="category-select" name="category" onchange="document.getElementById('categoryForm').submit()">
-            <option value="전체보기">전체 카테고리</option>
+            <option value="전체보기">전체</option>
             <c:forEach var="category" items="${requestScope.category_List}">
                 <option value="${category}" 
                     <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
