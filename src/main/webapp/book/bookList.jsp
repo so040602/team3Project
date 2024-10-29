@@ -261,10 +261,11 @@ button[type="submit"]:hover {
     left: 50%;
     transform: translateX(-50%);
     min-width: max-content;
+    flex-wrap: wrap; 
 }
 
 .page-item {
-    margin: 0 4px;
+    margin: 4px;
     display: inline-flex;
     align-items: center;
 }
@@ -339,6 +340,7 @@ button[type="submit"]:hover {
         transform: none;
         margin: 20px 0;
         flex-wrap: wrap;
+        justify-content: center;
     }
 }
 </style>
