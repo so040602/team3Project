@@ -1,45 +1,46 @@
 package com.team3.model.dao;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.team3.model.bean.Board;
-import com.team3.model.bean.Book;
-import com.team3.model.bean.Paging;
 import com.team3.model.bean.Review;
-import com.team3.utility.AppConfig;
 
-public class ReviewDao extends SuperDao {
+public class ReviewDao extends SuperDao{
+    private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
 
-	public List<Review> selectAll() {
-		// 게시물 전체 목록을 읽어 들입니다.
-		List<Review> lists = new ArrayList<Review>();
-		
-		PreparedStatement pstmt = null ;
-		ResultSet rs = null ;
-		
-		// 게시물 번호 역순으로 정렬
-		String sql = " SELECT * FROM TEAM3_BOOK_REVIEW" ;
-		sql += " ORDER BY reviewidx desc" ;
-		
-		try {
-			conn = super.getConnection() ;
-			pstmt = conn.prepareStatement(sql);			
-			
-			rs = pstmt.executeQuery() ;
-			
-			while(rs.next()) {
-				lists.add(getBeanData(rs)) ; 
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
+    public List<Review> selectAllReviews() {
+        List<Review> reviews = new ArrayList<>();
+        String sql = "SELECT r.*, b.book_name " +
+                     "FROM TEAM3_BOOK_REVIEW r " +
+                     "JOIN booklist b ON r.bookIdx = b.bookIdx " +
+                     "ORDER BY r.reviewIdx DESC";
+
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Review review = new Review();
+                review.setReviewIdx(rs.getInt("reviewIdx"));
+                review.setBookIdx(rs.getInt("bookIdx"));
+                review.setMemId(rs.getString("memId"));
+                review.setReviewTitle(rs.getString("reviewTitle"));
+                review.setReviewBody(rs.getString("reviewBody"));
+                review.setReviewCnt(rs.getInt("reviewCnt"));
+                review.setReviewRegDate(rs.getDate("reviewRegDate"));
+                review.setReviewUpdated(rs.getDate("reviewUpdated"));
+                review.setBook_name(rs.getString("book_name"));
+                reviews.add(review);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
 			try {
 				if(rs!=null) {rs.close();}
 				if(pstmt!=null) {pstmt.close();}
@@ -48,37 +49,47 @@ public class ReviewDao extends SuperDao {
 				e2.printStackTrace();
 			}
 		}
-		
-		return lists ;
-	}	
-	
-	
-	private Review getBeanData(ResultSet rs) {
-		Review bean = null;
-		
-		try {
-			bean = new Review() ; 
-			
-			bean.setReviewIdx(rs.getInt("reviewidx"));
-			bean.setBookIdx(rs.getInt("bookidx"));
-			bean.setMemId(rs.getString("memid"));
-			bean.setReviewTitle(rs.getString("review_title"));
-			bean.setReviewBody(rs.getString("review_body"));
-			bean.setReviewCnt(rs.getInt("review_cnt"));
-			bean.setReviewRegDate(rs.getDate("review_regdate"));
-			bean.setReviewUpdated(rs.getDate("review_updated"));
-			
-			
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null ;
-		}
-		
-		return bean ;
-	}
 
-	
-	
+        return reviews;
+    }
+
+    public Review selectReviewByIdx(int reviewIdx) {
+        Review review = null;
+        String sql = "SELECT r.*, b.book_name " +
+                     "FROM TEAM3_BOOK_REVIEW r " +
+                     "JOIN booklist b ON r.bookIdx = b.bookIdx " +
+                     "WHERE r.reviewIdx = ?";
+
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, reviewIdx);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                review = new Review();
+                review.setReviewIdx(rs.getInt("reviewIdx"));
+                review.setBookIdx(rs.getInt("bookIdx"));
+                review.setMemId(rs.getString("memId"));
+                review.setReviewTitle(rs.getString("reviewTitle"));
+                review.setReviewBody(rs.getString("reviewBody"));
+                review.setReviewCnt(rs.getInt("reviewCnt"));
+                review.setReviewRegDate(rs.getDate("reviewRegDate"));
+                review.setReviewUpdated(rs.getDate("reviewUpdated"));
+                review.setBook_name(rs.getString("book_name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(pstmt!=null) {pstmt.close();}
+				if(conn!=null) {conn.close();}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+
+        return review;
+    }
 }
