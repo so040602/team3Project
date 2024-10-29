@@ -29,7 +29,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
             color: #333;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: auto;
             background: #fff;
             padding: 20px;
@@ -88,7 +88,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
                     <tr>
                         <td><%= notice.getNoticeTitle() %></td>
                         <td><%= notice.getNoticeAuthor() %></td>
-                        <td><%= notice.getNoticeCreated() %></td>
+                        <td><%= notice.getFormattedNoticeCreated() %></td>
                         <td><%= notice.getNoticeViews() %></td>
                     </tr>
                 <%

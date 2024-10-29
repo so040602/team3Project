@@ -1,6 +1,7 @@
 package com.team3.model.bean;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class Notice {
     private int noticeId;
@@ -88,5 +89,10 @@ public class Notice {
 
     public Notice() {
         super();
+    }
+    
+    public String getFormattedNoticeCreated() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return sdf.format(noticeCreated);
     }
 }
