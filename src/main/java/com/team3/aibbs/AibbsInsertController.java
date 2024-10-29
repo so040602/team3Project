@@ -35,7 +35,7 @@ public class AibbsInsertController extends SuperClass {
 		ReviewDao dao = new ReviewDao() ;
 		int cnt = -999999;
 		try {
-			cnt = dao.insertBoardData(bean);	
+			//cnt = dao.insertBoardData(bean);	
 			
 			if(cnt == -999999) { // 등록 실패
 				new AibbsInsertController().doGet(request, response);

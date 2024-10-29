@@ -205,12 +205,8 @@ public class TeamUtility {
 		opsMap.put("aibbsDelete", "com.team3.controller.aibbs.AibbsDeleteController");
 		opsMap.put("aibbsList",   "com.team3.controller.aibbs.AibbsListController");
 		
-		// board section
-		opsMap.put("brdInsert", "com.team3.controller.board.BoardInsertController");
-		opsMap.put("brdDetail", "com.team3.controller.board.BoardDetailController");
-		opsMap.put("brdUpdate", "com.team3.controller.board.BoardUpdateController");
-		opsMap.put("brdDelete", "com.team3.controller.board.BoardDeleteController");
-		opsMap.put("brdList",   "com.team3.controller.board.BoardListController");
+		// review section
+		opsMap.put("reviewList", "com.team3.controller.review.ReviewListController");
 	
 		// product section
 		opsMap.put("prdInsert", "com.team3.controller.product.ProductInsertController");

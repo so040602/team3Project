@@ -15,8 +15,8 @@ public class AibbsUpdateController extends SuperClass{
 		// 수정할 게시물 번호를 우선 챙깁니다.
 		int brdidx = Integer.parseInt(request.getParameter("brdidx"));
 		ReviewDao dao = new ReviewDao() ;
-		Board bean = dao.getBoardDataByPk(brdidx);
-		request.setAttribute("bean", bean); 
+	//	Board bean = dao.getBoardDataByPk(brdidx);
+	//	request.setAttribute("bean", bean); 
 		
 		super.gotoPage("aibbs/aibbsUpdateForm.jsp");
 	}
@@ -41,7 +41,7 @@ public class AibbsUpdateController extends SuperClass{
 		ReviewDao dao = new ReviewDao() ;
 		int cnt = -999999;
 		try {
-			cnt = dao.updateBoardData(bean);	
+	//		cnt = dao.updateBoardData(bean);	
 			
 			if(cnt == -999999) { // 등록 실패
 				new AibbsUpdateController().doGet(request, response);
