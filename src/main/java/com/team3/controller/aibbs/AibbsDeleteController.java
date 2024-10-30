@@ -1,4 +1,4 @@
-package com.team3.aibbs;
+package com.team3.controller.aibbs;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
