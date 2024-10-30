@@ -9,6 +9,7 @@ import java.util.List;
 import com.team3.model.bean.Book;
 import com.team3.model.bean.Paging;
 
+
 public class BookDao extends SuperDao {
 
     public int getTotalCount(String mode) {
@@ -599,5 +600,120 @@ public class BookDao extends SuperDao {
 		
 		
 		return lists;
-	}	
+	}
+
+	public String getCheckOut(int bookId) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement prsmt = null;
+		ResultSet rs = null;
+		String sql = "select checkout from booklist";
+		sql += " where book_idx = ?";
+		String checkOut = "";
+		
+		try {
+			conn = super.getConnection();
+			prsmt = conn.prepareStatement(sql);
+			prsmt.setInt(1, bookId);
+			rs = prsmt.executeQuery();
+			
+			while(rs.next()) {
+				checkOut = rs.getString("checkout");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(prsmt != null) {prsmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return checkOut;
+	}
+
+	public int getOutCartCnt(Integer midx) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement prsmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = " select count(*) AS cnt From outcart";
+		sql += " where memidx = ?";
+		
+		try {
+			conn = super.getConnection();
+			prsmt = conn.prepareStatement(sql);
+			prsmt.setInt(1, midx);
+			rs = prsmt.executeQuery();
+			
+			while(rs.next()) {
+				count = rs.getInt("cnt");
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(prsmt != null) {prsmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		
+		return count;
+	}
+
+	public int insertOutCart(int bookId, int midx) {
+		int cnt = -99999;
+		Connection conn = null;
+		PreparedStatement checkStmt = null;
+		PreparedStatement insertStmt = null;
+		ResultSet rs = null;
+		String selectsql = " select count(*) From outcart";
+		selectsql += " where book_idx = ? And memidx = ?";
+		
+		String sql = " insert into outcart (memidx, book_idx, regdate)";
+		sql += " values(?,?, CURRENT_TIMESTAMP)";
+		
+		try {
+			conn = super.getConnection();
+			checkStmt = conn.prepareStatement(selectsql);
+			checkStmt.setInt(1, bookId);
+			checkStmt.setInt(2, midx);
+			rs = checkStmt.executeQuery();
+			
+			if(rs.next() && rs.getInt(1) > 0 ) {
+				return 0 ;
+			}
+			
+			insertStmt = conn.prepareStatement(sql);
+			insertStmt.setInt(1, midx);
+	        insertStmt.setInt(2, bookId);
+			cnt = insertStmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(checkStmt != null) {checkStmt.close();}
+				if(insertStmt != null) {insertStmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		// TODO Auto-generated method stub
+		return cnt;
+	}
 }
