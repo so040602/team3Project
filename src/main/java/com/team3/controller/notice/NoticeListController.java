@@ -1,4 +1,4 @@
-package com.team3.controller.book;
+package com.team3.controller.notice;
 
 import java.util.List;
 import com.team3.controller.SuperClass;
@@ -7,7 +7,7 @@ import com.team3.model.dao.NoticeDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class BookNoticeController extends SuperClass {
+public class NoticeListController extends SuperClass {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -21,7 +21,7 @@ public class BookNoticeController extends SuperClass {
             request.setAttribute("notices", notices);
             
             // 페이지 이동
-            super.gotoPage("notice/noticeMain.jsp");
+            super.gotoPage("notice/noticeList.jsp");
             
         } catch (Exception e) {
             e.printStackTrace();
