@@ -39,6 +39,12 @@ public class ReviewListController extends SuperClass {
 
     private void listReviews(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Review> reviews = reviewDao.selectAllReviews();
+        if(reviews.size() == 0) {
+        	System.out.println("값을 읽어올수 없습니다.");
+        }
+        for(Review bean : reviews) {
+        	System.out.println(bean);
+        }
         request.setAttribute("reviews", reviews);
         super.gotoPage("review/reviewList.jsp");
     }
