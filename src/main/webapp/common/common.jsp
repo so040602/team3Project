@@ -142,6 +142,20 @@ String getEnvs = appName + mappingName + "?opsmode=";
 }
 </style>
 
+<!-- 부트 스트랩은 제이 쿼리를 기반으로 하므로, 제이 쿼리 선언이 먼저 나와야 합니다. -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- for BootStrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- for jQueryUI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+
+</head>
+
 <header class="header">
     <div class="header-content">
         <a href="<%=getEnvs%>home" class="logo">책숲</a>

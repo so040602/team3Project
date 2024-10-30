@@ -22,8 +22,8 @@
         
         function validCheck() {
             var userName = $('#userName').val();
-            if (userName.length < 2 || userName.length > 5) {
-                alert('성명은 2글자 이상 5글자 이하로 입력해 주세요.');
+            if (userName.length < 2 || userName.length > 12) {
+                alert('성명은 2글자 이상 12글자 이하로 입력해 주세요.');
                 $('#userName').focus(); 
                 return false;
             }
@@ -102,7 +102,8 @@
             border: 1px solid #ddd;
             color: #495057;
             font-weight: 500;
-            min-width: 120px;
+            min-width: 135px;
+            width: 135px;
             justify-content: center;
         }
         
