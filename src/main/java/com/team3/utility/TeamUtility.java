@@ -205,6 +205,13 @@ public class TeamUtility {
 		opsMap.put("aibbsDelete", "com.team3.controller.aibbs.AibbsDeleteController");
 		opsMap.put("aibbsList",   "com.team3.controller.aibbs.AibbsListController");
 		
+		// notice section
+		opsMap.put("noticeList", "com.team3.controller.notice.NoticeListController");
+		opsMap.put("noticeDetail", "com.team3.controller.notice.NoticeDetailController");
+		opsMap.put("noticeInsert", "com.team3.controller.notice.NoticeInsertController");
+		opsMap.put("noticeDelete", "com.team3.controller.notice.NoticeDeleteController");
+		opsMap.put("noticeUpdate", "com.team3.controller.notice.NoticeUpdateController");
+		
 		// review section
 		opsMap.put("reviewList", "com.team3.controller.review.ReviewListController");
 	
@@ -238,9 +245,9 @@ public class TeamUtility {
 		opsMap.put("bookDetail", "com.team3.controller.book.BookDetailController");
 		opsMap.put("bookMain", "com.team3.controller.book.BookMainController");
 		opsMap.put("bookRaiting", "com.team3.controller.book.BookratingListController");
-		opsMap.put("bookRecent", "com.team3.controller.book.BookRecentController");
-		opsMap.put("bookNotice", "com.team3.controller.book.BookNoticeController");
+		opsMap.put("bookRecent", "com.team3.controller.book.BookRecentController");	
 		opsMap.put("bookOutCart", "com.team3.controller.book.BookOutCartController");
+		
 		// big data section
 		//opsMap.put("bigCorr01","com.team3.controller.bigdata.corr01Controller");
 		

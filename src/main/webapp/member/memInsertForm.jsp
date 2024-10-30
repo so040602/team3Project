@@ -150,6 +150,80 @@
             }
         }
     </style>
+    
+    <script type="text/javascript">
+	    $(document).ready(function() {
+	        $('#birth').datepicker({dateFormat:"yy-mm-dd"});
+	    });
+	
+	    function validCheck() {
+	        const memid = $('#memid').val();
+	        if (memid.length < 4 || memid.length > 12) {
+	            alert('아이디는 4글자 이상 12글자 이하로 입력해 주세요.');
+	            $('#memid').focus();
+	            return false;
+	        }
+	
+	        const memname = $('#memname').val();
+	        if (memname.length < 2 || memname.length > 12) {
+	            alert('이름은 2글자 이상 12글자 이하로 입력해 주세요.');
+	            $('#memname').focus();
+	            return false;
+	        }
+	
+	        const mempwd = $('#mempwd').val();
+	        if (mempwd.length < 5 || mempwd.length > 12) {
+	            alert('비밀번호는 5자리 이상 12자리 이하로 입력해 주세요.');
+	            $('#mempwd').focus();
+	            return false;
+	        }
+	
+	        const regexPassword = /^[a-z]\S{4,11}$/;
+	        if (!regexPassword.test(mempwd)) {
+	            alert('비밀번호의 첫 글자는 반드시 소문자이어야 합니다.');
+	            $('#mempwd').focus();
+	            return false;
+	        }
+	
+	        if (!/[#$@]/.test(mempwd)) {
+	            alert('비밀번호에는 특수 문자 #@$ 중에서 최소 1개가 포함되어야 합니다.');
+	            $('#mempwd').focus();
+	            return false;
+	        }
+	
+	        if ($('input[name="gender"]:checked').length === 0) {
+	            alert('성별은 반드시 선택이 되어야 합니다.');
+	            return false;
+	        }
+	
+	        const birth = $('#birth').val();
+	        const regexBirth = /^\d{4}[-/]\d{2}[-/]\d{2}$/;
+	        if (!regexBirth.test(birth)) {
+	            alert('생일은 반드시 yyyy/mm/dd 형식 또는 yyyy-mm-dd 형식으로 입력해 주셔야 합니다.');
+	            $('#birth').focus();
+	            return false;
+	        }
+	
+	        const email = $('#email').val();
+	        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+	        if (!regexEmail.test(email)) {
+	            alert("이메일 주소를 정확하게 입력해 주세요");
+	            $('#email').val("");
+	            $('#email').focus();
+	            return false;
+	        }
+	
+	        const addr01 = $('#addr01').val();
+	        if (addr01.length < 12) {
+	            alert('주소를 입력해 주세요.');
+	            $('#addr01').focus();
+	            return false;
+	        }
+	
+	        return true;
+	    }
+	</script>
+
 </head>
 <body>
     <div class="container">
@@ -189,7 +263,7 @@
             </div>
             
             <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-calendar me-2"></i>생일</span>
+                <span class="input-group-text"><i class="fas fa-calendar me-2"></i>생년월일</span>
                 <input type="datetime" class="form-control" id="birth" name="birth" value="<%=request.getAttribute("parsedBirth")%>">
             </div>
             
@@ -212,7 +286,7 @@
                 <span class="input-group-text"><i class="fas fa-home me-2"></i>상세주소</span>
                 <input type="text" class="form-control" id="addr02" name="addr02" value="<%=request.getAttribute("parsedAddr02")%>" placeholder="상세 주소를 입력해주세요">
             </div>
-            
+
             <div id="buttonset">
                 <button type="submit" class="btn btn-primary" onclick="return validCheck();">
                     <i class="fas fa-user-plus me-2"></i>가입하기
@@ -221,7 +295,9 @@
                     <i class="fas fa-redo me-2"></i>초기화
                 </button>
             </div>
+            
         </form>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

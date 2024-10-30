@@ -1,117 +1,70 @@
 package com.team3.model.bean;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Review {
-	    private int reviewIdx; // 리뷰 번호
-	    private Integer bookIdx; // 도서번호(booklist 테이블 primary key값)
-	    private String memId; // 아이디 (member 테이블에서 가져온 아이디)
-	    private String reviewTitle; // 서평 제목
-	    private String reviewBody; // 서평 내용
-	    private int reviewCnt; // 서평 조회수
-	    private Date reviewRegDate; // 서평 작성일자
-	    private Date reviewUpdated; // 서평 수정일자
-	    private String book_name; // 책 이름(bookIdx 통해 booklist 테이블에서 가져온 책이름
-		
-	    public Review() {
-			// TODO Auto-generated constructor stub
-		}
-	    
-	    public Review(int reviewIdx, Integer bookIdx, String memId, String reviewTitle, String reviewBody,
-				int reviewCnt, Date reviewRegDate, Date reviewUpdated, String book_name) {
-			super();
-			this.reviewIdx = reviewIdx;
-			this.bookIdx = bookIdx;
-			this.memId = memId;
-			this.reviewTitle = reviewTitle;
-			this.reviewBody = reviewBody;
-			this.reviewCnt = reviewCnt;
-			this.reviewRegDate = reviewRegDate;
-			this.reviewUpdated = reviewUpdated;
-			this.book_name = book_name;
-		}
+    private int reviewidx;
+    private String review_title;
+    private String review_body;
+    private int review_cnt;
+    private Timestamp review_regdate;  // Timestamp 타입으로 변경
+    private String book_name;
+    private String memid;
 
-		@Override
-		public String toString() {
-			return "Review [reviewIdx=" + reviewIdx + ", bookIdx=" + bookIdx + ", memId=" + memId + ", reviewTitle="
-					+ reviewTitle + ", reviewBody=" + reviewBody + ", reviewCnt=" + reviewCnt + ", reviewRegDate="
-					+ reviewRegDate + ", reviewUpdated=" + reviewUpdated + ", book_name=" + book_name + "]";
-		}
+    // Getters and Setters
+    public int getReviewidx() {
+        return reviewidx;
+    }
 
-		public int getReviewIdx() {
-			return reviewIdx;
-		}
+    public void setReviewidx(int reviewidx) {
+        this.reviewidx = reviewidx;
+    }
 
-		public void setReviewIdx(int reviewIdx) {
-			this.reviewIdx = reviewIdx;
-		}
+    public String getReview_title() {
+        return review_title;
+    }
 
-		public Integer getBookIdx() {
-			return bookIdx;
-		}
+    public void setReview_title(String review_title) {
+        this.review_title = review_title;
+    }
 
-		public void setBookIdx(Integer bookIdx) {
-			this.bookIdx = bookIdx;
-		}
+    public String getReview_body() {
+        return review_body;
+    }
 
-		public String getMemId() {
-			return memId;
-		}
+    public void setReview_body(String review_body) {
+        this.review_body = review_body;
+    }
 
-		public void setMemId(String memId) {
-			this.memId = memId;
-		}
+    public int getReview_cnt() {
+        return review_cnt;
+    }
 
-		public String getReviewTitle() {
-			return reviewTitle;
-		}
+    public void setReview_cnt(int review_cnt) {
+        this.review_cnt = review_cnt;
+    }
 
-		public void setReviewTitle(String reviewTitle) {
-			this.reviewTitle = reviewTitle;
-		}
+    public Timestamp getReview_regdate() {
+        return review_regdate;
+    }
 
-		public String getReviewBody() {
-			return reviewBody;
-		}
+    public void setReview_regdate(Timestamp review_regdate) {
+        this.review_regdate = review_regdate;
+    }
 
-		public void setReviewBody(String reviewBody) {
-			this.reviewBody = reviewBody;
-		}
+    public String getBook_name() {
+        return book_name;
+    }
 
-		public int getReviewCnt() {
-			return reviewCnt;
-		}
+    public void setBook_name(String book_name) {
+        this.book_name = book_name;
+    }
 
-		public void setReviewCnt(int reviewCnt) {
-			this.reviewCnt = reviewCnt;
-		}
+    public String getMemid() {
+        return memid;
+    }
 
-		public Date getReviewRegDate() {
-			return reviewRegDate;
-		}
-
-		public void setReviewRegDate(Date reviewRegDate) {
-			this.reviewRegDate = reviewRegDate;
-		}
-
-		public Date getReviewUpdated() {
-			return reviewUpdated;
-		}
-
-		public void setReviewUpdated(Date reviewUpdated) {
-			this.reviewUpdated = reviewUpdated;
-		}
-
-		public String getBook_name() {
-			return book_name;
-		}
-
-		public void setBook_name(String book_name) {
-			this.book_name = book_name;
-		}
-	    
-	    
-	    
-	    
-	    
+    public void setMemid(String memid) {
+        this.memid = memid;
+    }
 }
