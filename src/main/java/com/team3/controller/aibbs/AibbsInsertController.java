@@ -1,4 +1,4 @@
-package com.team3.aibbs;
+package com.team3.controller.aibbs;
 
 import com.team3.controller.HomeController;
 import com.team3.controller.SuperClass;

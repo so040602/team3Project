@@ -1,4 +1,4 @@
-package com.team3.aibbs;
+package com.team3.controller.aibbs;
 
 import com.team3.controller.SuperClass;
 import com.team3.model.bean.Board;
