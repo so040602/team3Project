@@ -328,8 +328,19 @@ double convertedRating = (rating / 10) * 5;
                     return response.json(); // JSON으로 응답 받기
                 })
                 .then(data => {
-                    console.log(data); // 서버에서 받은 응답 처리
-                    alert('북마크에 추가되었습니다.'); // 알림 표시
+                    console.log(data);// 서버에서 받은 응답 처리
+                    
+                    if(data === "초과"){
+                    	alert('책은 6권 이상 담을 수 없습니다.');
+                    }else if(data === "중복"){
+                    	alert('같은 책은 담을 수 없습니다.');
+                    }else if(data === "오류"){
+                    	alert('책을 담을 수 없습니다.')
+                    } else if(data === "가능"){
+                    	alert('북마크에 추가되었습니다.');
+                    }else{
+                    	alert('이미 대출중인 도서 입니다.');
+                    }                   
                 })
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
