@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.team3.model.bean.Aibbs;
+import com.team3.model.bean.Board;
 import com.team3.utility.AppConfig;
 
 public class AibbsDao extends SuperDao {
@@ -31,7 +32,7 @@ public class AibbsDao extends SuperDao {
 			rs = pstmt.executeQuery() ;
 			
 			while(rs.next()) {
-				lists.add(getBeanData(rs)) ; 
+				lists.add(getAibbsBeanData(rs)) ; 
 			}
 			
 		} catch (Exception e) {
@@ -50,7 +51,7 @@ public class AibbsDao extends SuperDao {
 	}	
 	
 	
-	private Aibbs getBeanData(ResultSet rs) {
+	private Aibbs getAibbsBeanData(ResultSet rs) {
 		Aibbs bean = null;
 		
 		try {
@@ -84,7 +85,7 @@ public class AibbsDao extends SuperDao {
 		return bean ;
 	}
 
-	public List<Aibbs> getDataList(){
+	public List<Aibbs> getAibbsDataList(){
 		List<Aibbs> lists = new ArrayList<Aibbs>();
 		// lists.add(new Board(10, "hong", "abc123", "jsp 프로그래밍", "잼있어요", 10, "2024/08/28", 0));
 		return lists;
@@ -102,7 +103,7 @@ public class AibbsDao extends SuperDao {
 		and errors are handled more effectively.
      **/
 	
-	public int updateBoardData(Aibbs bean) {
+	public int updateAibbsData(Aibbs bean) {
 	    // bean을 사용하여 데이터베이스에 수정합니다.
 	    System.out.println("updateData");
 	    System.out.println(bean);
@@ -221,7 +222,7 @@ public class AibbsDao extends SuperDao {
 	}
 
 
-	public int insertBoardData(Aibbs bean) {
+	public int insertAibbsData(Aibbs bean) {
 		// bean을 사용하여 데이터 베이스에 추가합니다.
 		System.out.println("insertData");
 		System.out.println(bean);
@@ -289,7 +290,7 @@ public class AibbsDao extends SuperDao {
 
 	}
 	
-	public Aibbs getBoardDataByPk(int brdidx) {
+	public Aibbs getAibbsDataByPk(int brdidx) {
 		
 		plusReadcnt(brdidx); // 조회수 1회 증가시킴
 		
@@ -310,7 +311,7 @@ public class AibbsDao extends SuperDao {
 			rs = pstmt.executeQuery() ;
 			
 			if(rs.next()) {
-				bean = getBeanData(rs);
+				bean = getAibbsBeanData(rs);
 			}
 			
 		} catch (Exception e) {
