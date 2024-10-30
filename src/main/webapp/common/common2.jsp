@@ -148,11 +148,11 @@ String getEnvs = appName + mappingName + "?opsmode=";
         <nav class="user-menu">
             <c:choose>
                 <c:when test="${whologin == 0}">
-                    <a href="<%=getEnvs%>login">
+                    <a href="<%=getEnvs%>memLogin">
                         <i class="fas fa-right-to-bracket"></i>
                         <span>로그인</span>
                     </a>
-                    <a href="<%=getEnvs%>signup">
+                    <a href="<%=getEnvs%>userAuthStart">
                         <i class="fas fa-user-plus"></i>
                         <span>회원가입</span>
                     </a>

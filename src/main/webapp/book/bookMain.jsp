@@ -415,10 +415,10 @@ String getEnvs = appName + mappingName + "?opsmode=";
             style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <a href="#" class="logo">책숲</a>
             <div class="user-menu">
-                <a href="#">
+                <a href="<%=getEnvs%>memLogin">
                     <i class="fas fa-right-to-bracket"></i> 로그인
                 </a>
-                <a href="#">
+                <a href="<%=getEnvs%>userAuthStart">
                     <i class="fas fa-user-plus"></i> 회원가입
                 </a>
                 <a href="#">
