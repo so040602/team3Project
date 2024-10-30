@@ -77,4 +77,62 @@ public class NoticeDao extends SuperDao {
             e.printStackTrace();
         }
     }
+    public boolean insertNotice(Notice notice) {
+        String sql = "INSERT INTO notices (notice_title, notice_content, notice_author, notice_created, notice_views, notice_attachments) "
+                  + "VALUES (?, ?, ?, NOW(), 0, ?)";
+        
+        try (Connection conn = super.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, notice.getNoticeTitle());
+            pstmt.setString(2, notice.getNoticeContent());
+            pstmt.setString(3, notice.getNoticeAuthor());
+            pstmt.setString(4, notice.getNoticeAttachments());
+            
+            int count = pstmt.executeUpdate();
+            return count > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean deleteNotice(int noticeId) {
+        String sql = "DELETE FROM notices WHERE notice_id = ?";
+        
+        try (Connection conn = super.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, noticeId);
+            int count = pstmt.executeUpdate();
+            return count > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean updateNotice(Notice notice) {
+        String sql = "UPDATE notices SET notice_title=?, notice_content=?, notice_author=?, notice_attachments=? WHERE notice_id=?";
+        
+        try (Connection conn = super.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, notice.getNoticeTitle());
+            pstmt.setString(2, notice.getNoticeContent());
+            pstmt.setString(3, notice.getNoticeAuthor());
+            pstmt.setString(4, notice.getNoticeAttachments());
+            pstmt.setInt(5, notice.getNoticeId());
+            
+            int count = pstmt.executeUpdate();
+            return count > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+    

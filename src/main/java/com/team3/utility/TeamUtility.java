@@ -208,6 +208,9 @@ public class TeamUtility {
 		// notice section
 		opsMap.put("noticeList", "com.team3.controller.notice.NoticeListController");
 		opsMap.put("noticeDetail", "com.team3.controller.notice.NoticeDetailController");
+		opsMap.put("noticeInsert", "com.team3.controller.notice.NoticeInsertController");
+		opsMap.put("noticeDelete", "com.team3.controller.notice.NoticeDeleteController");
+		opsMap.put("noticeUpdate", "com.team3.controller.notice.NoticeUpdateController");
 		
 		// review section
 		opsMap.put("reviewList", "com.team3.controller.review.ReviewListController");

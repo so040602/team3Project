@@ -44,6 +44,48 @@ body {
 	padding: 2rem;
 }
 
+.btn {
+	padding: 0.75rem 1.5rem;
+	border-radius: 8px;
+	font-weight: 500;
+	text-decoration: none;
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.btn-primary {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.btn-primary:hover {
+	background-color: var(--hover-color);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.btn-back {
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+    background-color: var(--border-color);
+}
+
 .board-header {
 	display: flex;
 	justify-content: space-between;
@@ -153,14 +195,33 @@ tr:hover {
 	.mobile-hide {
 		display: none;
 	}
+	.header-left {
+        gap: 1rem;
+    }
+    
+    .btn-back {
+        padding: 0.5rem 1rem;
+    }
+    
+    h1 {
+        font-size: 1.25rem;
+    }
 }
 </style>
 </head>
 <body>
 	<div class="container">
 		<div class="board-header">
-			<h1>공지사항</h1>
-		</div>
+    <h1>공지사항</h1>
+    <div class="button-group">
+        <a href="<%=getEnvs%>bookMain" class="btn btn-back">
+            <i class="fas fa-home"></i> 홈으로
+        </a>
+        <a href="<%=getEnvs%>noticeInsert" class="btn btn-primary">
+            <i class="fas fa-pen"></i> 등록하기
+        </a>
+    </div>
+</div>
 
 		<%
 		NoticeDao dao = new NoticeDao();
@@ -193,8 +254,7 @@ tr:hover {
 						<!-- NoticeMain.jsp의 제목 링크 부분 -->
 						<td>
 							<div class="notice-title">
-								<a
-									href="<%=getEnvs%>noticeDetail&id=<%=notice.getNoticeId()%>">
+								<a href="<%=getEnvs%>noticeDetail&id=<%=notice.getNoticeId()%>">
 									<%=notice.getNoticeTitle()%>
 								</a>
 							</div>
