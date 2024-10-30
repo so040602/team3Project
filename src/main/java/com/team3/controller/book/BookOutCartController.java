@@ -33,9 +33,11 @@ public class BookOutCartController extends SuperClass{
 		// TODO Auto-generated method stub
 		super.doPost(request, response);
 		
-//		HttpSession session = request.getSession();
-//		
-//		Object loginInfo = session.getAttribute("loginInfo"); 아직 로그인 정보가 없음
+		HttpSession session = request.getSession();
+		
+		Object loginInfo = session.getAttribute("loginInfo");
+		
+		System.out.println(loginInfo);
 		
 		StringBuilder jsonBuilder = new StringBuilder();
 		String line;

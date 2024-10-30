@@ -699,9 +699,17 @@ public class BookDao extends SuperDao {
 			insertStmt.setInt(1, midx);
 	        insertStmt.setInt(2, bookId);
 			cnt = insertStmt.executeUpdate();
+			
+			conn.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
 		}finally {
 			try {
 				if(rs != null) {rs.close();}
