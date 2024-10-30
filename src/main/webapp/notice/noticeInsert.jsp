@@ -14,149 +14,188 @@ String getEnvs = appName + mappingName + "?opsmode=";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4A90E2;
-            --hover-color: #357ABD;
-            --background-color: #F5F7FA;
-            --card-background: #FFFFFF;
-            --text-primary: #2C3E50;
-            --text-secondary: #7F8C8D;
-            --border-color: #E0E6ED;
-            --error-color: #E74C3C;
-            --success-color: #2ECC71;
-        }
+   --primary-color: #03C75A;
+   --hover-color: #02b350;
+   --background-color: #f5f6f8;
+   --card-background: #FFFFFF;
+   --text-primary: #222222;
+   --text-secondary: #666666;
+   --border-color: #e5e5e5;
+   --error-color: #ff3b3b;
+}
 
-        body {
-            background-color: var(--background-color);
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            margin: 0;
-            padding: 20px;
-            color: var(--text-primary);
-        }
+body {
+   background-color: var(--background-color);
+   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+   margin: 0;
+   padding: 0;
+   color: var(--text-primary);
+   line-height: 1.5;
+}
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+.container {
+   max-width: 900px;
+   margin: 40px auto;
+   padding: 0 20px;
+}
 
-        .notice-form {
-            background: var(--card-background);
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            padding: 2rem;
-        }
+.notice-form {
+   background: var(--card-background);
+   border: 1px solid var(--border-color);
+   border-radius: 8px;
+}
 
-        .form-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--border-color);
-        }
+.form-title {
+   font-size: 24px;
+   font-weight: 600;
+   color: var(--text-primary);
+   margin: 0;
+   padding: 25px 30px;
+   border-bottom: 1px solid var(--border-color);
+}
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+.form-group {
+   margin: 0;
+   padding: 20px 30px;
+   border-bottom: 1px solid var(--border-color);
+}
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
+.form-group:last-of-type {
+   border-bottom: none;
+}
 
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-        }
+label {
+   display: block;
+   margin-bottom: 10px;
+   font-size: 14px;
+   font-weight: 500;
+   color: var(--text-primary);
+}
 
-        input[type="text"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
-        }
+input[type="text"],
+textarea {
+   width: 100%;
+   padding: 12px 16px;
+   border: 1px solid var(--border-color);
+   border-radius: 4px;
+   font-size: 14px;
+   color: var(--text-primary);
+   transition: all 0.2s;
+   box-sizing: border-box;
+   font-family: inherit;
+}
 
-        textarea {
-            min-height: 200px;
-            resize: vertical;
-        }
+input[type="text"]:focus,
+textarea:focus {
+   outline: none;
+   border-color: var(--primary-color);
+   background-color: #fafafa;
+}
 
-        .button-group {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
+input[type="text"]::placeholder,
+textarea::placeholder {
+   color: #aaa;
+}
 
-        .btn {
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
-            font-weight: 500;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+textarea {
+   min-height: 400px;
+   resize: vertical;
+   line-height: 1.6;
+}
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
+.button-group {
+   padding: 20px 30px;
+   display: flex;
+   justify-content: center;
+   gap: 12px;
+   border-top: 1px solid var(--border-color);
+   background-color: #fafbfc;
+   margin: 0;
+}
 
-        .btn-primary:hover {
-            background-color: var(--hover-color);
-        }
+.btn {
+   min-width: 120px;
+   padding: 12px 24px;
+   border-radius: 4px;
+   font-size: 14px;
+   font-weight: 500;
+   text-decoration: none;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 6px;
+   transition: all 0.2s;
+   cursor: pointer;
+}
 
-        .btn-cancel {
-            background-color: var(--background-color);
-            color: var(--text-primary);
-        }
+.btn i {
+   font-size: 14px;
+}
 
-        .btn-cancel:hover {
-            background-color: var(--border-color);
-        }
+.btn-primary {
+   background-color: var(--primary-color);
+   color: white;
+   border: none;
+}
 
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
+.btn-primary:hover {
+   background-color: var(--hover-color);
+}
 
-        .required::after {
-            content: "*";
-            color: var(--error-color);
-            margin-left: 4px;
-        }
+.btn-cancel {
+   background-color: white;
+   color: var(--text-primary);
+   border: 1px solid #dde0e4;
+}
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
+.btn-cancel:hover {
+   background-color: #f8f9fa;
+}
 
-            .notice-form {
-                padding: 1.5rem;
-            }
+.error-message {
+   color: var(--error-color);
+   font-size: 14px;
+   padding: 12px 16px;
+   background-color: #fff8f8;
+   border: 1px solid #ffe8e8;
+   border-radius: 4px;
+   margin: 20px 30px;
+}
 
-            .form-title {
-                font-size: 1.5rem;
-            }
+.required::after {
+   content: "*";
+   color: var(--error-color);
+   margin-left: 4px;
+}
 
-            .button-group {
-                flex-direction: column;
-            }
+@media (max-width: 768px) {
+   .container {
+       margin: 20px auto;
+       padding: 0 15px;
+   }
 
-            .btn {
-                width: 100%;
-            }
-        }
+   .form-title {
+       padding: 20px;
+       font-size: 20px;
+   }
+
+   .form-group {
+       padding: 15px 20px;
+   }
+
+   .button-group {
+       padding: 15px 20px;
+       flex-direction: column;
+   }
+
+   .btn {
+       width: 100%;
+   }
+
+   .error-message {
+       margin: 15px 20px;
+   }
+}
     </style>
 </head>
 <body>
@@ -164,42 +203,44 @@ String getEnvs = appName + mappingName + "?opsmode=";
         <form class="notice-form" action="<%=getEnvs%>noticeInsert" method="post">
             <h1 class="form-title">공지사항 작성</h1>
 
-            <% if (request.getAttribute("errorMessage") != null) { %>
-            <div class="error-message">
-                <%= request.getAttribute("errorMessage") %>
-            </div>
-            <% } %>
+<% if (request.getAttribute("errorMessage") != null) { %>
+<div class="error-message">
+    <%= request.getAttribute("errorMessage") %>
+</div>
+<% } %>
 
-            <div class="form-group">
-                <label class="required" for="title">제목</label>
-                <input type="text" id="title" name="title" required
-                       value="${param.title}" placeholder="제목을 입력하세요">
-            </div>
+<div class="form-groups">
+    <div class="form-group">
+        <label class="required" for="title">제목</label>
+        <input type="text" id="title" name="title" required
+               value="${param.title}" placeholder="제목을 입력하세요">
+    </div>
 
-            <div class="form-group">
-                <label class="required" for="author">작성자</label>
-                <input type="text" id="author" name="author" required
-                       value="${param.author}" placeholder="작성자를 입력하세요">
-            </div>
+    <div class="form-group">
+        <label class="required" for="author">작성자</label>
+        <input type="text" id="author" name="author" required
+               value="${param.author}" placeholder="작성자를 입력하세요">
+    </div>
 
-            <div class="form-group">
-                <label class="required" for="content">내용</label>
-                <textarea id="content" name="content" required
-                          placeholder="내용을 입력하세요">${param.content}</textarea>
-            </div>
+    <div class="form-group">
+        <label class="required" for="content">내용</label>
+        <textarea id="content" name="content" required
+                  placeholder="내용을 입력하세요">${param.content}</textarea>
+    </div>
 
-            <div class="form-group">
-                <label for="attachments">첨부파일</label>
-                <input type="text" id="attachments" name="attachments"
-                       value="${param.attachments}" placeholder="첨부파일 경로를 입력하세요">
-            </div>
+    <div class="form-group">
+        <label for="attachments">첨부파일</label>
+        <input type="text" id="attachments" name="attachments"
+               value="${param.attachments}" placeholder="첨부파일 경로를 입력하세요">
+    </div>
+</div>
 
-            <div class="button-group">
-                <a href="<%=getEnvs%>noticeList" class="btn btn-cancel">취소</a>
-                <button type="submit" class="btn btn-primary">
-                    <i href="<%=getEnvs%>noticeList" class="fas fa-save"></i> 등록하기
-                </button>
-            </div>
+<div class="button-group">
+    <a href="<%=getEnvs%>noticeList" class="btn btn-cancel">취소</a>
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-save"></i> 등록하기
+    </button>
+</div>
         </form>
     </div>
 </body>

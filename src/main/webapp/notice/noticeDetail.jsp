@@ -24,202 +24,227 @@ String getEnvs = appName + mappingName + "?opsmode=";
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
 :root {
-   --primary-color: #4A90E2;
-   --hover-color: #357ABD; 
-   --background-color: #F5F7FA;
-   --card-background: #FFFFFF;
-   --text-primary: #2C3E50;
-   --text-secondary: #7F8C8D;
-   --border-color: #E0E6ED;
-   --error-color: #E74C3C;
-   --success-color: #2ECC71;
+    --primary-color: #03C75A;
+    --hover-color: #02b350;
+    --background-color: #f5f6f8;
+    --card-background: #FFFFFF;
+    --text-primary: #222222;
+    --text-secondary: #666666;
+    --border-color: #e5e5e5;
+    --error-color: #ff3b3b;
 }
 
 body {
-   background-color: var(--background-color);
-   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-   margin: 0;
-   padding: 20px;
-   color: var(--text-primary);
+    background-color: var(--background-color);
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-primary);
+    line-height: 1.5;
 }
 
 .container {
-   max-width: 1000px;
-   margin: 0 auto;
-   padding: 2rem;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
 .notice-detail {
-   background: var(--card-background);
-   border-radius: 16px;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-   padding: 2rem;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
 }
 
 .notice-header {
-   border-bottom: 1px solid var(--border-color);
-   padding-bottom: 1.5rem;
-   margin-bottom: 1.5rem;
+    padding: 30px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .notice-title {
-   font-size: 1.75rem;
-   font-weight: 700;
-   color: var(--text-primary);
-   margin-bottom: 1rem;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 20px 0;
+    line-height: 1.4;
 }
 
 .notice-meta {
-   display: flex;
-   justify-content: space-between;
-   color: var(--text-secondary);
-   font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+    font-size: 14px;
 }
 
 .notice-meta-left {
-   display: flex;
-   gap: 1.5rem;
+    display: flex;
+    gap: 20px;
 }
 
-.notice-content {
-   line-height: 1.8;
-   font-size: 1.05rem;
-   color: var(--text-primary);
-   min-height: 200px;
-   white-space: pre-line;
-   padding: 2rem 0;
-   word-break: keep-all;
-   letter-spacing: -0.025em;
+.notice-meta-left span,
+.notice-meta-right span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.notice-meta i {
+    color: #999;
+    font-size: 14px;
 }
 
 .content-wrapper {
-   max-width: 100%;
-   margin: 0 auto;
+    padding: 30px;
+}
+
+.notice-content {
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.8;
+    white-space: pre-line;
+    word-break: keep-all;
 }
 
 .attachment-section {
-   margin-top: 2rem;
-   padding-top: 1.5rem;
-   border-top: 1px solid var(--border-color);
+    margin-top: 30px;
+    padding: 20px 30px;
+    background-color: #f9fafb;
+    border-top: 1px solid var(--border-color);
 }
 
 .attachment-title {
-   font-weight: 600;
-   margin-bottom: 1rem;
-   color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .attachment-list {
-   display: flex;
-   gap: 1rem;
-   flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .attachment-item {
-   display: flex;
-   align-items: center;
-   gap: 0.5rem;
-   padding: 0.5rem 1rem;
-   background-color: var(--background-color);
-   border-radius: 8px;
-   color: var(--primary-color);
-   text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 14px;
 }
 
 .attachment-item:hover {
-   background-color: #E8F0FE;
+    background-color: #f8f9fa;
+    border-color: var(--primary-color);
 }
 
 .button-group {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   gap: 1rem;
-   margin-top: 2rem;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
 }
 
 .button-group-right {
-   display: flex;
-   gap: 1rem;
+    display: flex;
+    gap: 8px;
 }
 
 .btn {
-   padding: 0.75rem 2rem;
-   border-radius: 8px;
-   font-weight: 500;
-   text-decoration: none;
-   display: inline-flex;
-   align-items: center;
-   gap: 0.5rem;
-   transition: all 0.2s ease;
-   border: none;
-   cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
 }
 
 .btn-back {
-   background-color: var(--background-color);
-   color: var(--text-primary);
+    background-color: #f8f9fa;
+    color: var(--text-primary);
+    border: 1px solid #dde0e4;
 }
 
 .btn-back:hover {
-   background-color: var(--border-color);
+    background-color: #eceef0;
 }
 
 .btn-edit {
-   background-color: var(--primary-color);
-   color: white;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
 }
 
 .btn-edit:hover {
-   background-color: var(--hover-color);
+    background-color: var(--hover-color);
 }
 
 .btn-delete {
-   background-color: var(--error-color);
-   color: white;
+    background-color: white;
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
 }
 
 .btn-delete:hover {
-   background-color: #C0392B;
+    background-color: #fff1f1;
 }
 
 @media (max-width: 768px) {
-   .container {
-       padding: 1rem;
-   }
-   
-   .notice-detail {
-       padding: 1.5rem;
-   }
-   
-   .notice-title {
-       font-size: 1.5rem;
-   }
-   
-   .notice-content {
-       padding: 1.5rem 0;
-       font-size: 1rem;
-   }
-   
-   .notice-meta {
-       flex-direction: column;
-       gap: 0.5rem;
-   }
-   
-   .button-group {
-       flex-direction: column;
-   }
-   
-   .button-group-right {
-       width: 100%;
-       justify-content: space-between;
-   }
-   
-   .btn {
-       flex: 1;
-       justify-content: center;
-       padding: 0.75rem 1rem;
-   }
+    .container {
+        margin: 20px auto;
+    }
+
+    .notice-header,
+    .content-wrapper,
+    .button-group {
+        padding: 20px;
+    }
+
+    .notice-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .notice-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .notice-meta-left {
+        gap: 15px;
+    }
+
+    .button-group {
+        flex-direction: column-reverse;
+        gap: 15px;
+    }
+
+    .button-group-left,
+    .button-group-right {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .attachment-section {
+        padding: 15px 20px;
+    }
 }
 </style>
 </head>
