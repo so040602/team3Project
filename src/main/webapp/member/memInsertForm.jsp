@@ -208,10 +208,7 @@
 	        if (memidOK == "NOTYET") { 
 	            alert('해당 아이디 사용을 확인하시기 바랍니다.'); 
 	            return false; 
-	        } else if (memidOK == "USEOK") { 
-	            alert('해당 아이디는 사용할 수 있습니다.'); 
-	            $('#memidOK').prop("readonly", true); 
-	        } else {
+	        } else if (memidOK != "USEOK") { 
 	            alert('해당 아이디는 사용할 수 없습니다.'); 
 	            $('#memid').val(""); 
 	            $('#memid').focus(); 
