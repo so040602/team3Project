@@ -116,6 +116,15 @@
             transform: translateY(-2px);
         }
         
+        .input-group-append {
+            display: flex;
+        }
+        
+        .id-check-btn {
+            border-radius: 0 8px 8px 0 !important;
+            white-space: nowrap;
+        }
+        
         /* 반응형 스타일 */
         @media (max-width: 768px) {
             .container {
@@ -134,7 +143,7 @@
             }
             
             .form-control {
-                border-radius: 0 0 8px 8px;
+                border-radius: 0;
             }
             
             .radio-group {
@@ -148,6 +157,11 @@
             .btn {
                 width: 100%;
             }
+            
+            .id-check-btn {
+                border-radius: 0 0 8px 8px !important;
+                width: 100%;
+            }
         }
     </style>
     
@@ -155,7 +169,40 @@
 	    $(document).ready(function() {
 	        $('#birth').datepicker({dateFormat:"yy-mm-dd"});
 	    });
-	
+//-----------------------------------------------------------------------// 추가된 함수 필요 없으면 지워주세요.
+        // ID 중복 체크 함수
+        function validCheck() {
+            const memid = $('#memid').val();
+            
+            if (memid.length < 4 || memid.length > 12) {
+                alert('아이디는 4글자 이상 12글자 이하로 입력해 주세요.');
+                $('#memid').focus();
+                return;
+            }
+            
+            // Ajax를 사용하여 서버에 중복 확인 요청
+            $.ajax({
+                url: 'checkId.jsp',  // 실제 중복 체크를 처리할 서버 엔드포인트
+                type: 'POST',
+                data: { memid: memid },
+                success: function(response) {
+                    // 서버로부터의 응답을 처리
+                    if (response.trim() === 'available') {
+                        alert('사용 가능한 아이디입니다.');
+                    } else {
+                        alert('이미 사용중인 아이디입니다.');
+                        $('#memid').val('').focus();
+                    }
+                },
+                error: function() {
+                    alert('중복 확인 중 오류가 발생했습니다.');
+                }
+            });
+        }
+//--------------------------------------------------------------------------//
+
+
+
 	    function validCheck() {
 	        const memid = $('#memid').val();
 	        if (memid.length < 4 || memid.length > 12) {
@@ -236,6 +283,9 @@
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-user me-2"></i>아이디</span>
                 <input type="text" class="form-control" id="memid" name="memid" placeholder="4~12자 사이로 입력해주세요">
+                <button type="button" class="btn btn-outline-primary id-check-btn" onclick="checkDuplicateId();">
+                    <i class="fas fa-check me-1"></i>중복확인
+                </button>
             </div>
             
             <div class="input-group">
@@ -297,7 +347,6 @@
             </div>
             
         </form>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

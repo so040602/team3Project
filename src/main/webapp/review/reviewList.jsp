@@ -5,6 +5,24 @@
 <%
     List<Review> reviews = (List<Review>) request.getAttribute("reviews");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 날짜 포맷
+    
+   
+ // 나의 프로젝트(애플리케이션 이름) 이름이며, 컨텍스트 이름이라고 합니다.
+ String appName = request.getContextPath();
+
+ // FrontController.java 파일의 url Pattern과 동일해야 합니다.
+ // 서블릿 매핑을 위한 문자열 이름입니다.
+ String mappingName = "/coolapp";
+
+ // form 태그에서 변수 값 전달
+ String postForm = appName + mappingName;
+
+ // get url에서 변수 값 전달
+ String getEnvs = appName + mappingName + "?opsmode=";
+
+ // out.println(getEnvs);
+
+    
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -55,13 +73,13 @@
             %>
                         <tr>
                             <td><%= review.getReviewidx() %></td>
-                            <td><a href="reviewDetail.jsp?reviewIdx=<%= review.getReviewidx() %>"><%= review.getReview_title() %></a></td>
+                            <td><a href="reviewDetail.jsp&reviewIdx=<%= review.getReviewidx() %>"><%= review.getReview_title() %></a></td>
                             <td><%= review.getReview_body() %></td>
                             <td><%= review.getReview_cnt() %></td>
                             <td><%= sdf.format(review.getReview_regdate()) %></td> <!-- 포맷팅된 날짜 -->
                             <td><%= review.getBook_name() %></td>
                             <td><%= review.getMemid() %></td>
-                            <td><a href="reviewDetail.jsp?reviewIdx=<%= review.getReviewidx() %>">상세보기</a></td>
+                            <td><a href="reviewDetail.jsp&reviewIdx=<%= review.getReviewidx() %>">상세보기</a></td>
                         </tr>
             <%
                     }

@@ -14,7 +14,7 @@ public class ReviewDao extends SuperDao {
         List<Review> reviews = new ArrayList<>();
         String sql = "SELECT r.reviewidx, r.review_title, r.review_body, r.review_cnt, r.review_regdate, b.book_name, m.memid " +
                      "FROM TEAM3_BOOK_REVIEW r " +
-                     "JOIN booklist b ON r.bookidx = b.bookidx " +
+                     "JOIN booklist b ON r.bookidx = b.book_idx " +
                      "JOIN team3_member m ON r.memid = m.memid";
 
         try (Connection conn = super.getConnection();
@@ -44,7 +44,7 @@ public class ReviewDao extends SuperDao {
         Review review = null;
         String sql = "SELECT r.reviewidx, r.review_title, r.review_body, r.review_cnt, r.review_regdate, b.book_name, m.memid " +
                      "FROM TEAM3_BOOK_REVIEW r " +
-                     "JOIN booklist b ON r.bookidx = b.bookidx " +
+                     "JOIN booklist b ON r.bookidx = b.book_idx " +
                      "JOIN team3_member m ON r.memid = m.memid " +
                      "WHERE r.reviewidx = ?";
 
@@ -76,7 +76,7 @@ public class ReviewDao extends SuperDao {
                      "FROM (SELECT r.reviewidx, r.review_title, r.review_body, r.review_cnt, r.review_regdate, b.book_name, m.memid, " +
                      "ROW_NUMBER() OVER (ORDER BY r.review_regdate DESC) AS ranking " +
                      "FROM TEAM3_BOOK_REVIEW r " +
-                     "JOIN booklist b ON r.bookidx = b.bookidx " +
+                     "JOIN booklist b ON r.bookidx = b.book_idx " +
                      "JOIN team3_member m ON r.memid = m.memid) AS ranked_reviews " +
                      "WHERE ranking BETWEEN ? AND ?";
 
