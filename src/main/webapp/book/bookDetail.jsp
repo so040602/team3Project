@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="com.team3.model.bean.Book"%>
 <%@ page import="com.team3.model.dao.BookDao"%>
 <%@ include file="./../common/common.jsp"%>
@@ -14,218 +15,250 @@ double convertedRating = (rating / 10) * 5;
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%=book.getBook_name()%></title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%=book.getBook_name()%></title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+	rel="stylesheet">
 
-    <style>
-        /* 기본 스타일 */
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
+<style>
+/* 기본 스타일 */
+body {
+	background-color: #f8f9fa;
+	font-family: 'Noto Sans KR', sans-serif;
+}
 
-        .container {
-            max-width: 1400px;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
+.container {
+	max-width: 1400px;
+	background-color: white;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
 
-        /* 책 커버 스타일 */
-        .book-cover {
-            max-width: 100%;
-            height: auto;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-        }
+/* 책 커버 스타일 */
+.book-cover {
+	max-width: 100%;
+	height: auto;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+}
 
-        .rank-badge {
-            background-color: #007bff;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-top: 1rem;
-            display: inline-block;
-        }
+.rank-badge {
+	background-color: #007bff;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 20px;
+	font-size: 0.8rem;
+	margin-top: 1rem;
+	display: inline-block;
+}
 
-        /* 책 정보 스타일 */
-        .book-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 1rem;
-        }
+/* 책 정보 스타일 */
+.book-title {
+	font-size: 24px;
+	font-weight: bold;
+	color: #333;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 15px;
+	margin-bottom: 1rem;
+}
 
-        .meta-info {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
+.meta-info {
+	font-size: 0.9rem;
+	color: #666;
+	margin-bottom: 1rem;
+	line-height: 1.6;
+}
 
-        /* 평점 스타일 */
-        .rating-stars {
-            color: #ff6b6b;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
+/* 평점 스타일 */
+.rating-review {
+	display: flex;
+	align-items: center;
+	margin-bottom: 1rem;
+}
 
-        .rating-stars i {
-            margin-right: 2px;
-        }
+.rating-stars {
+	color: #ff6b6b;
+	font-size: 1.2rem;
+}
 
-        /* 책 상세 정보 영역 */
-        .bookdetail-info {
-            background-color: #f8f9fa;
-            padding: 30px;
-            border-radius: 12px;
-            margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
+.rating-stars i {
+	margin-right: 2px;
+}
 
-        .book-details {
-            position: relative;
-            padding-bottom: 40px;
-        }
+.rating-score {
+	margin-left: 0.5rem;
+	margin-right: 1.5rem;
+	font-weight: 500;
+	color: #333;
+}
 
-        .detail-header {
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #eee;
-        }
+.review-link {
+	display: inline-flex;
+	align-items: center;
+	color: #0066c0;
+	font-weight: 500;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
 
-        .detail-content {
-            line-height: 1.8;
-            color: #555;
-            max-height: 200px;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            margin-bottom: 20px;
-            font-size: 1rem;
-            word-break: keep-all;
-            position: relative;
-        }
+.review-link:hover {
+	color: #004e96;
+	text-decoration: underline;
+}
 
-        .detail-content.expanded {
-            max-height: none;
-        }
+.review-link i {
+	margin-right: 5px;
+}
 
-        /* 더보기 버튼 스타일 */
-        .toggle-button {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background: none;
-            border: none;
-            color: #0066c0;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.2s ease;
-        }
+/* 책 상세 정보 영역 */
+.bookdetail-info {
+	background-color: #f8f9fa;
+	padding: 30px;
+	border-radius: 12px;
+	margin: 20px 0;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
 
-        .toggle-button:hover {
-            background-color: #f0f7ff;
-            text-decoration: underline;
-        }
+.book-details {
+	position: relative;
+	padding-bottom: 40px;
+}
 
-        .toggle-button::after {
-            content: '';
-            display: inline-block;
-            margin-left: 5px;
-            width: 8px;
-            height: 8px;
-            border-right: 2px solid #0066c0;
-            border-bottom: 2px solid #0066c0;
-            transform: rotate(45deg);
-            transition: transform 0.2s ease;
-        }
+.detail-header {
+	font-size: 20px;
+	font-weight: 600;
+	color: #333;
+	margin-bottom: 20px;
+	padding-bottom: 15px;
+	border-bottom: 2px solid #eee;
+}
 
-        .toggle-button.expanded::after {
-            transform: rotate(-135deg);
-        }
+.detail-content {
+	line-height: 1.8;
+	color: #555;
+	max-height: 200px;
+	overflow: hidden;
+	transition: max-height 0.3s ease;
+	margin-bottom: 20px;
+	font-size: 1rem;
+	word-break: keep-all;
+	position: relative;
+}
 
-        /* 버튼 그룹 스타일 */
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-        }
+.detail-content.expanded {
+	max-height: none;
+}
 
-        .action-buttons .btn {
-            flex: 1;
-            padding: 12px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
+/* 더보기 버튼 스타일 */
+.toggle-button {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background: none;
+	border: none;
+	color: #0066c0;
+	font-size: 0.9rem;
+	font-weight: 500;
+	cursor: pointer;
+	padding: 8px 16px;
+	border-radius: 20px;
+	transition: all 0.2s ease;
+}
 
-        .btn-buy {
-            background-color: #E64938;
-            color: white;
-            border: none;
-            flex: 2 !important;
-        }
+.toggle-button:hover {
+	background-color: #f0f7ff;
+	text-decoration: underline;
+}
 
-        .btn-buy:hover {
-            background-color: #d43b2a;
-        }
+.toggle-button::after {
+	content: '';
+	display: inline-block;
+	margin-left: 5px;
+	width: 8px;
+	height: 8px;
+	border-right: 2px solid #0066c0;
+	border-bottom: 2px solid #0066c0;
+	transform: rotate(45deg);
+	transition: transform 0.2s ease;
+}
 
-        .btn-wishlist {
-            background-color: white;
-            color: #666;
-            border: 1px solid #666;
-        }
+.toggle-button.expanded::after {
+	transform: rotate(-135deg);
+}
 
-        .btn-wishlist:hover {
-            background-color: #f8f9fa;
-            color: #333;
-        }
+/* 버튼 그룹 스타일 */
+.action-buttons {
+	display: flex;
+	gap: 10px;
+	margin: 20px 0;
+}
 
-        .btn-cart {
-            background-color: #666;
-            color: white;
-            border: none;
-        }
+.action-buttons .btn {
+	flex: 1;
+	padding: 12px;
+	font-weight: 500;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	transition: all 0.2s ease;
+}
 
-        .btn-cart:hover {
-            background-color: #555;
-        }
+.btn-buy {
+	background-color: #E64938;
+	color: white;
+	border: none;
+	flex: 2 !important;
+}
 
-        /* 반응형 스타일 */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-                margin: 1rem;
-            }
+.btn-buy:hover {
+	background-color: #d43b2a;
+}
 
-            .action-buttons {
-                flex-direction: column;
-            }
+.btn-wishlist {
+	background-color: white;
+	color: #666;
+	border: 1px solid #666;
+}
 
-            .action-buttons .btn {
-                width: 100%;
-            }
-        }
-    </style>
+.btn-wishlist:hover {
+	background-color: #f8f9fa;
+	color: #333;
+}
+
+.btn-cart {
+	background-color: #666;
+	color: white;
+	border: none;
+}
+
+.btn-cart:hover {
+	background-color: #555;
+}
+
+/* 반응형 스타일 */
+@media ( max-width : 768px) {
+	.container {
+		padding: 15px;
+		margin: 1rem;
+	}
+	.action-buttons {
+		flex-direction: column;
+	}
+	.action-buttons .btn {
+		width: 100%;
+	}
+}
+</style>
 </head>
 <body>
 	<div class="container my-5">
@@ -255,20 +288,25 @@ double convertedRating = (rating / 10) * 5;
 					<%=book.getCategory()%>
 				</div>
 
-				<div class="rating-stars mb-3">
-    <%
-    for (int i = 1; i <= 5; i++) {
-        if (i <= convertedRating) {
-            out.print("<i class='fas fa-star'></i>");
-        } else if (i - convertedRating < 1) {
-            out.print("<i class='fas fa-star-half-alt'></i>");
-        } else {
-            out.print("<i class='far fa-star'></i>");
-        }
-    }
-    %>
-    <span class="ms-2"><%=String.format("%.1f", rating)%></span>
-</div>
+				<div class="rating-review">
+					<div class="rating-stars">
+						<%
+						for (int i = 1; i <= 5; i++) {
+							if (i <= convertedRating) {
+								out.print("<i class='fas fa-star'></i>");
+							} else if (i - convertedRating < 1) {
+								out.print("<i class='fas fa-star-half-alt'></i>");
+							} else {
+								out.print("<i class='far fa-star'></i>");
+							}
+						}
+						%>
+					</div>
+					<span class="rating-score"><%=String.format("%.1f", rating)%></span>
+					<a href="<%=getEnvs%>reviewList&book_idx=<%=bookCnt%>"
+						class="review-link"> <i class="far fa-comment-dots"></i> 리뷰 보기
+					</a>
+				</div>
 
 				<div class="bookdetail-info">
 					<div class="book-details">
@@ -297,8 +335,9 @@ double convertedRating = (rating / 10) * 5;
 		</div>
 	</div>
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
         // DOM 로드 이벤트와 버튼 이벤트를 하나의 스크립트로 통합
         document.addEventListener("DOMContentLoaded", function() {
             // 더보기 버튼 기능
