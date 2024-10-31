@@ -440,7 +440,7 @@
 	</script>
 	
 	<script>
-	function checkMemIdDuplicate() {
+	function heldCheckMemIdDuplicate() {
 	    const elmMemid = document.getElementById('memid'); // elmMemid 변수 정의
 	    const valResult = validateMemId();
 	    if (valResult === false) {
