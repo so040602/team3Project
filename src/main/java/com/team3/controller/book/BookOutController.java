@@ -48,6 +48,7 @@ public class BookOutController extends SuperClass{
 		int oid = jsonObject.getInt("oid");
 
 		System.out.println(bookId);
+		System.out.println(oid);
 		
 		int midx = super.loginfo.getMemidx();
 		BookDao dao = new BookDao();
