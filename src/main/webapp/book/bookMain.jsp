@@ -445,9 +445,9 @@ String getEnvs = appName + mappingName + "?opsmode=";
             </a></li>
             <li><a href="<%=getEnvs%>bookRecent"> <i class="fas fa-book-open"></i> 신간 도서
             </a></li>
-            <li><a href="#"> <i class="fas fa-pen-fancy"></i> 서평 & 추천
+            <li><a href="<%=getEnvs%>reviewList"> <i class="fas fa-pencil-alt"></i> 서평 & 추천
             </a></li>
-            <li><a href="<%=getEnvs%>aibbsList"> <i class="fas fa-clipboard-list"></i> AI Lab
+            <li><a href="<%=getEnvs%>aibbsList"> <i class="fas fa-flask"></i> AI Lab
             </a></li>
          </ul>
       </nav>

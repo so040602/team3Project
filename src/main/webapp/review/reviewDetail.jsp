@@ -1,66 +1,60 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.team3.model.bean.Review" %>
-<%
-    Review review = (Review) request.getAttribute("review");
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="./../common/common.jsp" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>서평 상세보기</title>
+    <title>리뷰 상세보기</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        .review-container {
-            border: 1px solid #ccc;
+        .review-detail {
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            border: 1px solid #ddd;
         }
-        .review-title {
-            font-size: 24px;
-            margin-bottom: 10px;
+        .review-header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
-        .review-body {
-            margin-bottom: 15px;
+        .review-content {
+            min-height: 200px;
+            margin: 20px 0;
+            white-space: pre-wrap;
         }
-        .review-meta {
-            font-size: 14px;
-            color: #666;
-        }
-        .back-link {
-            display: inline-block;
+        .btn-group {
             margin-top: 20px;
-            text-decoration: none;
-            color: #007BFF;
-        }
-        .back-link:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>서평 상세보기</h1>
-    <div class="review-container">
-        <% if (review != null) { %>
-            <div class="review-title"><%= review.getReview_title() %></div>
-            <div class="review-body"><%= review.getReview_body() %></div>
-            <div class="review-meta">
-                <p>조회수: <%= review.getReview_cnt() %></p>
-                <p>작성일: <%= review.getReview_regdate() %></p>
-                <p>책 제목: <%= review.getBook_name() %></p>
-                <p>작성자: <%= review.getMemid() %></p>
+    <div class="container">
+        <div class="review-detail">
+            <div class="review-header">
+                <h2>${review.review_title}</h2>
+                <p>
+                    도서: ${review.book_name} | 
+                    작성자: ${review.memid} | 
+                    조회수: ${review.review_cnt} | 
+                    작성일: <fmt:formatDate value="${review.review_regdate}" pattern="yyyy-MM-dd HH:mm"/>
+                </p>
             </div>
-        <% } else { %>
-            <p>서평 정보를 불러오는 데 실패했습니다.</p>
-        <% } %>
+            
+            <div class="review-content">
+                ${review.review_body}
+            </div>
+            
+            <div class="btn-group">
+                <a href="<%=getEnvs%>reviewList" class="btn btn-primary">목록</a>
+                <c:if test="${sessionScope.loginfo.memid eq review.memid}">
+                    <a href="<%=getEnvs%>reviewUpdate&reviewIdx=${review.reviewidx}" 
+                       class="btn btn-success">수정</a>
+                    <a href="<%=getEnvs%>reviewDelete&reviewIdx=${review.reviewidx}" 
+                       class="btn btn-danger" 
+                       onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+                </c:if>
+            </div>
+        </div>
     </div>
-    <a class="back-link" href="reviewList.jsp">목록으로 돌아가기</a>
 </body>
 </html>
