@@ -64,8 +64,7 @@
             };
             xhr.send(data);
         }
-    </script>
-    
+    </script>   
 </head>
 	
 </body>
