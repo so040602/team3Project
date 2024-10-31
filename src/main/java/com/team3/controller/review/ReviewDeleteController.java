@@ -1,13 +1,11 @@
 package com.team3.controller.review;
 
-import java.util.List;
 import com.team3.controller.SuperClass;
-import com.team3.model.bean.Review;
 import com.team3.model.dao.ReviewDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class ReviewListController extends SuperClass {
+public class ReviewDeleteController extends SuperClass {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
         super.doGet(request, response);
@@ -15,14 +13,18 @@ public class ReviewListController extends SuperClass {
         ReviewDao dao = new ReviewDao();
         
         try {
-            List<Review> reviews = dao.selectAllReviews();
-            request.setAttribute("reviews", reviews);
+            int reviewIdx = Integer.parseInt(request.getParameter("reviewIdx"));
+            boolean isSuccess = dao.deleteReview(reviewIdx);
             
-            super.gotoPage("review/reviewList.jsp");
+            if (isSuccess) {
+            	response.sendRedirect(request.getContextPath() + "/coolapp?opsmode=reviewList");
+            } else {
+                throw new Exception("리뷰 삭제 실패");
+            }
             
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errorMessage", "리뷰 목록을 불러오는 중 오류가 발생했습니다.");
+            request.setAttribute("errorMessage", "리뷰 삭제 중 오류가 발생했습니다.");
             super.gotoPage("common/error.jsp");
         }
     }

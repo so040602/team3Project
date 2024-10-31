@@ -3,13 +3,13 @@ package com.team3.model.bean;
 import java.sql.Timestamp;
 
 public class Review {
-    private int reviewidx;
-    private String review_title;
-    private String review_body;
-    private int review_cnt;
-    private Timestamp review_regdate;  // Timestamp 타입으로 변경
-    private String book_name;
-    private String memid;
+    private int reviewidx; // 서평 번호
+    private String review_title; // 서평 제목
+    private String review_body; // 서평 내용
+    private int review_cnt; // 서평 조회수
+    private Timestamp review_regdate;  // 서평 작성일자
+    private String book_name; // 책 이름
+    private String memid; // 작성자
 
     // Getters and Setters
     public int getReviewidx() {

@@ -214,6 +214,10 @@ public class TeamUtility {
 		
 		// review section
 		opsMap.put("reviewList", "com.team3.controller.review.ReviewListController");
+		opsMap.put("reviewDetail", "com.team3.controller.review.ReviewDetailController");
+		opsMap.put("reviewUpdate", "com.team3.controller.review.ReviewUpdateController");
+		opsMap.put("reviewDelete", "com.team3.controller.review.ReviewDeleteController");
+		opsMap.put("reviewInsert", "com.team3.controller.review.ReviewInsertController");
 	
 		// product section
 		opsMap.put("prdInsert", "com.team3.controller.product.ProductInsertController");

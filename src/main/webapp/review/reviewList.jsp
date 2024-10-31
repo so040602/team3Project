@@ -1,97 +1,67 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.team3.model.bean.Review" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%
-    List<Review> reviews = (List<Review>) request.getAttribute("reviews");
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 날짜 포맷
-    
-   
- // 나의 프로젝트(애플리케이션 이름) 이름이며, 컨텍스트 이름이라고 합니다.
- String appName = request.getContextPath();
-
- // FrontController.java 파일의 url Pattern과 동일해야 합니다.
- // 서블릿 매핑을 위한 문자열 이름입니다.
- String mappingName = "/coolapp";
-
- // form 태그에서 변수 값 전달
- String postForm = appName + mappingName;
-
- // get url에서 변수 값 전달
- String getEnvs = appName + mappingName + "?opsmode=";
-
- // out.println(getEnvs);
-
-    
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="./../common/common.jsp" %>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>서평 리스트</title>
+    <title>리뷰 목록</title>
     <style>
-        table {
+        .review-table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
-        th, td {
+        .review-table th, .review-table td {
             padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
+            border: 1px solid #ddd;
         }
-        th {
-            background-color: #f2f2f2;
+        .review-table th {
+            background-color: #f5f5f5;
         }
-        a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-        a:hover {
-            text-decoration: underline;
+        .btn-write {
+            float: right;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>서평 리스트</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>서평 번호</th>
-                <th>서평 제목</th>
-                <th>서평 내용</th>
-                <th>조회수</th>
-                <th>작성일</th>
-                <th>책 제목</th>
-                <th>작성자</th>
-                <th>상세보기</th>
-            </tr>
-        </thead>
-        <tbody>
-            <%
-                if (reviews != null && !reviews.isEmpty()) {
-                    for (Review review : reviews) {
-            %>
-                        <tr>
-                            <td><%= review.getReviewidx() %></td>
-                            <td><a href="reviewDetail.jsp&reviewIdx=<%= review.getReviewidx() %>"><%= review.getReview_title() %></a></td>
-                            <td><%= review.getReview_body() %></td>
-                            <td><%= review.getReview_cnt() %></td>
-                            <td><%= sdf.format(review.getReview_regdate()) %></td> <!-- 포맷팅된 날짜 -->
-                            <td><%= review.getBook_name() %></td>
-                            <td><%= review.getMemid() %></td>
-                            <td><a href="reviewDetail.jsp&reviewIdx=<%= review.getReviewidx() %>">상세보기</a></td>
-                        </tr>
-            <%
-                    }
-                } else {
-            %>
+    <div class="container">
+        <h2>도서 리뷰 목록</h2>
+        
+        <div class="btn-write">
+            <a href="<%=getEnvs%>reviewInsert" class="btn btn-primary">리뷰 작성</a>
+        </div>
+        
+        <table class="review-table">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>책 제목</th>
+                    <th>작성자</th>
+                    <th>조회수</th>
+                    <th>작성일자</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="review" items="${requestScope.reviews}">
                     <tr>
-                        <td colspan="8">서평이 없습니다.</td>
+                        <td>${review.reviewidx}</td>
+                        <td>
+                            <a href="<%=getEnvs%>reviewDetail&reviewIdx=${review.reviewidx}">
+                                ${review.review_title}
+                            </a>
+                        </td>
+                        <td>${review.book_name}</td>
+                        <td>${review.memid}</td>
+                        <td>${review.review_cnt}</td>
+                        <td>
+                            <fmt:formatDate value="${review.review_regdate}" pattern="yyyy-MM-dd HH:mm"/>
+                        </td>
                     </tr>
-            <%
-                }
-            %>
-        </tbody>
-    </table>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
