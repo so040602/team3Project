@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.team3.model.bean.Book;
+import com.team3.model.bean.OutCart;
 import com.team3.model.bean.Paging;
 
 
@@ -723,5 +724,73 @@ public class BookDao extends SuperDao {
 		}
 		// TODO Auto-generated method stub
 		return cnt;
+	}
+
+	public List<OutCart> getOutCartList(int memidx) {
+		Connection conn = null;
+		PreparedStatement prsmt = null;
+		ResultSet rs = null;
+		List<OutCart> cartList = null;
+		String sql = "SELECT b.book_name, b.category, b.person_name, b.publisher, b.img, b.date,";
+		sql += " b.checkout, o.oid, o.regdate, o.book_idx, memidx, memname";
+		sql += " FROM booklist b";
+		sql += " Right JOIN (";
+		sql += "	select o.oid, o.regdate, o.book_idx, m.memidx, m.memname";
+		sql += "	from outcart o";
+		sql += "	LEFT JOIN team3_member m ON o.memidx = m.memidx";
+		sql += "	where o.memidx = ?";
+		sql += ") AS o ON b.book_idx = o.book_idx";
+		sql += " order by regdate";
+		
+		try {
+			conn = super.getConnection();
+			prsmt = conn.prepareStatement(sql);
+			prsmt.setInt(1, memidx);
+			rs = prsmt.executeQuery();
+			cartList = new ArrayList<OutCart>();
+			
+			while(rs.next()) {
+				OutCart bean = new OutCart();
+				bean = this.getOutCartData(rs);
+				cartList.add(bean);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		// TODO Auto-generated method stub
+		return cartList;
+	}
+
+	private OutCart getOutCartData(ResultSet rs) {
+		// TODO Auto-generated method stub
+		OutCart bean = new OutCart();
+		try {
+			bean.setBook_idx(rs.getInt("book_idx"));
+			bean.setMemidx(rs.getInt("memidx"));
+			bean.setOid(rs.getInt("oid"));
+			bean.setBook_name(rs.getString("book_name"));
+			bean.setCategory(rs.getString("category"));
+			bean.setPerson_name(rs.getString("person_name"));
+			bean.setPublisher(rs.getString("publisher"));
+			bean.setImg(rs.getString("img"));
+			bean.setRegdate(rs.getString("regdate"));
+			bean.setCheckout(rs.getString("checkout"));
+			bean.setMemname(rs.getString("memname"));
+			bean.setDate(rs.getString("date"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+
+		return bean;
 	}
 }

@@ -33,11 +33,15 @@ public class BookOutCartController extends SuperClass{
 		// TODO Auto-generated method stub
 		super.doPost(request, response);
 		
-		HttpSession session = request.getSession();
-		
-		Object loginInfo = session.getAttribute("loginInfo");
-		
-		System.out.println(loginInfo);
+		if(super.loginfo==null) {
+			super.youNeedLogin();
+			return ;
+		}
+//		
+		System.out.println("로그인 정보 : " + super.loginfo);
+	
+		System.out.println(super.loginfo.getMemidx());
+
 		
 		StringBuilder jsonBuilder = new StringBuilder();
 		String line;
@@ -56,9 +60,8 @@ public class BookOutCartController extends SuperClass{
 		BookDao dao = new BookDao();
 		String book_avail = dao.getCheckOut(bookId);
 		
-		Member mbean = new Member();
-		mbean.setMemidx(1);
-		int midx = mbean.getMemidx();
+		int midx = super.loginfo.getMemidx();
+		System.out.println(midx);
 				
 		int outCartCnt = dao.getOutCartCnt(midx);
 		
