@@ -151,6 +151,39 @@ public class MemberDao extends SuperDao {
 	}
 	
 	
+	// 회원 가입 아이디를 사용할 수 있는지 체크합니다.
+	public Member getMemberByMemid(String memid) {
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;		
+		String sql = " select * from TEAM3_MEMBER where memid = ? ";
+		
+		Member bean = null ;
+		
+		try {
+			conn = super.getConnection() ;
+			pstmt = conn.prepareStatement(sql) ;
+			pstmt.setString(1, memid);
+			rs = pstmt.executeQuery() ;
+			
+			if(rs.next()) {
+				bean = getBeanData(rs);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(pstmt!=null) {pstmt.close();}
+				if(conn!=null) {conn.close();}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return bean;
+	}
+	
 	private Member getBeanData(ResultSet rs) {
 		// ResultSet 객체를 사용하여 Bean 객체에 데이터를 설정합니다.
 		Member bean = new Member() ;
