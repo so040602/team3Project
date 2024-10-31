@@ -21,7 +21,7 @@ public class AibbsDetailController extends SuperClass {
 		AibbsDao dao = new AibbsDao() ;
 		Aibbs bean = null ;
 		
-		bean = dao.getBoardDataByPk(brdidx);
+		bean = dao.getAibbsDataByPk(brdidx);
 		
 		if(bean == null) {
 			super.setAlertMessage("잘못된 게시물 번호입니다.");

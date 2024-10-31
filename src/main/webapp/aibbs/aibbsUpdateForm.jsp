@@ -46,16 +46,84 @@
 			<div class="input-group">
 				<span class="input-group-text col-md-2">글내용</span> 
 				<input id="contents" name="contents" type="text" class="form-control" value="${requestScope.bean.contents}">
-			</div> 
-			<div class="input-group">
-				<span class="input-group-text col-md-2">첨부파일(1)</span> 
-				<input id="attach01" name="attach01" type="file" class="form-control">
 			</div>
-			<div class="input-group">
-				<span class="input-group-text col-md-2">첨부파일(2)</span> 
-				<input id="attach02" name="attach02" type="file" class="form-control">
-			</div>
-			<div class="input-group">
+			
+			<c:choose>
+			    <c:when test="${not empty requestScope.bean.attach01}">
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">첨부파일(1)</span> 
+			            <img id="attach01" src="111.png">
+			        </div>
+			    </c:when>
+			    <c:otherwise>
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">첨부파일(1)</span> 
+			            <input id="attach01" name="attach01" type="file" class="form-control">
+			        </div>
+			    </c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			    <c:when test="${not empty requestScope.bean.attach02}">
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">첨부파일(2)</span> 
+			            <img id="attach02" src="222.png">
+			        </div>
+			    </c:when>
+			    <c:otherwise>
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">첨부파일(2)</span> 
+			            <input id="attach02" name="attach02" type="file" class="form-control">
+			        </div>
+			    </c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			    <c:when test="${not empty requestScope.bean.attach03}">
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">첨부파일(3)</span> 
+			            <img id="attach03" src="333.png">
+			        </div>
+			    </c:when>
+			    <c:otherwise>
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">첨부파일(3)</span> 
+			            <input id="attach03" name="attach03" type="file" class="form-control">
+			        </div>
+			    </c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			    <c:when test="${not empty requestScope.bean.attach04}">
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">첨부파일(4)</span> 
+						<img id="attach04" src="333.png">
+			        </div>
+			    </c:when>
+			    <c:otherwise>
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">첨부파일(4)</span> 
+			            <input id="attach04" name="attach04" type="file" class="form-control">
+			        </div>
+			    </c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+			    <c:when test="${not empty requestScope.bean.codefile}">
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">코드파일</span> 
+			            <img id="attach04" src="444.png">
+			        </div>
+			    </c:when>
+			    <c:otherwise>
+			        <div class="input-group">
+			            <span class="input-group-text col-md-2">코드파일</span> 
+			            <input id="codefile" name="codefile" type="file" class="form-control">
+			        </div>
+			    </c:otherwise>
+			</c:choose>
+			 
+  			<div class="input-group">
 				<span class="input-group-text col-md-2">조회수</span> 
 				<input id="readcnt" name="readcnt" type="number" class="form-control" readonly value="${requestScope.bean.readcnt}"> 
 			</div> 

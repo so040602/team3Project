@@ -3,8 +3,9 @@
 <%@ include file="./../common/common.jsp" %>
 
 	<div class="container">
-		<h2>인공지능 목록</h2>
-		<p>팀원들이 작업한 목록을 보여 주는 페이지</p>	
+        <h2>인공지능 목록</h2>
+        <p>Team3 팀원들이 작업한 목록을 보여 주는 페이지</p>
+	    
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -61,6 +62,28 @@
 			</tbody>
 		</table>
 		
+		<div id="buttonset" style="text-align:right;">
+	    	<button type="submit" class="btn btn-primary" onclick="aibbsInsert();">
+	        	<i class="fas fa-sign-in-alt me-2"></i>인공 지능 개발 추가
+	        </button>
+	        &nbsp;
+	        <button type="submit" class="btn btn-primary" onclick="aibbsBigData();">
+	        	<i class="fas fa-sign-in-alt me-2"></i>빅데이터 처리 목록
+	        </button>
+	    </div>
+		
 	</div>	 
+	
+	<script>
+	  	function aibbsInsert(){
+	   		const aibbsInsertUrl = "<%=getEnvs%>aibbsInsert";
+	   		location.assign(aibbsInsertUrl);
+	   	}
+	  	
+	  	function aibbsBigData(){
+	   		const aibbsBigListUrl = "<%=getEnvs%>aibbsBigList";
+	   		location.assign(aibbsBigListUrl);
+	   	}
+	</script>
 </body>
 </html>
