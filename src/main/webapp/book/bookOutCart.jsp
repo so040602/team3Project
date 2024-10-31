@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div class="container">
+		<h2>북마크 페이지 입니다.</h2>	
+	</div>
 
 </body>
 </html>

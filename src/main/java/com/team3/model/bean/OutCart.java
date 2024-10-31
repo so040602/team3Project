@@ -12,14 +12,23 @@ public class OutCart {
 	private String publisher;
 	private String img;
 	private String checkout;
+	private String date;
 			
 	public OutCart() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Override
+	public String toString() {
+		return "OutCart [oid=" + oid + ", memidx=" + memidx + ", memname=" + memname + ", book_idx=" + book_idx
+				+ ", regdate=" + regdate + ", book_name=" + book_name + ", category=" + category + ", person_name="
+				+ person_name + ", publisher=" + publisher + ", img=" + img + ", checkout=" + checkout + ", date="
+				+ date + "]";
+	}
 
 	public OutCart(int oid, int memidx, String memname, int book_idx, String regdate, String book_name, String category,
-			String person_name, String publisher, String img, String checkout) {
+			String person_name, String publisher, String img, String checkout, String date) {
 		super();
 		this.oid = oid;
 		this.memidx = memidx;
@@ -32,6 +41,17 @@ public class OutCart {
 		this.publisher = publisher;
 		this.img = img;
 		this.checkout = checkout;
+		this.date = date;
+	}
+
+	
+	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public int getOid() {
