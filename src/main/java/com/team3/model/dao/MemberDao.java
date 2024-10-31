@@ -150,7 +150,6 @@ public class MemberDao extends SuperDao {
 		return bean;
 	}
 	
-	
 	// 회원 가입 아이디를 사용할 수 있는지 체크
 	public Member getMemberByMemid(String memid) {
 		PreparedStatement pstmt = null ;
