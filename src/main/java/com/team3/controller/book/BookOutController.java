@@ -1,6 +1,7 @@
 package com.team3.controller.book;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -14,6 +15,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
+@WebServlet("/team3/coolapp?opsmode=bookmark")
 public class BookOutController extends SuperClass{
 	
 	@Override
@@ -26,8 +29,6 @@ public class BookOutController extends SuperClass{
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		super.doPost(request, response);
-		
-		System.out.println(1);
 		
 		if(super.loginfo==null) {
 			super.youNeedLogin();
@@ -47,7 +48,7 @@ public class BookOutController extends SuperClass{
 		int bookId = jsonObject.getInt("bookId");
 		int oid = jsonObject.getInt("oid");
 
-		System.out.println(bookId);
+//		System.out.println(bookId);
 		System.out.println(oid);
 		
 		int midx = super.loginfo.getMemidx();
@@ -67,6 +68,7 @@ public class BookOutController extends SuperClass{
 				cnt = dao.insertbookOut(bookId, midx);
 				if(cnt != -99999) {					
 				}
+				sendJsonResPonse(response, book_avail);
 			}else {
 				sendJsonResPonse(response, book_avail);
 			}
@@ -88,6 +90,7 @@ public class BookOutController extends SuperClass{
 		PrintWriter out = response.getWriter();
 		out.print(jsonResponse);
 		out.flush();
+		
 	}
 
 }

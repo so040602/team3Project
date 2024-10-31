@@ -7,17 +7,17 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="lib" path="C:/Users/ict-19/Documents/카카오톡 받은 파일/jackson-annotations-2.17.2/jackson-annotations-2.17.2.jar">
+	<classpathentry kind="lib" path="C:/team3_lib/jackson-annotations-2.17.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ict-19/Documents/카카오톡 받은 파일/jackson-annotations-2.17.2/jackson-core-2.17.2.jar">
+	<classpathentry kind="lib" path="C:/team3_lib/jackson-core-2.17.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ict-19/Documents/카카오톡 받은 파일/jackson-annotations-2.17.2/jackson-databind-2.17.2.jar">
+	<classpathentry kind="lib" path="C:/team3_lib/jackson-databind-2.17.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

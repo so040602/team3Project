@@ -793,4 +793,54 @@ public class BookDao extends SuperDao {
 
 		return bean;
 	}
+
+	public int searchOutBook(int bookId, int midx) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement prsmt = null;
+		ResultSet rs = null;
+		int scnt = -99999;
+		String sql = "select * from bookout where book_idx = ? AND memidx = ?";
+		
+		try {
+			conn = super.getConnection();
+			prsmt = conn.prepareStatement(sql);
+			prsmt.setInt(1, bookId);
+			prsmt.setInt(2, midx);
+			rs = prsmt.executeQuery();
+			
+			if(rs.next()) {
+				//데이터가 존재하는 경우
+				scnt = 0;
+			}else {
+				//데이터가 존재하지 않는 경우
+				scnt = -1;
+			}
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(prsmt != null) {rs.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}				
+		return scnt;
+	}
+
+	public int insertbookOut(int bookId, int midx) {
+		// TODO Auto-generated method stub
+		Connection conn =null;
+		PreparedStatement prsmt = null;
+		int cnt = -99999;
+		String sql = "insert into ";
+		
+		
+		return 0;
+	}
 }

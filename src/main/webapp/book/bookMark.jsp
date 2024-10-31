@@ -14,10 +14,7 @@
     --primary-hover: #004d8c;
     --background-color: #f8f9fa;
 }
-	
-	
-	
-	
+
 	.container {
     max-width: 1400px;
     margin: 40px auto;
@@ -89,7 +86,7 @@
 									${bean.regdate}					
 								</td>
 								<td>
-									<button type="button" class="borrow-button btn-out" value="${bean.book_idx}">대출하기</button>
+									<button type="button" class="borrow-button btn-out" value="${bean.book_idx},${bean.oid}">대출하기</button>
 								</td>					
 							</tr>					
 						</c:forEach>	
@@ -106,15 +103,18 @@
         	const buttons = document.querySelectorAll('.btn-out')
             // 버튼 클릭 이벤트
             buttons.forEach(button => {button.addEventListener('click', function() {
-                const bookOutIdx = this.value;
-                console.log(bookOutIdx)
+                const values = this.value.split(',');
+            	const bookOutIdx = values[0];
+                const cartOid = values[1];
+                console.log(bookOutIdx);
+                console.log(cartOid);
                 
                 fetch('<%=getEnvs%>bookOut', {
                 	method: 'POST',
                 	headers: {
                 		'Content-Type':'application/json'
                 	},
-                	body: JSON.stringify({bookId:bookOutIdx})
+                	body: JSON.stringify({bookId: bookOutIdx, oid: cartOid})
                 }).then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
