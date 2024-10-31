@@ -1,19 +1,33 @@
 package com.team3.controller.book;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team3.controller.SuperClass;
+import com.team3.model.dao.BookDao;
 
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class BookOutController extends SuperClass{
+	
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		super.doGet(request, response);
+	}
+	
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		super.doPost(request, response);
+		
+		System.out.println(1);
 		
 		if(super.loginfo==null) {
 			super.youNeedLogin();
@@ -31,12 +45,48 @@ public class BookOutController extends SuperClass{
 		
 		JSONObject jsonObject = new JSONObject(jsonBuilder.toString());
 		int bookId = jsonObject.getInt("bookId");
+		int oid = jsonObject.getInt("oid");
+
+		System.out.println(bookId);
+		
 		int midx = super.loginfo.getMemidx();
+		BookDao dao = new BookDao();
+				
+		int scnt = -99999;
 		
-		System.out.println("bookId: " + bookId);
+		scnt = dao.searchOutBook(bookId, midx);
+		if(scnt == 0) {
+			String bookState = "대여중";
+			sendJsonResPonse(response, bookState);
+		}else if(scnt == -1) {
+			String book_avail = dao.getCheckOut(bookId);
+			if(book_avail.equals("가능")) {
+				System.out.println("oid: " + oid);
+				int cnt = -99999;
+				cnt = dao.insertbookOut(bookId, midx);
+				if(cnt != -99999) {					
+				}
+			}else {
+				sendJsonResPonse(response, book_avail);
+			}
+		}else {
+			String dbState = "오류";
+			sendJsonResPonse(response, dbState);
+		}
 		
-		int cnt = -99999;
+
 		
+	}
+	private void sendJsonResPonse(HttpServletResponse response, String message) throws IOException {
+		// TODO Auto-generated method stub
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonResponse = objectMapper.writeValueAsString(message);			
+		// 응답 보내기
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(jsonResponse);
+		out.flush();
 	}
 
 }
