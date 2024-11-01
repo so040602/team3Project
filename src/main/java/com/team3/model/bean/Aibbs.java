@@ -10,6 +10,7 @@ public class Aibbs {
 	private String attach02 ; // 첨부파일
 	private String attach03 ; // 첨부파일
 	private String attach04 ; // 첨부파일
+	private String codefile ; // 코드파일
 	private int readcnt ; // 조회수
  	private String regdate ; // 등록일자
  	private String updated ; // 갱신일자
@@ -26,8 +27,8 @@ public class Aibbs {
  	public Aibbs() {}
 
 	public Aibbs(int brdidx, String memid, String boardpwd, String subtitle, String contents, String attach01,
-			String attach02, String attach03, String attach04, int readcnt, String regdate, String updated,
-			int groupnum, int ordernum, int depthcnt, int likes, int hates) {
+			String attach02, String attach03, String attach04, String codefile, int readcnt, String regdate,
+			String updated, int groupnum, int ordernum, int depthcnt, int likes, int hates) {
 		super();
 		this.brdidx = brdidx;
 		this.memid = memid;
@@ -38,6 +39,7 @@ public class Aibbs {
 		this.attach02 = attach02;
 		this.attach03 = attach03;
 		this.attach04 = attach04;
+		this.codefile = codefile;
 		this.readcnt = readcnt;
 		this.regdate = regdate;
 		this.updated = updated;
@@ -120,6 +122,14 @@ public class Aibbs {
 		this.attach04 = attach04;
 	}
 
+	public String getCodefile() {
+		return codefile;
+	}
+
+	public void setCodefile(String codefile) {
+		this.codefile = codefile;
+	}
+
 	public int getReadcnt() {
 		return readcnt;
 	}
@@ -186,13 +196,12 @@ public class Aibbs {
 
 	@Override
 	public String toString() {
-		return "Board [brdidx=" + brdidx + ", memid=" + memid + ", boardpwd=" + boardpwd + ", subtitle=" + subtitle
+		return "Aibbs [brdidx=" + brdidx + ", memid=" + memid + ", boardpwd=" + boardpwd + ", subtitle=" + subtitle
 				+ ", contents=" + contents + ", attach01=" + attach01 + ", attach02=" + attach02 + ", attach03="
-				+ attach03 + ", attach04=" + attach04 + ", readcnt=" + readcnt + ", regdate=" + regdate + ", updated="
-				+ updated + ", groupnum=" + groupnum + ", ordernum=" + ordernum + ", depthcnt=" + depthcnt + ", likes="
-				+ likes + ", hates=" + hates + "]";
+				+ attach03 + ", attach04=" + attach04 + ", codefile=" + codefile + ", readcnt=" + readcnt + ", regdate="
+				+ regdate + ", updated=" + updated + ", groupnum=" + groupnum + ", ordernum=" + ordernum + ", depthcnt="
+				+ depthcnt + ", likes=" + likes + ", hates=" + hates + "]";
 	}
 
- 		
  	
 }
