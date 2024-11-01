@@ -317,20 +317,20 @@ body {
 						<button id="toggleButton" class="toggle-button">더보기</button>
 					</div>
 				</div>
-
-				<div class="action-buttons">
-					<button class="btn btn-lg btn-buy">
-						<i class="fas fa-book"></i> 대출
-					</button>
-					<button class="btn btn-lg btn-wishlist">
-						<i class="fas fa-calendar-check"></i> 대출 예약
-					</button>
-					<button class="btn btn-lg btn-cart" value="<%=bookCnt%>">
-						<i class="fas fa-bookmark"></i> 북마크
-					</button>
-				</div>
-
-
+				
+				<c:if test="${whologin > 0}">
+					<div class="action-buttons">
+						<button class="btn btn-lg btn-buy btn-out" value="<%=bookCnt%>">
+							<i class="fas fa-book"></i> 대출
+						</button>
+						<button class="btn btn-lg btn-wishlist">
+							<i class="fas fa-calendar-check"></i> 대출 예약
+						</button>
+						<button class="btn btn-lg btn-cart" value="<%=bookCnt%>">
+							<i class="fas fa-bookmark"></i> 북마크
+						</button>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -391,7 +391,37 @@ body {
             });
             
             document.querySelector('.btn-buy').addEventListener('click', function() {
-                location.href = '<%=request.getContextPath()%>/order/orderForm.jsp?book_idx=<%=bookCnt%>';
+            	const bookOutIdx = this.value;
+            	console.log(bookOutIdx);
+            	fetch('<%=getEnvs%>BookListOut', {
+                	method: 'POST',
+                	headers: {
+                		'Content-Type':'application/json'
+                	},
+                	body: JSON.stringify({bookId: bookOutIdx})
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // JSON으로 응답 받기
+                })
+                .then(data => {
+                    console.log(data);// 서버에서 받은 응답 처리  
+                    if(data === "불가능"){
+                    	alert('이미 책이 대여 중 입니다.');
+                    }else if(data === "성공"){
+                    	alert('해당 책이 대출 되었습니다.');
+                    	window.location.href = window.location.href;
+                    }else if(data === "실패"){
+                    	alert('책을 대출할 수 없습니다.')
+                    } else if(data === "오류"){
+                    	alert('대출 진행 중 오류가 발생했습니다. 다시 시도해주세요.');
+                    }else if(data === "초과")
+                    	alert('대출 가능한 권수(4)를 초과했습니다.')
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
             });
         });
     </script>

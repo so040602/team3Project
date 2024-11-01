@@ -305,5 +305,4 @@ public class MemberDao extends SuperDao {
 		return bean;
 	}
 
-
 }

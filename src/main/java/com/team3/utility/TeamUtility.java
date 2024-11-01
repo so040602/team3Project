@@ -193,6 +193,7 @@ public class TeamUtility {
 		opsMap.put("memList",   "com.team3.controller.member.MemberListController");
 		opsMap.put("memLogin",  "com.team3.controller.member.MemberLoginController");
 		opsMap.put("memLogout", "com.team3.controller.member.MemberLogoutController");
+		opsMap.put("memMyPage", "com.team3.controller.member.MemberMyPageController");
 				
 		// user auth section
 		opsMap.put("userAuthStart", "com.team3.controller.member.UserAuthStartController");
@@ -256,9 +257,6 @@ public class TeamUtility {
 		opsMap.put("bookmark", "com.team3.controller.book.BookMarkController");
 		opsMap.put("bookOut", "com.team3.controller.book.BookOutController");
 		opsMap.put("BookListOut", "com.team3.controller.book.BookListOutController");
-
-		// big data section
-		//opsMap.put("bigCorr01","com.team3.controller.bigdata.corr01Controller");
 		
 		for ( String key : opsMap.keySet() ) {
 			String opsmode = key;

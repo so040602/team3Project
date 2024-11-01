@@ -2,6 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+<c:set var="whologin" value="0" />
+<c:if test="${not empty sessionScope.loginfo}">
+	<c:if test="${sessionScope.loginfo.memid == 'admin'}">
+		<c:set var="whologin" value="2" />
+	</c:if>
+	<c:if test="${sessionScope.loginfo.memid != 'admin'}">
+		<c:set var="whologin" value="1" />
+	</c:if>
+</c:if>
+
 <%
 String appName = request.getContextPath();
 String mappingName = "/coolapp";
@@ -413,20 +423,32 @@ String getEnvs = appName + mappingName + "?opsmode=";
       <header class="header">
          <div
             style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <a href="#" class="logo">책숲</a>
+            <a href="#" class="logo">책숲</a>       
             <div class="user-menu">
-                <a href="<%=getEnvs%>memLogin">
-                    <i class="fas fa-right-to-bracket"></i> 로그인
-                </a>
-                <a href="<%=getEnvs%>userAuthStart">
-                    <i class="fas fa-user-plus"></i> 회원가입
-                </a>
-                <a href="#">
-                    <i class="fas fa-user"></i> 마이페이지
-                </a>
-                <a href="#">
-                    <i class="fas fa-bookmark"></i> 북마크
-                </a>
+            	<c:choose>
+	            	<c:when test="${whologin == 0}">
+		                <a href="<%=getEnvs%>memLogin">
+		                    <i class="fas fa-right-to-bracket"></i>로그인
+		                </a>
+	
+		                <a href="<%=getEnvs%>userAuthStart">
+		                    <i class="fas fa-user-plus"></i>회원가입
+		                </a>
+		                
+	                </c:when>
+					<c:otherwise>
+						<a href="<%=getEnvs%>memMyPage">
+		                    <i class="fas fa-user"></i> 마이페이지
+		                </a>
+		                <a href="<%=getEnvs%>bookmark">
+	                    	<i class="fas fa-bookmark"></i> 북마크
+	                	</a>
+	                	<a href="<%=getEnvs%>logout">
+	                        <i class="fas fa-sign-out-alt"></i>
+	                        <span>로그아웃</span>
+	                    </a>				
+					</c:otherwise>
+				</c:choose>
             </div>
          </div>
          <div class="search-bar">
