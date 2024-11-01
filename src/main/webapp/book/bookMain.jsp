@@ -6,6 +6,15 @@
 <%@ page import="com.team3.model.bean.Review"%>
 <%@ page import="java.util.List"%>
 
+<c:set var="whologin" value="0" />
+<c:if test="${not empty sessionScope.loginfo}">
+	<c:if test="${sessionScope.loginfo.memid == 'admin'}">
+		<c:set var="whologin" value="2" />
+	</c:if>
+	<c:if test="${sessionScope.loginfo.memid != 'admin'}">
+		<c:set var="whologin" value="1" />
+	</c:if>
+</c:if>
 
 <%
 String appName = request.getContextPath();
@@ -279,6 +288,16 @@ body {
 	font-size: 13px;
 }
 
+.book-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.book-link:hover {
+    color: #0066c0;  /* 마우스 오버시 색상 변경 */
+}
+
 .articles-section {
 	padding: 20px;
 	margin-bottom: 30px;
@@ -426,15 +445,31 @@ body {
 			<div
 				style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
 				<a href="#" class="logo">책숲</a>
+	
 				<div class="user-menu">
+				<c:choose>
+                  <c:when test="${whologin == 0}">
 					<a href="<%=getEnvs%>memLogin"> <i
 						class="fas fa-right-to-bracket"></i> 로그인
 					</a> <a href="<%=getEnvs%>userAuthStart"> <i
 						class="fas fa-user-plus"></i> 회원가입
-					</a> <a href="#"> <i class="fas fa-user"></i> 마이페이지
-					</a> <a href="#"> <i class="fas fa-bookmark"></i> 북마크
-					</a>
-				</div>
+					</a>				
+					</c:when>
+					<c:otherwise>
+					 <a href="<%=getEnvs%>memMyPage">
+                          <i class="fas fa-user"></i> 마이페이지
+                      </a>
+
+					 <a href="<%=getEnvs%>bookmark">
+                          <i class="fas fa-bookmark"></i> 북마크
+                      </a>
+						<a href="<%=getEnvs%>logout">
+                           <i class="fas fa-sign-out-alt"></i>
+                           <span>로그아웃</span>
+                       </a>
+                       </c:otherwise>
+                 </c:choose>
+                 </div>
 			</div>
 			<div class="search-bar">
 				<input type="text" class="search-input"
@@ -486,7 +521,12 @@ body {
 					<div class="book-card">
 						<img src="${book.img}" alt="${book.book_name}" class="book-image">
 						<div class="book-info">
-							<h3 class="book-title">${book.book_name}</h3>
+							<h3 class="book-title">
+                    <a href="<%=getEnvs%>bookDetail&book_idx=${book.book_idx}" class="book-link">
+                        ${book.book_name}
+                    </a>
+                </h3>
+
 							<p class="book-person">${book.person_name}</p>
 							<div class="book-subinfo">
 								<span>${book.publisher}</span> <span>|</span> <span>${book.date}</span>
@@ -509,7 +549,12 @@ body {
 					<div class="book-card">
 						<img src="${book.img}" alt="${book.book_name}" class="book-image">
 						<div class="book-info">
-							<h3 class="book-title">${book.book_name}</h3>
+							<h3 class="book-title">
+                    <a href="<%=getEnvs%>bookDetail&book_idx=${book.book_idx}" class="book-link">
+                        ${book.book_name}
+                    </a>
+                </h3>
+
 							<p class="book-person">${book.person_name}</p>
 							<div class="book-subinfo">
 								<span>${book.publisher}</span> <span>|</span> <span>${book.date}</span>
