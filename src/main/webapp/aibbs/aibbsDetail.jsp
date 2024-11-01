@@ -3,7 +3,7 @@
 <%@ include file="./../common/common.jsp" %>
     
 	<style type="text/css">
-		.container{margin-top: 10px;} /* box model */
+		.container{margin-top: 10px;} /* box model style */
 		.rounded-pill{opacity: 0.7;}
 		#backButton{margin: auto;}
 		.tbBoardRead th {width: 120px;}
