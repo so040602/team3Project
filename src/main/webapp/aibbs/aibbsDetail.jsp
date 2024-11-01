@@ -106,12 +106,15 @@
 
 				<c:choose>
 				    <c:when test="${not empty requestScope.bean.codefile}">
-				        <tr>
-				            <th>코드파일</th>
-				            <td>
-				                <a href="${requestScope.filePath}/${requestScope.bean.codefile}">${requestScope.bean.codefile}</a>
-				            </td>
-				        </tr>
+						<tr>
+						    <th>코드파일</th>
+						    <td>
+						        <a href="${requestScope.filePath}/${requestScope.bean.codefile}" download>
+						            ${requestScope.bean.codefile}&nbsp;<i class="fa fa-download"></i>
+						        </a>
+						    </td>
+						</tr>
+
 				    </c:when>
 				    <c:otherwise>
 				        <tr>
