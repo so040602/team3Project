@@ -183,7 +183,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
                         <i class="fas fa-bookmark"></i>
                         <span>북마크</span>
                     </a>
-                    <a href="<%=getEnvs%>logout">
+                    <a href="<%=getEnvs%>memLogout">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>로그아웃</span>
                     </a>
