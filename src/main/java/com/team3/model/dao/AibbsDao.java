@@ -66,6 +66,7 @@ public class AibbsDao extends SuperDao {
 			bean.setAttach02(rs.getString("attach02"));
 			bean.setAttach03(rs.getString("attach03"));
 			bean.setAttach04(rs.getString("attach04"));
+			bean.setCodefile(rs.getString("codefile"));
 			bean.setReadcnt(rs.getInt("readcnt"));
 			bean.setGroupnum(rs.getInt("groupnum"));
 			bean.setOrdernum(rs.getInt("ordernum"));
@@ -134,6 +135,11 @@ public class AibbsDao extends SuperDao {
 	        sql.append(", attach04 = ?");
 	        paramList.add(bean.getAttach04());
 	        removePreloadedFile("attach04", bean.getBrdidx());
+	    }
+	    if (bean.getCodefile() != null) {
+	        sql.append(", codefile = ?");
+	        paramList.add(bean.getCodefile());
+	        removePreloadedFile("codefile", bean.getBrdidx());
 	    }
 
 	    // Add update timestamp and where clause
@@ -229,8 +235,8 @@ public class AibbsDao extends SuperDao {
 		
 		PreparedStatement pstmt = null;
 		String sql = " INSERT INTO TEAM3_AIBBS (memid, boardpwd, subtitle, contents, "
-				   + " attach01, attach02, attach03, attach04, regdate)" ;
-		sql += " VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())" ;	 
+				   + " attach01, attach02, attach03, attach04, codefile, regdate)" ;
+		sql += " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())" ;	 
 
 		int cnt = -99999 ;
 		
@@ -248,6 +254,7 @@ public class AibbsDao extends SuperDao {
 			pstmt.setString(6, bean.getAttach02());
 			pstmt.setString(7, bean.getAttach03());
 			pstmt.setString(8, bean.getAttach04());
+			pstmt.setString(9, bean.getCodefile());
 			
 			cnt = pstmt.executeUpdate() ;
 			
