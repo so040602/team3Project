@@ -88,15 +88,26 @@
 	</div>	 
 	
 	<script>
-	  	function aibbsInsert(){
-	   		const aibbsInsertUrl = "<%=getEnvs%>aibbsInsert";
-	   		location.assign(aibbsInsertUrl);
-	   	}
-	  	
-	  	function aibbsBigData(){
-	   		const aibbsBigListUrl = "<%=getEnvs%>aibbsBigList";
-	   		location.assign(aibbsBigListUrl);
-	   	}
+	<% 
+	    boolean isLoggedIn = session.getAttribute("loginfo") != null; // 로그인 정보 확인
+	%> 
+	    function aibbsInsert() {
+	        // JSP의 boolean 값을 숫자로 변환
+	        const isLoggedIn = <%= isLoggedIn ? 1 : 0 %>;
+	        const aibbsInsertUrl = "<%= getEnvs %>aibbsInsert";
+	        
+	        if (!isLoggedIn) {
+	            alert("로그인 이후 사용할 수 있습니다.");
+	        } else {
+	            location.assign(aibbsInsertUrl);
+	        }    
+	    }
+	    
+	    function aibbsBigData() {
+	        const aibbsBigListUrl = "<%= getEnvs %>aibbsBigList";
+	        location.assign(aibbsBigListUrl);
+	    }
 	</script>
+	
 </body>
 </html>
