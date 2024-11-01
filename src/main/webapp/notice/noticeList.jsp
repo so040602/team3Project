@@ -2,15 +2,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="com.team3.model.bean.Notice"%>
 <%@ page import="com.team3.model.dao.NoticeDao"%>
-
-
-
-<%
-String appName = request.getContextPath();
-String mappingName = "/coolapp";
-String postForm = appName + mappingName;
-String getEnvs = appName + mappingName + "?opsmode=";
-%>
+<%@ include file="./../common/common.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
