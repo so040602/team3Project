@@ -130,6 +130,41 @@ public class BookDao extends SuperDao {
 		
 		return lists;
     }
+    
+    public List<Book> getAllBooks() {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<Book> lists = new ArrayList<Book>();
+        
+        String sql = "SELECT book_idx, book_name, price, category, rating, date, "
+                   + "person_name, publisher, img, description "
+                   + "FROM booklist ORDER BY book_idx ASC";
+        
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            
+            while(rs.next()) {
+                Book bean = this.getBeanData(rs);
+                lists.add(bean);
+            }
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if(rs != null) {rs.close();}
+                if(pstmt != null) {pstmt.close();}
+                if(conn != null) {conn.close();}
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+        return lists;
+    }
 
     private Book getBeanData(ResultSet rs) {
         Book bean = new Book();
