@@ -142,6 +142,10 @@ String getEnvs = appName + mappingName + "?opsmode=";
 }
 </style>
 
+<!-- Stanley added on 2024-11-01 -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
 <header class="header">
     <div class="header-content">
         <a href="<%=getEnvs%>home" class="logo">책숲</a>
