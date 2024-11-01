@@ -31,20 +31,80 @@
 					<th>글내용</th>
 					<td>${requestScope.bean.contents}</td>
 				</tr>
-				<tr>
-					<th>첨부파일(1)</th>
-					<td>
-						<img src="${requestScope.filePath}/${requestScope.bean.attach01}" style="width:640px; height:auto;" 
-							alt="${requestScope.filePath}/${requestScope.bean.attach01}" />
-					</td>
-				</tr>
-				<tr>
-					<th>첨부파일(2)</th>
-					<td>
-						<img src="${requestScope.filePath}/${requestScope.bean.attach02}" style="width:640px; height:auto;" 
-							alt="${requestScope.filePath}/${requestScope.bean.attach02}" />
-					</td>
-				</tr>
+
+				<c:choose>
+				    <c:when test="${not empty requestScope.bean.attach01}">
+				        <tr>
+				            <th>첨부파일(1)</th>
+				            <td>
+				                <img src="${requestScope.filePath}/${requestScope.bean.attach01}" style="width:640px; height:auto;" 
+				                    alt="${requestScope.filePath}/${requestScope.bean.attach01}" />
+				            </td>
+				        </tr>
+				    </c:when>
+				    <c:otherwise>
+				        <tr>
+				            <th>첨부파일(1)</th>
+				            <td>첨부파일이 없습니다.</td>
+				        </tr>
+				    </c:otherwise>
+				</c:choose>
+				
+				<c:choose>
+				    <c:when test="${not empty requestScope.bean.attach02}">
+				        <tr>
+				            <th>첨부파일(2)</th>
+				            <td>
+				                <img src="${requestScope.filePath}/${requestScope.bean.attach02}" style="width:640px; height:auto;" 
+				                    alt="${requestScope.filePath}/${requestScope.bean.attach02}" />
+				            </td>
+				        </tr>
+				    </c:when>
+				    <c:otherwise>
+				        <tr>
+				            <th>첨부파일(2)</th>
+				            <td>첨부파일이 없습니다.</td>
+				        </tr>
+				    </c:otherwise>
+				</c:choose>
+				
+				<c:choose>
+				    <c:when test="${not empty requestScope.bean.attach03}">
+				        <tr>
+				            <th>첨부파일(3)</th>
+				            <td>
+				                <img src="${requestScope.filePath}/${requestScope.bean.attach03}" style="width:640px; height:auto;" 
+				                    alt="${requestScope.filePath}/${requestScope.bean.attach03}" />
+				            </td>
+				        </tr>
+				    </c:when>
+				    <c:otherwise>
+				        <tr>
+				            <th>첨부파일(3)</th>
+				            <td>첨부파일이 없습니다.</td>
+				        </tr>
+				    </c:otherwise>
+				</c:choose>
+				
+				<c:choose>
+				    <c:when test="${not empty requestScope.bean.attach04}">
+				        <tr>
+				            <th>첨부파일(4)</th>
+				            <td>
+				                <img src="${requestScope.filePath}/${requestScope.bean.attach04}" style="width:640px; height:auto;" 
+				                    alt="${requestScope.filePath}/${requestScope.bean.attach04}" />
+				            </td>
+				        </tr>
+				    </c:when>
+				    <c:otherwise>
+				        <tr>
+				            <th>첨부파일(4)</th>
+				            <td>첨부파일이 없습니다.</td>
+				        </tr>
+				    </c:otherwise>
+				</c:choose>
+
+
 				<tr>
 				<th>조회수</th>
 					<td>${requestScope.bean.readcnt}</td>

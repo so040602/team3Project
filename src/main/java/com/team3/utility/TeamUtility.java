@@ -199,12 +199,14 @@ public class TeamUtility {
 		opsMap.put("userCardParse", "com.team3.controller.member.UserCardAuthController");
 
 		// aibbs section
-		opsMap.put("aibbsInsert", "com.team3.controller.aibbs.AibbsInsertController");
-		opsMap.put("aibbsDetail", "com.team3.controller.aibbs.AibbsDetailController");
-		opsMap.put("aibbsUpdate", "com.team3.controller.aibbs.AibbsUpdateController");
-		opsMap.put("aibbsDelete", "com.team3.controller.aibbs.AibbsDeleteController");
-		opsMap.put("aibbsList",   "com.team3.controller.aibbs.AibbsListController");
-		
+		opsMap.put("aibbsInsert",   "com.team3.controller.aibbs.AibbsInsertController");
+		opsMap.put("aibbsDetail",   "com.team3.controller.aibbs.AibbsDetailController");
+		opsMap.put("aibbsUpdate",   "com.team3.controller.aibbs.AibbsUpdateController");
+		opsMap.put("aibbsDelete",   "com.team3.controller.aibbs.AibbsDeleteController");
+		opsMap.put("aibbsList",     "com.team3.controller.aibbs.AibbsListController");
+		opsMap.put("aiBigDataList", "com.team3.controller.aibbs.AiBigDataListController");
+		opsMap.put("aiBigDataView", "com.team3.controller.aibbs.AiBigDataViewController");
+				
 		// notice section
 		opsMap.put("noticeList", "com.team3.controller.notice.NoticeListController");
 		opsMap.put("noticeDetail", "com.team3.controller.notice.NoticeDetailController");

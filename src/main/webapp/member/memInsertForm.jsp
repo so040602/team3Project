@@ -201,14 +201,18 @@
         }
 //--------------------------------------------------------------------------//
 
-
-
 	    function validCheck() {
-	        const memid = $('#memid').val();
-	        if (memid.length < 4 || memid.length > 12) {
-	            alert('아이디는 4글자 이상 12글자 이하로 입력해 주세요.');
-	            $('#memid').focus();
-	            return false;
+
+	        const memidOK = $('#memidOK').val(); 
+	        
+	        if (memidOK == "NOTYET") { 
+	            alert('해당 아이디 사용을 확인하시기 바랍니다.'); 
+	            return false; 
+	        } else if (memidOK != "USEOK") { 
+	            alert('해당 아이디는 사용할 수 없습니다.'); 
+	            $('#memid').val(""); 
+	            $('#memid').focus(); 
+	            return false; 
 	        }
 	
 	        const memname = $('#memname').val();
@@ -282,7 +286,9 @@
             
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-user me-2"></i>아이디</span>
-                <input type="text" class="form-control" id="memid" name="memid" placeholder="4~12자 사이로 입력해주세요">
+                <input type="text" class="form-control noPreData" id="memid" name="memid" 
+                	placeholder="아이디는 4~12 영문 소문자와 숫자만 사용할 수 있습니다." autocomplete="off">
+                <input type="hidden" id="memidOK" value="NOTYET" />
                 <button type="button" class="btn btn-outline-primary id-check-btn" onclick="checkDuplicateId();">
                     <i class="fas fa-check me-1"></i>중복확인
                 </button>
@@ -290,12 +296,14 @@
             
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-signature me-2"></i>이름</span>
-                <input type="text" class="form-control" id="memname" name="memname" value="<%=request.getAttribute("parsedName")%>" placeholder="이름을 입력해주세요">
+                <input type="text" class="form-control" id="memname" name="memname" autocomplete="off" 
+                	value="<%=request.getAttribute("parsedName")%>" placeholder="이름을 입력해주세요" >
             </div>
             
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-lock me-2"></i>비밀번호</span>
-                <input type="password" class="form-control" id="mempwd" name="mempwd" placeholder="5~12자 사이로 입력해주세요">
+                <input type="password" class="form-control noPreData" id="mempwd" name="mempwd" autocomplete="off" 
+                	placeholder="5~12자 사이로 입력해주세요">
             </div>
             
             <div class="input-group">
@@ -319,22 +327,25 @@
             
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-mobile-alt me-2"></i>휴대폰</span>
-                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="휴대폰 번호를 입력해주세요">
+                <input type="text" class="form-control noPreData" id="mobile" name="mobile" autocomplete="off" placeholder="휴대폰 번호를 입력해주세요">
             </div>
             
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-envelope me-2"></i>이메일</span>
-                <input type="email" class="form-control" id="email" name="email" placeholder="이메일 주소를 입력해주세요">
+                <input type="email" class="form-control noPreData" id="email" name="email" autocomplete="off" 
+                	placeholder="이메일 주소를 입력해주세요">
             </div>
             
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-map-marker-alt me-2"></i>주소</span>
-                <input type="text" class="form-control" id="addr01" name="addr01" value="<%=request.getAttribute("parsedAddr01")%>" placeholder="기본 주소를 입력해주세요">
+                <input type="text" class="form-control" id="addr01" name="addr01" autocomplete="off"
+                	value="<%=request.getAttribute("parsedAddr01")%>" placeholder="기본 주소를 입력해주세요">
             </div>
             
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-home me-2"></i>상세주소</span>
-                <input type="text" class="form-control" id="addr02" name="addr02" value="<%=request.getAttribute("parsedAddr02")%>" placeholder="상세 주소를 입력해주세요">
+                <input type="text" class="form-control" id="addr02" name="addr02" autocomplete="off" 
+                	value="<%=request.getAttribute("parsedAddr02")%>" placeholder="상세 주소를 입력해주세요">
             </div>
 
             <div id="buttonset">
@@ -350,5 +361,122 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+	<script> 
+	    function alertUser(result) {
+	    	
+	    	let resText = "";
+	    	if (result) {
+	    	    resText = result.trim(); 
+	    	    document.getElementById("memidOK").value = resText; 
+	    	} else {
+	    	    return false;
+	    	}
+
+	        // elmMemid 변수 정의
+	        const elmMemid = document.getElementById('memid');
+	
+	        if (resText === "NOGOOD") {
+	            alert("해당 아이디를 사용할 수 없습니다.");
+	            elmMemid.value = "";
+	            elmMemid.focus();      	
+	        } else if (resText === "USEOK") { 
+	            alert('해당 아이디는 사용할 수 있습니다.'); 
+	            elmMemid.readOnly = true; 
+	        }  
+	    }
+	
+	    function validateMemId(){
+	        const elmMemid = document.getElementById('memid');
+	        if (!elmMemid.value) {
+	            alert("아이디를 입력하세요.");
+	            elmMemid.focus();
+	            return false;
+	        }
+	
+	        if (elmMemid.value.length < 4 || elmMemid.value.length > 12) {
+	            alert('아이디는 4글자 이상 12글자 이하로 입력해 주세요.');
+	            elmMemid.focus();
+	            return false;
+	        }
+	        
+	        // 아이디가 영문 소문자와 숫자만 구성되어 있는지 확인
+	        const alphanumericRegex = /^[a-z0-9]+$/; 
+	        if (!alphanumericRegex.test(elmMemid.value)) {
+	            alert('아이디는 영문 소문자와 숫자만 사용할 수 있습니다.');
+	            elmMemid.focus();
+	            return false;
+	        }
+	
+	        return true; // 유효성 검사 통과 시 true 반환
+	    }
+	
+	    // 바닐라 Ajax 코드
+	    function checkDuplicateId() {
+	    	
+	        const elmMemid = document.getElementById('memid'); // elmMemid 변수 정의
+	        const valResult = validateMemId();
+	        if (valResult === false) {
+	            return false;
+	        }
+	
+	        const xhr = new XMLHttpRequest();
+	        const url = "AjaxMemidCheck"; // 중요! 요청할 Servlet URL
+	        const data = "memid=" + encodeURIComponent(elmMemid.value); // URL 인코딩
+	
+	        xhr.open("POST", url, true);
+	        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	
+	        xhr.onreadystatechange = function () {
+	            if (xhr.readyState === 4 && xhr.status === 200) {
+	                alertUser(xhr.responseText);
+	            }
+	        };
+	        xhr.send(data);
+	    }
+	</script>
+	
+	<script>
+	function heldCheckMemIdDuplicate() {
+	    const elmMemid = document.getElementById('memid'); // elmMemid 변수 정의
+	    const valResult = validateMemId();
+	    if (valResult === false) {
+	        return false;
+	    }
+
+	    // FormData 객체 생성
+	    const formData = new FormData();
+	    formData.append("memid", elmMemid.value); // memid 값을 FormData에 추가
+
+	    const url = "AjaxMemidCheck"; // 중요! 요청할 Servlet URL
+
+	    // fetch를 사용하여 POST 요청
+	    fetch(url, {
+	        method: "POST",
+	        body: formData // FormData를 본문으로 전송
+	    })
+	    .then(response => {
+	        if (!response.ok) {
+	            throw new Error('네트워크 응답이 좋지 않습니다.');
+	        }
+	        return response.text(); // 응답을 텍스트로 변환
+	    })
+	    .then(data => {
+	        alertUser(data); // 서버 응답 처리
+	    })
+	    .catch(error => {
+	        console.error('오류 발생:', error); // 오류 처리
+	    });
+	}
+
+	</script>
+    
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+              	$(".noPreData").val("");
+            }, 1200); 
+        });
+    </script>
 </body>
 </html>

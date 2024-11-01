@@ -15,7 +15,7 @@
 		
 		<div class="input-group mt-2">
 			<span class="input-group-text spanTitle">홈으로</span>&nbsp; 
-			<a href="<%=getEnvs%>home">홈으로</a>
+			<a href="<%=getEnvs%>bookMain">홈으로</a>
 		</div>
 		<div class="input-group mt-2">
 			<span class="input-group-text spanTitle">로그인</span>&nbsp; 
@@ -25,7 +25,7 @@
 			<span class="input-group-text spanTitle">로그아웃</span>&nbsp; 
 			<a href="<%=getEnvs%>memLogout">로그아웃</a>
 		</div>
-		
+
 		<div class="input-group mt-2"> 
 			<span class="input-group-text spanTitle">회원가입</span>&nbsp; 
 			<a href="<%=getEnvs%>userAuthStart">회원가입</a>

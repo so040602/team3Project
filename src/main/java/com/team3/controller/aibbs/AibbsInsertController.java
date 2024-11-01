@@ -2,8 +2,8 @@ package com.team3.controller.aibbs;
 
 import com.team3.controller.HomeController;
 import com.team3.controller.SuperClass;
-import com.team3.model.bean.Board;
-import com.team3.model.dao.ReviewDao;
+import com.team3.model.bean.Aibbs;
+import com.team3.model.dao.AibbsDao;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +21,7 @@ public class AibbsInsertController extends SuperClass {
 		// TODO Auto-generated method stub
 		super.doPost(request, response);
 		
-		Board bean = new Board() ;
+		Aibbs bean = new Aibbs() ;
 		bean.setMemid(request.getParameter("memid"));
 		bean.setBoardpwd(request.getParameter("boardpwd"));
 		bean.setSubtitle(request.getParameter("subtitle"));
@@ -32,10 +32,12 @@ public class AibbsInsertController extends SuperClass {
 		bean.setAttach03((String)request.getAttribute("attach03"));
 		bean.setAttach04((String)request.getAttribute("attach04"));
 		
-		ReviewDao dao = new ReviewDao() ;
+		System.out.println("bean : " + bean.toString());
+		
+		AibbsDao dao = new AibbsDao() ;
 		int cnt = -999999;
 		try {
-			//cnt = dao.insertBoardData(bean);	
+			cnt = dao.insertAibbsData(bean); 
 			
 			if(cnt == -999999) { // 등록 실패
 				new AibbsInsertController().doGet(request, response);
