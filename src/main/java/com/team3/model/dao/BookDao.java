@@ -3,6 +3,7 @@ package com.team3.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -738,7 +739,7 @@ public class BookDao extends SuperDao {
 		sql += "	select o.oid, o.regdate, o.book_idx, m.memidx, m.memname";
 		sql += "	from outcart o";
 		sql += "	LEFT JOIN team3_member m ON o.memidx = m.memidx";
-		sql += "	where o.memidx = ?";
+		sql += "	where o.memidx = ? AND o.book_status = '대기' ";
 		sql += ") AS o ON b.book_idx = o.book_idx";
 		sql += " order by regdate";
 		
@@ -838,9 +839,116 @@ public class BookDao extends SuperDao {
 		Connection conn =null;
 		PreparedStatement prsmt = null;
 		int cnt = -99999;
-		String sql = "insert into ";
+		String sql = "insert into bookout(memidx, book_idx, regdate)";
+		sql += " values(?, ?, CURRENT_TIMESTAMP)";
 		
+		try {
+			conn = super.getConnection();
+			prsmt = conn.prepareStatement(sql);
+			prsmt.setInt(1, midx);
+			prsmt.setInt(2, bookId);
+			cnt = prsmt.executeUpdate();
+			
+			conn.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}finally {
+			try {
+				if(prsmt !=null) {prsmt.close();}
+				if(conn != null) {conn.close();}				
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
 		
-		return 0;
+		return cnt;
+	}
+
+	public int updateOutCart(int bookId, int midx) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement prsmt = null;
+		PreparedStatement bookprsmt = null;
+		int cnt = -99999;
+		String sql = " update outcart set book_status = '완료' , regdate = CURRENT_TIMESTAMP";
+		sql += " where book_idx = ? AND memidx = ?";
+		String bookSql = " update booklist set checkout = '불가능' ";
+		bookSql += " where book_idx = ?";
+		
+		try {
+			conn = super.getConnection();
+			prsmt = conn.prepareStatement(sql);
+			bookprsmt = conn.prepareStatement(bookSql);
+			prsmt.setInt(1, bookId);
+			prsmt.setInt(2, midx);
+			bookprsmt.setInt(1, bookId);
+			cnt = prsmt.executeUpdate();
+			cnt = bookprsmt.executeUpdate();
+			
+			conn.commit();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}finally {
+			try {
+				if(prsmt != null) {prsmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		
+		return cnt;
+	}
+
+	public int getCheckOutCount(int midx) {
+		Connection conn = null;
+		PreparedStatement prsmt = null;
+		ResultSet rs = null;
+		int cnt = 0;
+		String sql = " select count(*) AS cnt from bookout";
+		sql += " where memidx = ?";
+		
+		try {
+			conn = super.getConnection();
+			prsmt = conn.prepareStatement(sql);
+			prsmt.setInt(1, midx);
+			rs = prsmt.executeQuery();
+			
+			while(rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {prsmt.close();}
+				if(prsmt != null) {prsmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		
+		return cnt;
 	}
 }

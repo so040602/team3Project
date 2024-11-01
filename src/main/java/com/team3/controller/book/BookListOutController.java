@@ -1,31 +1,19 @@
 package com.team3.controller.book;
 
 import java.io.BufferedReader;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team3.controller.SuperClass;
-import com.team3.model.bean.OutCart;
 import com.team3.model.dao.BookDao;
 
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/coolapp/bookOut")
-public class BookOutController extends SuperClass{
-	
-	@Override
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		super.doGet(request, response);
-	}
-	
+public class BookListOutController extends SuperClass{
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
@@ -47,44 +35,38 @@ public class BookOutController extends SuperClass{
 		
 		JSONObject jsonObject = new JSONObject(jsonBuilder.toString());
 		int bookId = jsonObject.getInt("bookId");
-
+		int midx = super.loginfo.getMemidx();
+		
 		System.out.println(bookId);
 		
-		int midx = super.loginfo.getMemidx();
 		BookDao dao = new BookDao();
-				
-		int scnt = -99999;
 		
-		scnt = dao.searchOutBook(bookId, midx);
-		if(scnt == 0) {
-			String bookState = "대여중";
-			sendJsonResPonse(response, bookState);
-		}else if(scnt == -1) {
-			String book_avail = dao.getCheckOut(bookId);
-			if(book_avail.equals("가능")) {
-				int bookOutCount = dao.getCheckOutCount(midx);
-				if(bookOutCount < 4) {
-					int cnt = -99999;
-					cnt = dao.insertbookOut(bookId, midx);
-					if(cnt != -99999) {
-						int ucnt = -99999;
-						ucnt = dao.updateOutCart(bookId, midx);
-						if(ucnt != -99999) {
-							String bookState = "완료";
-							sendJsonResPonse(response, bookState);
-						}
+		String check = dao.getCheckOut(bookId);
+		int recOutState = dao.getCheckOutCount(midx);
+		
+		if(recOutState < 4) {
+			if(check.equals("불가능")) {
+				sendJsonResPonse(response, check);
+			}else {
+				int checkMark = dao.updateOutCart(bookId, midx);
+				if(checkMark > 0) {
+					int checkOut = dao.insertbookOut(bookId, midx);
+					if(checkOut > 0) {
+						String status = "성공";
+						sendJsonResPonse(response, status);					
+					}else {
+						String status = "실패";
+						sendJsonResPonse(response, status);
 					}
 				}else {
-					String bookState = "초과";
-					sendJsonResPonse(response, bookState);
+					String status = "오류";
+					sendJsonResPonse(response, status);
 				}
-			}else {
-				sendJsonResPonse(response, book_avail);
 			}
 		}else {
-			String dbState = "오류";
-			sendJsonResPonse(response, dbState);
-		}				
+			String status = "초과";
+			sendJsonResPonse(response, status);
+		}
 	}
 	private void sendJsonResPonse(HttpServletResponse response, String message) throws IOException {
 		// TODO Auto-generated method stub
@@ -98,5 +80,4 @@ public class BookOutController extends SuperClass{
 		out.flush();
 		
 	}
-
 }

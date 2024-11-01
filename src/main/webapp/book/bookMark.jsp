@@ -86,7 +86,7 @@
 									${bean.regdate}					
 								</td>
 								<td>
-									<button type="button" class="borrow-button btn-out" value="${bean.book_idx},${bean.oid}">대출하기</button>
+									<button type="button" class="borrow-button btn-out" value="${bean.book_idx}">대출하기</button>
 								</td>					
 							</tr>					
 						</c:forEach>	
@@ -103,18 +103,18 @@
         	const buttons = document.querySelectorAll('.btn-out')
             // 버튼 클릭 이벤트
             buttons.forEach(button => {button.addEventListener('click', function() {
-                const values = this.value.split(',');
-            	const bookOutIdx = values[0];
-                const cartOid = values[1];
+            	const bookOutIdx = this.value;
+
                 console.log(bookOutIdx);
-                console.log(cartOid);
+
+
                 
                 fetch('<%=getEnvs%>bookOut', {
                 	method: 'POST',
                 	headers: {
                 		'Content-Type':'application/json'
                 	},
-                	body: JSON.stringify({bookId: bookOutIdx, oid: cartOid})
+                	body: JSON.stringify({bookId: bookOutIdx})
                 }).then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -122,7 +122,20 @@
                     return response.json(); // JSON으로 응답 받기
                 })
                 .then(data => {
-                    console.log(data);// 서버에서 받은 응답 처리                
+                    console.log(data);// 서버에서 받은 응답 처리  
+                    
+                    if(data === "대여중"){
+                    	alert('이미 같은 책을 대여중 입니다.');
+                    }else if(data === "완료"){
+                    	alert('해당 책이 대출 되었습니다.');
+                    	window.location.href = window.location.href;
+                    }else if(data === "오류"){
+                    	alert('책을 대출할 수 없습니다.')
+                    } else if(data === "가능"){
+                    	alert('북마크에 추가되었습니다.');
+                    }else if(data === "초과"){
+                    	alert('더 이상 책을 대출할 수 없습니다.');
+                    }
                 })
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
