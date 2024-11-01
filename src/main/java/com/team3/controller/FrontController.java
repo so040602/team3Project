@@ -280,6 +280,7 @@ public class FrontController extends HttpServlet {
 		    System.out.println("attach02: " + (String)request.getAttribute("attach02"));
 		    System.out.println("attach03: " + (String)request.getAttribute("attach03"));
 		    System.out.println("attach04: " + (String)request.getAttribute("attach04"));
+		    System.out.println("codefile: " + (String)request.getAttribute("codefile"));
 	        
 	    }
 	    
