@@ -31,6 +31,7 @@ public class AibbsInsertController extends SuperClass {
 		bean.setAttach02((String)request.getAttribute("attach02"));
 		bean.setAttach03((String)request.getAttribute("attach03"));
 		bean.setAttach04((String)request.getAttribute("attach04"));
+		bean.setCodefile((String)request.getAttribute("codefile"));
 		
 		System.out.println("bean : " + bean.toString());
 		
