@@ -1,8 +1,8 @@
 package com.team3.controller.aibbs;
 
 import com.team3.controller.SuperClass;
-import com.team3.model.bean.Board;
-import com.team3.model.dao.ReviewDao;
+import com.team3.model.bean.Aibbs;
+import com.team3.model.dao.AibbsDao;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,9 +14,9 @@ public class AibbsUpdateController extends SuperClass{
 		super.doGet(request, response);
 		// 수정할 게시물 번호를 우선 챙깁니다.
 		int brdidx = Integer.parseInt(request.getParameter("brdidx"));
-		ReviewDao dao = new ReviewDao() ;
-	//	Board bean = dao.getBoardDataByPk(brdidx);
-	//	request.setAttribute("bean", bean); 
+		AibbsDao dao = new AibbsDao() ;
+		Aibbs bean = dao.getAibbsDataByPk(brdidx);
+		request.setAttribute("bean", bean); 
 		
 		super.gotoPage("aibbs/aibbsUpdateForm.jsp");
 	}
@@ -26,7 +26,7 @@ public class AibbsUpdateController extends SuperClass{
 		// TODO Auto-generated method stub
 		super.doPost(request, response);
 		
-		Board bean = new Board() ;
+		Aibbs bean = new Aibbs() ;
 		
 		bean.setBrdidx(Integer.parseInt(request.getParameter("brdidx")));
 		bean.setMemid(request.getParameter("memid"));
@@ -37,11 +37,12 @@ public class AibbsUpdateController extends SuperClass{
 		bean.setAttach02((String)request.getAttribute("attach02"));
 		bean.setAttach03((String)request.getAttribute("attach03"));
 		bean.setAttach04((String)request.getAttribute("attach04"));
+		bean.setCodefile((String)request.getAttribute("codefile"));
 		
-		ReviewDao dao = new ReviewDao() ;
+		AibbsDao dao = new AibbsDao() ;
 		int cnt = -999999;
 		try {
-	//		cnt = dao.updateBoardData(bean);	
+			cnt = dao.updateAibbsData(bean);	
 			
 			if(cnt == -999999) { // 등록 실패
 				new AibbsUpdateController().doGet(request, response);
