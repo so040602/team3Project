@@ -1,13 +1,16 @@
 package com.team3.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.team3.model.bean.Book;
+import com.team3.model.bean.BookOutCur;
 import com.team3.model.bean.OutCart;
 import com.team3.model.bean.Paging;
 
@@ -680,7 +683,7 @@ public class BookDao extends SuperDao {
 		ResultSet rs = null;
 		int count = 0;
 		String sql = " select count(*) AS cnt From outcart";
-		sql += " where memidx = ?";
+		sql += " where memidx = ? AND book_status='대기'";
 		
 		try {
 			conn = super.getConnection();
@@ -836,7 +839,7 @@ public class BookDao extends SuperDao {
 		PreparedStatement prsmt = null;
 		ResultSet rs = null;
 		int scnt = -99999;
-		String sql = "select * from bookout where book_idx = ? AND memidx = ?";
+		String sql = "select * from bookout where book_idx = ? AND memidx = ? AND returns = '대출'";
 		
 		try {
 			conn = super.getConnection();
@@ -920,6 +923,7 @@ public class BookDao extends SuperDao {
 		
 		try {
 			conn = super.getConnection();
+			conn.setAutoCommit(false); //자동 커밋 비활성화
 			prsmt = conn.prepareStatement(sql);
 			bookprsmt = conn.prepareStatement(bookSql);
 			prsmt.setInt(1, bookId);
@@ -942,6 +946,7 @@ public class BookDao extends SuperDao {
 		}finally {
 			try {
 				if(prsmt != null) {prsmt.close();}
+				if(bookprsmt !=null) {bookprsmt.close();}
 				if(conn != null) {conn.close();}
 			} catch (Exception e2) {
 				// TODO: handle exception
@@ -958,7 +963,7 @@ public class BookDao extends SuperDao {
 		ResultSet rs = null;
 		int cnt = 0;
 		String sql = " select count(*) AS cnt from bookout";
-		sql += " where memidx = ?";
+		sql += " where memidx = ? AND returns = '대출'";
 		
 		try {
 			conn = super.getConnection();
@@ -984,6 +989,129 @@ public class BookDao extends SuperDao {
 			}
 		}
 		
+		return cnt;
+	}
+
+	public List<BookOutCur> CurrentBookOut(Integer memidx) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = " SELECT b.book_idx ,b.book_name, b.category, b.person_name,";
+		sql += "  b.publisher, b.img, b.date, memidx, memname, bo.regdate";
+		sql += " FROM booklist b RIGHT OUTER JOIN ";
+		sql += " (SELECT m.memidx, m.memname, bo.book_idx, bo.regdate";
+		sql += " FROM bookout bo LEFT OUTER JOIN team3_member m ON m.memidx = ?";
+		sql += " where bo.returns = '대출')";
+		sql += " AS bo ON b.book_idx = bo.book_idx";
+		List<BookOutCur> outlist = null;
+		
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memidx);
+			rs = pstmt.executeQuery();
+			outlist = new ArrayList<BookOutCur>();
+			
+			while(rs.next()) {
+				BookOutCur bean = getBookOutCurrent(rs);
+				outlist.add(bean);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return outlist;
+	}
+
+	private BookOutCur getBookOutCurrent(ResultSet rs) {
+		// TODO Auto-generated method stub
+		BookOutCur bean = null;
+		try {
+			Date date = rs.getDate("regdate");
+			
+			SimpleDateFormat rdate = new SimpleDateFormat("yyyy년MM월dd일");
+			String regdate = rdate.format(date);
+			bean = new BookOutCur();
+			bean.setBook_idx(rs.getInt("book_idx"));
+			bean.setBook_name(rs.getString("book_name"));
+			bean.setCategory(rs.getString("category"));
+			bean.setPerson_name(rs.getString("person_name"));
+			bean.setPublisher(rs.getString("publisher"));
+			bean.setImg(rs.getString("img"));
+			bean.setDate(rs.getString("date"));
+			bean.setMemidx(rs.getInt("memidx"));
+			bean.setMemname(rs.getString("memname"));
+			bean.setRegdate(regdate);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return bean;
+	}
+
+	public int updateBookOut(int bookId, int memidx) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement bookout_prsmt = null;
+		PreparedStatement booklist_prsmt = null;
+		int cnt = -99999;
+		String bookout_sql = "update bookout set returns = '반납'";
+		bookout_sql += " where book_idx = ? AND memidx = ?";
+		String booklist_sql = "update booklist set checkout = '가능'";
+		booklist_sql += " where book_idx = ?";
+		
+		try {
+			conn = super.getConnection();
+			conn.setAutoCommit(false); //자동 커밋 비활성화
+			
+			bookout_prsmt = conn.prepareStatement(bookout_sql);
+			booklist_prsmt = conn.prepareStatement(booklist_sql);
+			bookout_prsmt.setInt(1, bookId);
+			bookout_prsmt.setInt(2, memidx);
+			
+			
+			cnt = bookout_prsmt.executeUpdate();
+			
+			if(cnt > 0) {
+				booklist_prsmt.setInt(1, bookId);
+				cnt += booklist_prsmt.executeUpdate();
+			}
+			
+			
+			conn.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			try {
+				if(conn != null) {
+				conn.rollback();
+				}
+			} catch (SQLException e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}finally {
+			try {
+				if(bookout_prsmt != null) {bookout_prsmt.close();}
+				if(booklist_prsmt != null) {booklist_prsmt.close();}
+				if(conn != null) {conn.close();}				
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
 		return cnt;
 	}
 }

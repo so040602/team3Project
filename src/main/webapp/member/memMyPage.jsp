@@ -62,10 +62,7 @@ span {
 				<p>${sessionScope.loginfo.memname}님의 회원 정보입니다.</p>
 				<br />
 				<h3 class="main_header">회원 정보</h3>
-				
-				<span>이름 : ${mbean.memname}</span>
-				<span></span>
-				
+
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -104,9 +101,75 @@ span {
 						</tr>
 					</tbody>
 				</table>
+				
+				<h3 class="main_header">대출 현황</h3>
+				<p>${sessionScope.loginfo.memname}님의 대출 현황입니다.</p>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th></th>
+							<th>책 이름</th>
+							<th>장르</th>
+							<th>작가</th>
+							<th>출판사</th>
+							<th>출판날짜</th>
+							<th>대출자</th>
+							<th>대출날짜</th>
+							<th>반납하기</th>
+						</tr>
+					</thead>
+					<c:forEach var="bean" items="${requestScope.datalist}">
+						<tbody>
+							<td><img class="bookimg" src="${bean.img}" width="45" height="45" alt="${bean.book_name}"></td>
+							<td>${bean.book_name}</td>
+							<td>${bean.category}</td>
+							<td>${bean.person_name}</td>
+							<td>${bean.publisher}</td>							
+							<td>${bean.date}</td>
+							<td>${bean.memname}</td>
+							<td>${bean.regdate}</td>
+							<td><button type="button" id="mybutton" class="borrow-button btn-out" value="${bean.book_idx}" onclick="showConfirm(this.value)">도서 반납</button></td>
+						</tbody>
+					</c:forEach>
+
+				</table>
 			</div>
 			<div class="col-sm-2"></div>
 		</div>
 	</div>
+	
+	<script>
+        function showConfirm(bookidx){
+        	const result = confirm("반납을 진행 하시겠습니까?");
+        	console.log(bookidx);
+        	if(result){
+        		fetch('<%=getEnvs%>bookOut', {
+        			method:'POST',
+        			headers:{
+        				'Content-Type':'application/json'
+        			},
+        			body:JSON.stringify({bookId:bookidx})
+        		}).then(response => {
+        			if(!response.ok){
+        				throw new Error('Network response was not ok');
+        			}
+        			return response.json(); //JSON으로 응답 받기
+        		})
+        		.then(data => {
+        			console.log(data);
+        			if(data === "완료"){
+                    	alert('반납이 완료 되었습니다.');
+                    	window.location.href = window.location.href;
+                    }else if(data === "실패"){
+                    	alert('반납이 실패하였습니다.');
+                    	window.location.href = window.location.href;
+                    }
+        		})
+        		.catck(error => {
+        			console.error('There has been a problem with your fetch operation:', error);
+        		});
+        	}
+        }
+    </script>
 </body>
 </html>

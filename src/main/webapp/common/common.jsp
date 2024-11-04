@@ -176,7 +176,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
                     </a>
                 </c:when>
                 <c:otherwise>
-                    <a href="<%=getEnvs%>mypage">
+                    <a href="<%=getEnvs%>memMyPage">
                         <i class="fas fa-user"></i>
                         <span>마이페이지</span>
                     </a>
