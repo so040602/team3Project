@@ -3,6 +3,10 @@ package com.team3.controller.member;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -32,10 +36,30 @@ public class MemberMyPageController extends SuperClass{
 		BookDao bookdao = new BookDao();
 		
 		List<BookOutCur> outlist = bookdao.CurrentBookOut(memidx);
+		
+		List<BookOutCur> overList = new ArrayList<BookOutCur>();
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy년MM월dd일");
+		LocalDate date = null;
+		LocalDate limitDate = null;
+		LocalDate currentDate = LocalDate.now();
+		List<BookOutCur> copyList = new ArrayList<BookOutCur>(outlist);
+		
+		for(BookOutCur bean2 : copyList) {
+			String curDate = bean2.getRegdate();
+			date = LocalDate.parse(curDate, dateFormat);
+			limitDate = date.plusDays(14);
+			
+			if(limitDate.isBefore(currentDate)) {
+				overList.add(bean2);
+				outlist.remove(bean2);
+			}
+		}
 			
 		request.setAttribute("mbean", bean);
 		request.setAttribute("datalist", outlist);
+		request.setAttribute("limitdate", overList);
 		super.gotoPage("member/memMyPage.jsp");
+		
 	}
 	
 	@Override
