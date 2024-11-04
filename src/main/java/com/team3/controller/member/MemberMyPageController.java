@@ -32,7 +32,7 @@ public class MemberMyPageController extends SuperClass{
 		BookDao bookdao = new BookDao();
 		
 		List<BookOutCur> outlist = bookdao.CurrentBookOut(memidx);
-				
+			
 		request.setAttribute("mbean", bean);
 		request.setAttribute("datalist", outlist);
 		super.gotoPage("member/memMyPage.jsp");

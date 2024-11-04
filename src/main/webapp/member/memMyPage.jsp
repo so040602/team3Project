@@ -45,6 +45,24 @@ span {
 .borrow-button:hover {
 	background-color: var(--primary-hover);
 }
+.main_header {
+    display: inline; /* 텍스트와 버튼을 같은 줄에 배치 */
+    margin-right: 10px; /* 텍스트와 버튼 간의 간격 조정 */
+}
+
+.button-container {
+    display: inline; /* 버튼을 같은 줄에 배치 */
+}
+
+.update-button {
+    padding: 5px 10px; /* 버튼 내부 여백 */
+    font-size: 14px; /* 버튼 글자 크기 */
+    cursor: pointer; /* 마우스 포인터 변경 */
+    background-color: var(--primary-color);
+    color: white;
+}
+
+
 </style>
 
 
@@ -62,7 +80,10 @@ span {
 				<p>${sessionScope.loginfo.memname}님의 회원 정보입니다.</p>
 				<br />
 				<h3 class="main_header">회원 정보</h3>
-
+				<div class="button-container">
+					<a href="<%=getEnvs%>memUpdate">
+					<input type="button" value="회원 수정" class="update-button"></a>
+				</div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -132,6 +153,23 @@ span {
 						</tbody>
 					</c:forEach>
 
+				</table>
+				<h3 class="main_header">연체 현황</h3>
+				<p>${sessionScope.loginfo.memname}님의 연체 현황입니다.</p>
+				<table class="table table-striped">
+					<thead>
+							<tr>
+								<th></th>
+								<th>책 이름</th>
+								<th>장르</th>
+								<th>작가</th>
+								<th>출판사</th>
+								<th>출판날짜</th>
+								<th>대출자</th>
+								<th>대출날짜</th>
+								<th>반납하기</th>
+							</tr>
+					</thead>
 				</table>
 			</div>
 			<div class="col-sm-2"></div>
