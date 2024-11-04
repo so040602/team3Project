@@ -60,6 +60,7 @@ public class AibbsDao extends SuperDao {
 			bean.setBrdidx(rs.getInt("brdidx"));
 			bean.setMemid(rs.getString("memid"));
 			bean.setBoardpwd(rs.getString("boardpwd"));
+			bean.setCategory(rs.getString("category"));
 			bean.setSubtitle(rs.getString("subtitle"));
 			bean.setContents(rs.getString("contents"));
 			bean.setAttach01(rs.getString("attach01"));
@@ -109,9 +110,10 @@ public class AibbsDao extends SuperDao {
 	    System.out.println("updateData");
 	    System.out.println(bean);
 
-	    StringBuilder sql = new StringBuilder("UPDATE TEAM3_AIBBS SET subtitle = ?, contents = ?");
+	    StringBuilder sql = new StringBuilder("UPDATE TEAM3_AIBBS SET category = ?, subtitle = ?, contents = ?");
 	    List<Object> paramList = new ArrayList<>();
 	    
+	    paramList.add(bean.getCategory());
 	    paramList.add(bean.getSubtitle());
 	    paramList.add(bean.getContents());
 
@@ -234,9 +236,9 @@ public class AibbsDao extends SuperDao {
 		System.out.println(bean);
 		
 		PreparedStatement pstmt = null;
-		String sql = " INSERT INTO TEAM3_AIBBS (memid, boardpwd, subtitle, contents, "
+		String sql = " INSERT INTO TEAM3_AIBBS (memid, boardpwd, category, subtitle, contents, "
 				   + " attach01, attach02, attach03, attach04, codefile, regdate)" ;
-		sql += " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())" ;	 
+		sql += " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())" ;	 
 
 		int cnt = -99999 ;
 		
@@ -248,13 +250,14 @@ public class AibbsDao extends SuperDao {
 			
 			pstmt.setString(1, bean.getMemid());		
 			pstmt.setString(2, bean.getBoardpwd());
-			pstmt.setString(3, bean.getSubtitle());		
-			pstmt.setString(4, bean.getContents());
-			pstmt.setString(5, bean.getAttach01());
-			pstmt.setString(6, bean.getAttach02());
-			pstmt.setString(7, bean.getAttach03());
-			pstmt.setString(8, bean.getAttach04());
-			pstmt.setString(9, bean.getCodefile());
+			pstmt.setString(3, bean.getCategory());		
+			pstmt.setString(4, bean.getSubtitle());		
+			pstmt.setString(5, bean.getContents());
+			pstmt.setString(6, bean.getAttach01());
+			pstmt.setString(7, bean.getAttach02());
+			pstmt.setString(8, bean.getAttach03());
+			pstmt.setString(9, bean.getAttach04());
+			pstmt.setString(10, bean.getCodefile());
 			
 			cnt = pstmt.executeUpdate() ;
 			

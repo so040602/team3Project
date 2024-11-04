@@ -4,6 +4,7 @@ public class Aibbs {
 	private int brdidx ; // 글번호
 	private String memid ; // 작성자 아이디
 	private String boardpwd ; // 비밀번호
+	private String category ; // 카테고리
 	private String subtitle ; // 글제목
 	private String contents ; // 글내용
 	private String attach01 ; // 첨부파일
@@ -26,13 +27,15 @@ public class Aibbs {
  	
  	public Aibbs() {}
 
-	public Aibbs(int brdidx, String memid, String boardpwd, String subtitle, String contents, String attach01,
-			String attach02, String attach03, String attach04, String codefile, int readcnt, String regdate,
-			String updated, int groupnum, int ordernum, int depthcnt, int likes, int hates) {
+	public Aibbs(int brdidx, String memid, String boardpwd, String category, String subtitle, String contents,
+			String attach01, String attach02, String attach03, String attach04, String codefile, int readcnt,
+			String regdate, String updated, int groupnum, int ordernum, int depthcnt, int likes, int hates) {
+		
 		super();
 		this.brdidx = brdidx;
 		this.memid = memid;
 		this.boardpwd = boardpwd;
+		this.category = category;
 		this.subtitle = subtitle;
 		this.contents = contents;
 		this.attach01 = attach01;
@@ -72,6 +75,14 @@ public class Aibbs {
 
 	public void setBoardpwd(String boardpwd) {
 		this.boardpwd = boardpwd;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getSubtitle() {
@@ -196,12 +207,12 @@ public class Aibbs {
 
 	@Override
 	public String toString() {
-		return "Aibbs [brdidx=" + brdidx + ", memid=" + memid + ", boardpwd=" + boardpwd + ", subtitle=" + subtitle
-				+ ", contents=" + contents + ", attach01=" + attach01 + ", attach02=" + attach02 + ", attach03="
-				+ attach03 + ", attach04=" + attach04 + ", codefile=" + codefile + ", readcnt=" + readcnt + ", regdate="
-				+ regdate + ", updated=" + updated + ", groupnum=" + groupnum + ", ordernum=" + ordernum + ", depthcnt="
-				+ depthcnt + ", likes=" + likes + ", hates=" + hates + "]";
+		return "Aibbs [brdidx=" + brdidx + ", memid=" + memid + ", boardpwd=" + boardpwd + ", category=" + category
+				+ ", subtitle=" + subtitle + ", contents=" + contents + ", attach01=" + attach01 + ", attach02="
+				+ attach02 + ", attach03=" + attach03 + ", attach04=" + attach04 + ", codefile=" + codefile
+				+ ", readcnt=" + readcnt + ", regdate=" + regdate + ", updated=" + updated + ", groupnum=" + groupnum
+				+ ", ordernum=" + ordernum + ", depthcnt=" + depthcnt + ", likes=" + likes + ", hates=" + hates + "]";
 	}
 
- 	
+
 }

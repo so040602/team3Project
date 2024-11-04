@@ -182,6 +182,16 @@
                 return false;
             }
         }
+        
+        const attach04 = document.getElementById('codefile').value;
+        if (attach04.length > 0) {
+            const allowedExtensions = /(\.zip|\.java|\.py|\.txt|\.pdf|\.js|\.html|\.txt|\.css)$/i; // 허용할 파일 확장자
+            if (!allowedExtensions.exec(codefile)) {
+                alert('zip, java, py, js, css, jsp, html, pdf, txt 파일만 첨부할 수 있습니다.');
+                document.getElementById('attach04').focus();
+                return false;
+            }
+        }
 
         // 모든 유효성 검사를 통과한 경우
         return true;
