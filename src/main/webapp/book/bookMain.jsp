@@ -123,28 +123,32 @@ body {
 
 /* 네비게이션 스타일 */
 .nav {
-   background: #fff;
-   padding: 10px;
-   border-bottom: 1px solid #eee;
+    background: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    width: 100%;
 }
 
 .nav ul {
    display: flex;
-   list-style: none;
-   justify-content: left;
-   gap: 30px;
-   padding: 0 30px;
+    list-style: none;
+    justify-content: space-between; /* changed from left to space-between */
+    max-width: 1200px;
+    margin: 0 auto; /* center the navigation */
+    padding: 0 30px;
 }
 
 .nav a {
    text-decoration: none;
-   color: #333;
-   font-weight: 500;
-   display: flex;
-   align-items: center;
-   gap: 8px;
-   padding: 8px 0;
-   transition: color 0.2s;
+    color: #333;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 아이콘과 텍스트 중앙 정렬 */
+    gap: 8px;
+    padding: 8px 0;
+    transition: color 0.2s;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
 .nav i {
@@ -155,6 +159,8 @@ body {
 
 .nav li {
    position: relative;
+    flex: 1; /* 각 항목이 동일한 공간을 차지하도록 설정 */
+    text-align: center;
 }
 
 .nav li::after {
@@ -178,24 +184,89 @@ body {
 
 /* 배너 스타일 */
 .main-banner {
-   background: #fff5d7;
-   padding: 40px 20px;
-   margin-bottom: 40px;
-   position: relative;
-   overflow: hidden;
+    background: linear-gradient(135deg, #fff5d7 0%, #ffe5a0 100%);
+    padding: 60px 20px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
 }
 
 .banner-content {
-   max-width: 1200px;
-   margin: 0 auto;
-   position: relative;
-   z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner-text {
+    flex: 1;
 }
 
 .banner-title {
-   font-size: 2.5em;
-   margin-bottom: 20px;
-   color: #333;
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.banner-subtitle {
+    font-size: 1.3em;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.banner-cta {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #0066c0;
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.banner-cta:hover {
+    background-color: #004d99;
+}
+
+.banner-illustration {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+/* 장식용 원형 요소 */
+.banner-decoration {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+}
+
+.decoration-1 {
+    width: 200px;
+    height: 200px;
+    background: #ffb700;
+    top: -100px;
+    right: -50px;
+}
+
+.decoration-2 {
+    width: 150px;
+    height: 150px;
+    background: #0066c0;
+    bottom: -50px;
+    right: 100px;
 }
 
 .banner-subtitle {
@@ -412,10 +483,15 @@ body {
       padding: 0 10px;
    }
    .nav ul {
-      padding: 0 15px;
-      gap: 15px;
-      overflow-x: auto;
-   }
+        padding: 0 15px;
+        justify-content: flex-start; /* 모바일에서는 왼쪽 정렬 */
+        overflow-x: auto;
+    }
+    
+    .nav li {
+        flex: 0 0 auto; /* 모바일에서는 자동 크기로 변경 */
+        padding: 0 15px;
+    }
    .book-grid {
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 15px;
@@ -429,9 +505,28 @@ body {
    .article-card {
       min-width: 250px;
    }
-   .banner-title {
-      font-size: 2em;
-   }
+   .main-banner {
+        padding: 40px 20px;
+        min-height: auto;
+    }
+
+    .banner-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .banner-title {
+        font-size: 2.5em;
+    }
+
+    .banner-subtitle {
+        font-size: 1.1em;
+    }
+
+    .banner-illustration {
+        display: none;
+    }
+}
    .user-menu {
       gap: 10px;
       font-size: 14px;
@@ -528,15 +623,23 @@ document.addEventListener('DOMContentLoaded', function() {
          </ul>
       </nav>
       <div class="main-banner">
-         <div class="banner-content">
+    <div class="banner-content">
+        <div class="banner-text">
             <h1 class="banner-title">
-               첫 방문을 위한<br>GUIDE
+                첫 방문을 위한<br>GUIDE
             </h1>
             <p class="banner-subtitle">
-               처음 방문하셨다면,<br>가이드를 따라오세요!
+                처음 방문하셨다면,<br>가이드를 따라오세요!
             </p>
-         </div>
-      </div>
+            <a href="#" class="banner-cta">시작하기</a>
+        </div>
+        <div class="banner-illustration">
+            <!-- 장식용 원형 요소 -->
+            <div class="banner-decoration decoration-1"></div>
+            <div class="banner-decoration decoration-2"></div>
+        </div>
+    </div>
+</div>
 
       <section class="book-section">
          <div class="section-header">

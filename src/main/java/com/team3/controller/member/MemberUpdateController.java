@@ -15,10 +15,10 @@ public class MemberUpdateController extends SuperClass{
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		super.doGet(request, response);
-		
-		String id = request.getParameter("memid");
+		String memid = super.loginfo.getMemid();
+		//String id = request.getParameter("memid");
 		MemberDao dao = new MemberDao() ;
-		Member bean = dao.getMemDataByMemId(id);
+		Member bean = dao.getMemDataByMemId(memid);
 		request.setAttribute("bean", bean); 
 		
 		super.gotoPage("member/memUpdateForm.jsp"); 
