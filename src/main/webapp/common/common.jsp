@@ -154,6 +154,9 @@ String getEnvs = appName + mappingName + "?opsmode=";
 
 <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
 
+<!-- Stanley added on 2024-11-01 -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 
 <header class="header">
@@ -180,7 +183,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
                         <i class="fas fa-bookmark"></i>
                         <span>북마크</span>
                     </a>
-                    <a href="<%=getEnvs%>logout">
+                    <a href="<%=getEnvs%>memLogout">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>로그아웃</span>
                     </a>

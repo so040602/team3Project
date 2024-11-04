@@ -14,6 +14,6 @@ public class MemberLogoutController extends SuperClass {
 		// 나의 세션 관련 정보를 깔끔히 비워 주세요.
 		super.session.invalidate();
 		
-		super.gotoPage("member/memLoginForm.jsp");  
+		super.gotoPage("book/bookMain.jsp");  
 	}
 }

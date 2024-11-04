@@ -3,10 +3,33 @@
 <%@ include file="./../common/common.jsp" %>
 
 	<div class="container">
-        <h2>인공지능 목록</h2>
-        <p>Team3 팀원들이 작업한 목록을 보여 주는 페이지</p>
+		<div>
+	        <h2>인공지능 목록</h2>
+	        <p>Team3 팀원들이 작업한 목록을 보여 주는 페이지</p>
+        <div>
+        
+        <table style="width:100%">
+        	<tr>
+	        	<td style="width:20%;">
+	        		<select class="custom-select ml-1">
+	        			<option value=""> 전체 카테고리 </option>
+	        			<option value="인공지능"> 인공지능 </option>
+	        			<option value="빅데이터"> 빅데이터 </option>
+	        		</select>
+	        	</td>
+	            <td id="buttonset" style="width:80%; text-align:right;">
+			    	<button type="submit" class="btn btn-primary" onclick="aibbsInsert();">
+			        	<i class="fas fa-sign-in-alt me-2"></i>인공 지능 개발 추가
+			        </button>
+			        &nbsp;
+			        <button type="submit" class="btn btn-primary" onclick="aibbsBigData();">
+			        	<i class="fas fa-sign-in-alt me-2"></i>빅데이터 처리 목록
+			        </button>
+			    </td>
+		    </tr>
+		</table>    
 	    
-		<table class="table table-striped">
+		<table class="table table-striped mt-2">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -62,28 +85,29 @@
 			</tbody>
 		</table>
 		
-		<div id="buttonset" style="text-align:right;">
-	    	<button type="submit" class="btn btn-primary" onclick="aibbsInsert();">
-	        	<i class="fas fa-sign-in-alt me-2"></i>인공 지능 개발 추가
-	        </button>
-	        &nbsp;
-	        <button type="submit" class="btn btn-primary" onclick="aibbsBigData();">
-	        	<i class="fas fa-sign-in-alt me-2"></i>빅데이터 처리 목록
-	        </button>
-	    </div>
-		
 	</div>	 
 	
 	<script>
-	  	function aibbsInsert(){
-	   		const aibbsInsertUrl = "<%=getEnvs%>aibbsInsert";
-	   		location.assign(aibbsInsertUrl);
-	   	}
-	  	
-	  	function aibbsBigData(){
-	   		const aibbsBigListUrl = "<%=getEnvs%>aibbsBigList";
-	   		location.assign(aibbsBigListUrl);
-	   	}
+	<% 
+	    boolean isLoggedIn = session.getAttribute("loginfo") != null; // 로그인 정보 확인
+	%> 
+	    function aibbsInsert() {
+	        // JSP의 boolean 값을 숫자로 변환
+	        const isLoggedIn = <%= isLoggedIn ? 1 : 0 %>;
+	        const aibbsInsertUrl = "<%= getEnvs %>aibbsInsert";
+	        
+	        if (!isLoggedIn) {
+	            alert("로그인 이후 사용할 수 있습니다.");
+	        } else {
+	            location.assign(aibbsInsertUrl);
+	        }    
+	    }
+	    
+	    function aibbsBigData() {
+	        const aibbsBigListUrl = "<%= getEnvs %>aibbsBigList";
+	        location.assign(aibbsBigListUrl);
+	    }
 	</script>
+	
 </body>
 </html>

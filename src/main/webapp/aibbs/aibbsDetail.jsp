@@ -3,7 +3,7 @@
 <%@ include file="./../common/common.jsp" %>
     
 	<style type="text/css">
-		.container{margin-top: 10px;} /* box model */
+		.container{margin-top: 10px;} /* box model style */
 		.rounded-pill{opacity: 0.7;}
 		#backButton{margin: auto;}
 		.tbBoardRead th {width: 120px;}
@@ -104,6 +104,22 @@
 				    </c:otherwise>
 				</c:choose>
 
+				<c:choose>
+				    <c:when test="${not empty requestScope.bean.codefile}">
+				        <tr>
+				            <th>코드파일</th>
+				            <td>
+				                <a href="${requestScope.filePath}/${requestScope.bean.codefile}">${requestScope.bean.codefile}</a>
+				            </td>
+				        </tr>
+				    </c:when>
+				    <c:otherwise>
+				        <tr>
+				            <th>코드파일</th>
+				            <td>코드파일이 없습니다.</td>
+				        </tr>
+				    </c:otherwise>
+				</c:choose>
 
 				<tr>
 				<th>조회수</th>
