@@ -37,26 +37,5 @@ public class HomeController extends SuperClass {
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // 검색 기능 구현
-        super.doPost(request, response);
-        
-        String searchKeyword = request.getParameter("searchKeyword");
-        String category = request.getParameter("category"); // 검색 카테고리
-        
-        BookDao dao = new BookDao();
-        
-        try {
-            List<Book> searchResults = dao.searchBooks(searchKeyword, category);
-            request.setAttribute("searchResults", searchResults);
-            request.setAttribute("searchKeyword", searchKeyword);
-            
-            // 검색 결과 페이지로 이동
-            super.gotoPage("book/searchResults.jsp");
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("errorMessage", "검색 중 오류가 발생했습니다.");
-            super.gotoPage("common/error.jsp");
-        }
     }
 }

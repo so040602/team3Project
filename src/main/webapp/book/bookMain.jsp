@@ -289,13 +289,13 @@ body {
 }
 
 .book-link {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.2s;
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.2s;
 }
 
 .book-link:hover {
-    color: #0066c0;  /* 마우스 오버시 색상 변경 */
+	color: #0066c0; /* 마우스 오버시 색상 변경 */
 }
 
 .articles-section {
@@ -445,36 +445,64 @@ body {
 			<div
 				style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
 				<a href="#" class="logo">책숲</a>
-	
-				<div class="user-menu">
-				<c:choose>
-                  <c:when test="${whologin == 0}">
-					<a href="<%=getEnvs%>memLogin"> <i
-						class="fas fa-right-to-bracket"></i> 로그인
-					</a> <a href="<%=getEnvs%>userAuthStart"> <i
-						class="fas fa-user-plus"></i> 회원가입
-					</a>				
-					</c:when>
-					<c:otherwise>
-					 <a href="<%=getEnvs%>memMyPage">
-                          <i class="fas fa-user"></i> 마이페이지
-                      </a>
 
-					 <a href="<%=getEnvs%>bookmark">
-                          <i class="fas fa-bookmark"></i> 북마크
-                      </a>
-						<a href="<%=getEnvs%>logout">
-                           <i class="fas fa-sign-out-alt"></i>
-                           <span>로그아웃</span>
-                       </a>
-                       </c:otherwise>
-                 </c:choose>
-                 </div>
+				<div class="user-menu">
+					<c:choose>
+						<c:when test="${whologin == 0}">
+							<a href="<%=getEnvs%>memLogin"> <i
+								class="fas fa-right-to-bracket"></i> 로그인
+							</a>
+							<a href="<%=getEnvs%>userAuthStart"> <i
+								class="fas fa-user-plus"></i> 회원가입
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="<%=getEnvs%>memMyPage"> <i class="fas fa-user"></i>
+								마이페이지
+							</a>
+
+							<a href="<%=getEnvs%>bookmark"> <i class="fas fa-bookmark"></i>
+								북마크
+							</a>
+							<a href="<%=getEnvs%>logout"> <i class="fas fa-sign-out-alt"></i>
+								<span>로그아웃</span>
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</div>
 			</div>
 			<div class="search-bar">
-				<input type="text" class="search-input"
-					placeholder="제목, 작가로 검색해 보세요">
+				<form action="<%=getEnvs%>searchBook" method="POST" id="searchForm">
+					<input type="text" class="search-input" name="keyword"
+						placeholder="제목, 작가로 검색해 보세요" autocomplete="off">
+				</form>
 			</div>
+
+			<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = searchForm.querySelector('.search-input');
+    
+    // URL 파라미터에서 message 확인
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get('message');
+    if (message) {
+        alert(decodeURIComponent(message));
+    }
+    
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const keyword = searchInput.value.trim();
+            if (keyword !== '') {
+                searchForm.submit();
+            } else {
+                alert('검색어를 입력해주세요.');
+            }
+        }
+    });
+});
+</script>
 		</header>
 
 		<nav class="nav">
@@ -522,10 +550,9 @@ body {
 						<img src="${book.img}" alt="${book.book_name}" class="book-image">
 						<div class="book-info">
 							<h3 class="book-title">
-                    <a href="<%=getEnvs%>bookDetail&book_idx=${book.book_idx}" class="book-link">
-                        ${book.book_name}
-                    </a>
-                </h3>
+								<a href="<%=getEnvs%>bookDetail&book_idx=${book.book_idx}"
+									class="book-link"> ${book.book_name} </a>
+							</h3>
 
 							<p class="book-person">${book.person_name}</p>
 							<div class="book-subinfo">
@@ -550,10 +577,9 @@ body {
 						<img src="${book.img}" alt="${book.book_name}" class="book-image">
 						<div class="book-info">
 							<h3 class="book-title">
-                    <a href="<%=getEnvs%>bookDetail&book_idx=${book.book_idx}" class="book-link">
-                        ${book.book_name}
-                    </a>
-                </h3>
+								<a href="<%=getEnvs%>bookDetail&book_idx=${book.book_idx}"
+									class="book-link"> ${book.book_name} </a>
+							</h3>
 
 							<p class="book-person">${book.person_name}</p>
 							<div class="book-subinfo">
