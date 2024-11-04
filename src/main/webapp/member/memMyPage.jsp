@@ -143,7 +143,7 @@ span {
         	const result = confirm("반납을 진행 하시겠습니까?");
         	console.log(bookidx);
         	if(result){
-        		fetch('<%=getEnvs%>bookOut', {
+        		fetch('<%=getEnvs%>memMyPage', {
         			method:'POST',
         			headers:{
         				'Content-Type':'application/json'

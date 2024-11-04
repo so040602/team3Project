@@ -325,21 +325,41 @@ public class BookDao extends SuperDao {
 
 
    
-    public List<Book> searchBooks(String keyword, String category) throws Exception {
-        String sql = "SELECT * FROM booklist WHERE 1=1 ";
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            sql += "AND (book_name LIKE ? OR description LIKE ?) ";
-        }
-        if (category != null && !category.trim().isEmpty()) {
-            sql += "AND category = ? ";
-        }
-        sql += "ORDER BY book_idx DESC";
-
-        List<Book> lists = new ArrayList<>();
-        // Logic remains the same...
-        // ...
-        return lists;
-    }
+    public int searchBookIdx(String keyword) {
+    	   Connection conn = null;
+    	   PreparedStatement pstmt = null;
+    	   ResultSet rs = null;
+    	   int bookIdx = -1; 
+    	   
+    	   String sql = "SELECT book_idx FROM booklist "
+    	              + "WHERE book_name LIKE ? OR person_name LIKE ? "
+    	              + "ORDER BY book_idx ASC LIMIT 1";
+    	              
+    	   try {
+    	       conn = super.getConnection(); 
+    	       pstmt = conn.prepareStatement(sql);
+    	       pstmt.setString(1, "%" + keyword + "%");
+    	       pstmt.setString(2, "%" + keyword + "%");
+    	       rs = pstmt.executeQuery();
+    	       
+    	       if(rs.next()) {
+    	           bookIdx = rs.getInt("book_idx");
+    	       }
+    	       
+    	   } catch (Exception e) {
+    	       e.printStackTrace();
+    	   } finally {
+    	       try {
+    	           if(rs != null) {rs.close();}
+    	           if(pstmt != null) {pstmt.close();}  
+    	           if(conn != null) {conn.close();}
+    	       } catch (Exception e) {
+    	           e.printStackTrace();
+    	       }
+    	   }
+    	   
+    	   return bookIdx;
+    	}
 
 	public List<String> getCategory() {
 		// TODO Auto-generated method stub

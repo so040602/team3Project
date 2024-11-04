@@ -257,6 +257,8 @@ public class TeamUtility {
 		opsMap.put("bookmark", "com.team3.controller.book.BookMarkController");
 		opsMap.put("bookOut", "com.team3.controller.book.BookOutController");
 		opsMap.put("BookListOut", "com.team3.controller.book.BookListOutController");
+		opsMap.put("searchBook", "com.team3.controller.search.BookSearchController");
+
 		
 		for ( String key : opsMap.keySet() ) {
 			String opsmode = key;
