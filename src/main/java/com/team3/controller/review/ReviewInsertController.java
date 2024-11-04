@@ -2,6 +2,7 @@ package com.team3.controller.review;
 
 import com.team3.model.dao.ReviewDao;
 import com.team3.controller.SuperClass;
+import com.team3.model.bean.Member;
 import com.team3.model.bean.Review;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,7 +26,17 @@ public class ReviewInsertController extends SuperClass {
             String title = request.getParameter("review_title");
             String body = request.getParameter("review_body");
             int bookidx = getNumberData(request.getParameter("bookidx"));
-            String memid = (String) session.getAttribute("loginfo"); // 현재 로그인된 회원 ID
+            Object loginfoObj = session.getAttribute("loginfo");
+            String memid = null;
+
+            if (loginfoObj instanceof String) {
+                memid = (String) loginfoObj;
+            } else if (loginfoObj instanceof Member) {
+                memid = ((Member) loginfoObj).getMemid(); // Member 클래스에 getId() 메서드가 있다고 가정
+            } else {
+                throw new Exception("로그인 정보가 유효하지 않습니다.");
+            }
+
 
             // 유효성 검사
             validateInputs(title, body);
