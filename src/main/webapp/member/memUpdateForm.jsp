@@ -235,7 +235,7 @@ body {
 
 .btn-secondary {
     background-color: gray;
-    color: white; /*변경*/
+    color: white; 
     border: 1px solid var(--border-color);
 }
 
