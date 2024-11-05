@@ -72,7 +72,11 @@
 			</div>
 			<div class="input-group">
 				<span class="input-group-text col-md-2">카테고리</span> 
-				<input id="category" name="category" type="text" class="form-control">
+				<select id="category" name="category" class="custom-select">
+					<option value=""> 선택 </option>
+					<option value="인공지능"> 인공지능 </option>
+					<option value="빅데이터"> 빅데이터 </option>
+				</select>
 			</div>
 			<div class="input-group">
 				<span class="input-group-text col-md-2">제목</span> 
