@@ -540,7 +540,7 @@ body {
       <header class="header">
          <div
             style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <a href="#" class="logo">책숲</a>
+            <a href="<%=getEnvs%>bookMain" class="logo">댕글댕글</a>
 
             <div class="user-menu">
                <c:choose>
