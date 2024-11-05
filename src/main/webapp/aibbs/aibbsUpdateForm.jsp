@@ -1,155 +1,251 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
 <%@ include file="./../common/common.jsp" %>        
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>게시물 수정</title>
-	<style type="text/css">
-		.container { margin-top: 10px; }
-		.input-group { margin: 7px; }
-		.input-group-text { display: inline-block; width: 120px; text-align: center; }
-		#buttonset { margin-top: 15px; }
-		#boardNo { display: none; visibility: hidden; }
-	</style>
+   <meta charset="UTF-8">
+   <title>게시물 수정</title>
+   <style>
+   :root {
+       --primary-color: #03C75A;
+       --hover-color: #02b350;
+       --background-color: #f5f6f8;
+       --card-background: #fff;
+       --text-primary: #222;
+       --text-secondary: #666;
+       --border-color: #e5e5e5;
+   }
+
+   body {
+       background-color: var(--background-color);
+       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+       margin: 0;
+       padding: 0;
+       color: var(--text-primary);
+       line-height: 1.5;
+   }
+
+   .container {
+       max-width: 800px;
+       margin: 40px auto;
+       padding: 40px;
+       background: var(--card-background);
+       border-radius: 8px;
+       border: 1px solid var(--border-color);
+   }
+
+   h2 {
+       font-size: 20px;
+       font-weight: 600;
+       color: var(--text-primary);
+       margin: 0 0 8px 0;
+   }
+
+   p {
+       color: var(--text-secondary);
+       font-size: 13px;
+       margin-bottom: 24px;
+   }
+
+   .form-row {
+       display: flex;
+       margin-bottom: 12px;
+   }
+
+   .form-label {
+       flex: 0 0 120px;
+       padding: 10px;
+       font-size: 13px;
+       font-weight: 500;
+       color: var(--text-primary);
+   }
+
+   .form-input {
+       flex: 1;
+       padding: 4px 0;
+   }
+
+   input[type="text"],
+   input[type="password"],
+   textarea,
+   select {
+       width: 100%;
+       padding: 8px 12px;
+       border: 1px solid var(--border-color);
+       border-radius: 4px;
+       font-size: 13px;
+       color: var(--text-primary);
+   }
+
+   input[readonly] {
+       background-color: #f8f9fa;
+       color: var(--text-secondary);
+   }
+
+   textarea {
+       min-height: 150px;
+       resize: vertical;
+   }
+
+   .file-input {
+       font-size: 13px;
+   }
+
+   .file-info {
+       font-size: 12px;
+       color: var(--text-secondary);
+       margin-bottom: 4px;
+   }
+
+   .button-group {
+       display: flex;
+       justify-content: center;
+       gap: 8px;
+       margin-top: 30px;
+       padding-top: 20px;
+       border-top: 1px solid var(--border-color);
+   }
+
+   .btn {
+       padding: 8px 16px;
+       border-radius: 4px;
+       font-size: 13px;
+       font-weight: 500;
+       cursor: pointer;
+       transition: all 0.2s;
+   }
+
+   .btn-primary {
+       background-color: var(--primary-color);
+       color: white;
+       border: none;
+   }
+
+   .btn-primary:hover {
+       background-color: var(--hover-color);
+   }
+
+   .btn-secondary {
+       background-color: #fff;
+       color: var(--text-primary);
+       border: 1px solid var(--border-color);
+   }
+
+   .btn-secondary:hover {
+       background-color: #f8f9fa;
+   }
+
+   @media (max-width: 768px) {
+       .container {
+           margin: 20px;
+           padding: 20px;
+       }
+
+       .form-row {
+           flex-direction: column;
+       }
+
+       .form-label {
+           padding: 8px 0;
+       }
+
+       .button-group {
+           flex-direction: column;
+       }
+
+       .btn {
+           width: 100%;
+       }
+   }
+   </style>
 </head>
 <body>
-	<div class="container">
-		<h2>게시물 수정</h2>
-		<p>${requestScope.bean.brdidx}번 게시물 수정</p>
-		
-		<form action="<%=postForm%>" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="opsmode" value="aibbsUpdate">
-			
-			<div class="input-group">
-				<span class="input-group-text col-md-2">번호</span>
-				<input id="brdidx" name="brdidx" type="text" class="form-control" value="${requestScope.bean.brdidx}" readonly>
-			</div>
-			
-			<div class="input-group">
-				<span class="input-group-text col-md-2">작성자</span>
-				<input id="memid" name="memid" disabled="disabled" type="text" class="form-control" 
-					value="${requestScope.bean.memid}" readonly>
-			</div>
-			<div class="input-group">
-				<span class="input-group-text col-md-2">카테고리</span> 
-				<select id="category" name="category" class="custom-select">
-					<option value="" <c:if test="${empty requestScope.bean.category}">selected</c:if>> 선택 </option>
-					<option value="인공지능" <c:if test="${requestScope.bean.category eq '인공지능'}">selected</c:if>> 인공지능 </option>
-					<option value="빅데이터" <c:if test="${requestScope.bean.category eq '빅데이터'}">selected</c:if>> 빅데이터 </option>
-				</select>	
-			</div>
-			
-			<div class="input-group">
-				<span class="input-group-text col-md-2">제목</span> 
-				<input id="subtitle" name="subtitle" type="text" class="form-control" value="${requestScope.bean.subtitle}" autocomplete="off">
-			</div>
-			<div class="input-group">
-				<span class="input-group-text col-md-2">내용</span> 
-				<textarea id="contents" name="contents" class="form-control" autocomplete="off"
-					style="height:200px; min-height:200px; max-height:300px;">${requestScope.bean.contents}</textarea>
-			</div>  
-			
-			<c:if test="${not empty requestScope.bean.attach01}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(1)</span> 
-					<input id="attach01FileName" type="text" class="form-control" value="${requestScope.bean.attach01}" readonly />
-				</div>	
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(1) 변경</span> 
-					<input id="attach01" name="attach01" type="file" class="form-control">
-				</div>
-			</c:if>
-			<c:if test="${empty requestScope.bean.attach01}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(1)</span> 
-					<input id="attach01" name="attach01" type="file" class="form-control">
-				</div>
-			</c:if>
-						
-			<c:if test="${not empty requestScope.bean.attach02}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(2)</span> 
-					<input type="text" class="form-control" value="${requestScope.bean.attach02}" readonly />
-				</div>	
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(2) 변경</span> 
-					<input id="attach02" name="attach02" type="file" class="form-control">
-				</div>
-			</c:if>
-			<c:if test="${empty requestScope.bean.attach02}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(2)</span> 
-					<input id="attach02" name="attach02" type="file" class="form-control">
-				</div>
-			</c:if>
-			
-			<c:if test="${not empty requestScope.bean.attach03}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(3)</span> 
-					<input type="text" class="form-control" value="${requestScope.bean.attach03}" readonly />
-				</div>	
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(3) 변경</span> 
-					<input id="attach03" name="attach03" type="file" class="form-control">
-				</div>
-			</c:if>
-			<c:if test="${empty requestScope.bean.attach03}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(3)</span> 
-					<input id="attach03" name="attach03" type="file" class="form-control">
-				</div>
-			</c:if>
-			
-			<c:if test="${not empty requestScope.bean.attach04}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(4)</span> 
-					<input type="text" class="form-control" value="${requestScope.bean.attach04}" readonly />
-				</div>	
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(4) 변경</span> 
-					<input id="attach04" name="attach04" type="file" class="form-control">
-				</div>
-			</c:if>
-			<c:if test="${empty requestScope.bean.attach04}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">첨부파일(4)</span> 
-					<input id="attach04" name="attach04" type="file" class="form-control">
-				</div>
-			</c:if>
-			
-			<c:if test="${not empty requestScope.bean.codefile}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">코드파일</span> 
-					<input type="text" class="form-control" value="${requestScope.bean.codefile}" readonly />
-				</div>	
-				<div class="input-group">
-					<span class="input-group-text col-md-2">코드파일 변경</span> 
-					<input id="codefile" name="codefile" type="file" class="form-control" 
-						accept=".zip,.java,.py,.js,.css,.jsp,.html,.pdf,.txt">
-				</div>
-			</c:if>
-			<c:if test="${empty requestScope.bean.codefile}">
-				<div class="input-group">
-					<span class="input-group-text col-md-2">코드파일</span> 
-					<input id="codefile" name="codefile" type="file" class="form-control">
-				</div>
-			</c:if>
-						
-			<div class="input-group">
-				<span class="input-group-text col-md-2">비밀번호</span> 
-				<input id="boardpwd" name="boardpwd" type="password" class="form-control" autocomplete="off">
-			</div> 			
-			<div id="buttonset" class="input-group d-flex justify-content-center">
-			    <button type="submit" class="btn btn-primary btn-lg" onclick="return validCheck();">수정</button>
-			    <button type="reset" class="btn btn-secondary btn-lg mx-2">초기화</button>
-			    <button type="button" class="btn btn-secondary btn-lg" onclick="history.back();">취소</button>
-			</div>
-		</form>
-	</div>
-
-<script>
+   <div class="container">
+       <h2>게시물 수정</h2>
+       <p>${requestScope.bean.brdidx}번 게시물 수정</p>
+       
+       <form action="<%=postForm%>" method="post" enctype="multipart/form-data">
+           <input type="hidden" name="opsmode" value="aibbsUpdate">
+           
+           <div class="form-row">
+               <div class="form-label">번호</div>
+               <div class="form-input">
+                   <input type="text" id="brdidx" name="brdidx" value="${requestScope.bean.brdidx}" readonly>
+               </div>
+           </div>
+           
+           <div class="form-row">
+               <div class="form-label">작성자</div>
+               <div class="form-input">
+                   <input type="text" id="memid" name="memid" value="${requestScope.bean.memid}" readonly>
+               </div>
+           </div>
+           
+           <div class="form-row">
+               <div class="form-label">카테고리</div>
+               <div class="form-input">
+                   <select id="category" name="category">
+                       <option value="" ${empty requestScope.bean.category ? 'selected' : ''}>선택</option>
+                       <option value="인공지능" ${requestScope.bean.category eq '인공지능' ? 'selected' : ''}>인공지능</option>
+                       <option value="빅데이터" ${requestScope.bean.category eq '빅데이터' ? 'selected' : ''}>빅데이터</option>
+                   </select>
+               </div>
+           </div>
+           
+           <div class="form-row">
+               <div class="form-label">제목</div>
+               <div class="form-input">
+                   <input type="text" id="subtitle" name="subtitle" value="${requestScope.bean.subtitle}">
+               </div>
+           </div>
+           
+           <div class="form-row">
+               <div class="form-label">내용</div>
+               <div class="form-input">
+                   <textarea id="contents" name="contents">${requestScope.bean.contents}</textarea>
+               </div>
+           </div>
+           
+           <c:forEach var="i" begin="1" end="4">
+               <div class="form-row">
+                   <div class="form-label">첨부파일 ${i}</div>
+                   <div class="form-input">
+                       <c:set var="attachVar" value="attach0${i}" />
+                       <c:if test="${not empty requestScope.bean[attachVar]}">
+                           <div class="file-info">현재 파일: ${requestScope.bean[attachVar]}</div>
+                       </c:if>
+                       <input type="file" id="attach0${i}" name="attach0${i}" class="file-input">
+                   </div>
+               </div>
+           </c:forEach>
+           
+           <div class="form-row">
+               <div class="form-label">코드파일</div>
+               <div class="form-input">
+                   <c:if test="${not empty requestScope.bean.codefile}">
+                       <div class="file-info">현재 파일: ${requestScope.bean.codefile}</div>
+                   </c:if>
+                   <input type="file" id="codefile" name="codefile" class="file-input" 
+                          accept=".java,.py,.js,.css,.jsp,.html,.zip,.txt,.pdf">
+               </div>
+           </div>
+           
+           <div class="form-row">
+               <div class="form-label">비밀번호</div>
+               <div class="form-input">
+                   <input type="password" id="boardpwd" name="boardpwd">
+               </div>
+           </div>
+           
+           <div class="button-group">
+               <button type="submit" class="btn btn-primary" onclick="return validCheck();">수정</button>
+               <button type="reset" class="btn btn-secondary">초기화</button>
+               <button type="button" class="btn btn-secondary" onclick="history.back();">취소</button>
+           </div>
+       </form>
+   </div>
+   
+   <script>
     function validCheck() {
         const boardpwd = $('#boardpwd').val();
 
@@ -257,5 +353,3 @@
 </script>
 </body>
 </html>
-
-        
