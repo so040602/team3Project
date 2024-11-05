@@ -54,6 +54,7 @@ public class AibbsUpdateController extends SuperClass{
 		bean.setBrdidx(Integer.parseInt(request.getParameter("brdidx")));
 		bean.setMemid(request.getParameter("memid"));
 		bean.setBoardpwd(request.getParameter("boardpwd"));
+		bean.setCategory(request.getParameter("category"));
 		bean.setSubtitle(request.getParameter("subtitle"));
 		bean.setContents(request.getParameter("contents"));
 		bean.setAttach01((String)request.getAttribute("attach01"));
