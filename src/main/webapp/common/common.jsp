@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
 <!--%@ taglib prefix="c" uri="http://jakarta.apache.org/jsp/jstl/core" %-->
 <!--%@ taglib prefix="fmt" uri="http://jakarta.apache.org/jsp/jstl/fmt" %-->
 <!--%@ taglib prefix="fn" uri="http://jakarta.apache.org/jsp/jstl/functions" %-->
@@ -156,7 +157,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
 
 <!-- Stanley added on 2024-11-01 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 
