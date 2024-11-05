@@ -1021,8 +1021,8 @@ public class BookDao extends SuperDao {
 		sql += "  b.publisher, b.img, b.date, memidx, memname, bo.regdate";
 		sql += " FROM booklist b RIGHT OUTER JOIN ";
 		sql += " (SELECT m.memidx, m.memname, bo.book_idx, bo.regdate";
-		sql += " FROM bookout bo LEFT OUTER JOIN team3_member m ON m.memidx = ?";
-		sql += " where bo.returns = '대출')";
+		sql += " FROM bookout bo LEFT OUTER JOIN team3_member m ON m.memidx = bo.memidx";
+		sql += " where bo.returns = '대출' AND bo.memidx = ?)";
 		sql += " AS bo ON b.book_idx = bo.book_idx";
 		List<BookOutCur> outlist = null;
 		

@@ -426,7 +426,7 @@ button[type="submit"]:hover {
                </div>
                <c:if test="${whologin > 0}">
 	               <div class="button-group">
-	                  <button class="reserve-button" onclick="showConfirm(this.value)" value="${bean.book_idx}">북마크</button>
+	                  <button class="reserve-button" onclick="showConfirm(this.value)" value="${bean.book_idx}">북 마크</button>
 	                  <button class="borrow-button btn-out" value="${bean.book_idx}">대출하기</button>
 	               </div>
                </c:if>

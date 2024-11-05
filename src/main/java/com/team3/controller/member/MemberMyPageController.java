@@ -35,6 +35,8 @@ public class MemberMyPageController extends SuperClass{
 		
 		BookDao bookdao = new BookDao();
 		
+		System.out.println(memidx);
+		
 		List<BookOutCur> outlist = bookdao.CurrentBookOut(memidx);
 		
 		List<BookOutCur> overList = new ArrayList<BookOutCur>();
