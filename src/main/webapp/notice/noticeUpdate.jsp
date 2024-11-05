@@ -8,6 +8,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
 
 Notice notice = (Notice)request.getAttribute("notice");
 %>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,7 +30,7 @@ Notice notice = (Notice)request.getAttribute("notice");
 
 body {
    background-color: var(--background-color);
-   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
    margin: 0;
    padding: 0;
    color: var(--text-primary);

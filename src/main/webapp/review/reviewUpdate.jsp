@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.team3.model.bean.Review" %>
 <%@ page import="java.util.List" %>
-
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <%
 String appName = request.getContextPath();
 String mappingName = "/coolapp";
@@ -34,7 +34,7 @@ Review review = (Review) request.getAttribute("review");
     }
 
     body {
-        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         background-color: var(--bg-color);
         color: var(--text-color);
         line-height: 1.6;
