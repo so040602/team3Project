@@ -325,7 +325,7 @@ body {
 							<i class="fas fa-book"></i> 대출
 						</button>
 						<button class="btn btn-lg btn-wishlist">
-							<i class="fas fa-calendar-check"></i> 대출 예약
+							<i class="fas fa-calendar-check" value="<%=book.getDescription()%>"></i> 대출 예약
 						</button>
 						<button class="btn btn-lg btn-cart" value="<%=bookCnt%>">
 							<i class="fas fa-bookmark"></i> 북마크
@@ -388,9 +388,27 @@ body {
             });
             
             document.querySelector('.btn-wishlist').addEventListener('click', function() {
-                alert('대출 예약이 완료되었습니다.');
-            });
-            
+                const bookDiscription = this.value;
+                fetch('<%=getEnvs%>BookWordCloud', {
+                	method: 'POST',
+                	headers: {
+                		'Content-Type':'application/json'
+                	},
+                	body: JSON.stringify({bookdiscription:bookDiscription})
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // JSON으로 응답 받기
+                })
+                .then(data => {
+                    console.log(data);// 서버에서 받은 응답 처리
+                                         
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            });           
             document.querySelector('.btn-buy').addEventListener('click', function() {
             	const bookOutIdx = this.value;
             	console.log(bookOutIdx);
