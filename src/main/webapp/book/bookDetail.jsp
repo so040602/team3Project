@@ -3,6 +3,7 @@
 <%@ page import="com.team3.model.bean.Book"%>
 <%@ page import="com.team3.model.dao.BookDao"%>
 <%@ include file="./../common/common.jsp"%>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
 <%
 int bookCnt = Integer.parseInt(request.getParameter("book_idx"));
@@ -30,7 +31,7 @@ double convertedRating = (rating / 10) * 5;
 /* 기본 스타일 */
 body {
 	background-color: #f8f9fa;
-	font-family: 'Noto Sans KR', sans-serif;
+	font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .container {

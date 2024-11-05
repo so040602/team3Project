@@ -5,6 +5,7 @@
 <%@ page import="com.team3.model.dao.ReviewDao"%>
 <%@ page import="com.team3.model.bean.Review"%>
 <%@ page import="java.util.List"%>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
 <c:set var="whologin" value="0" />
 <c:if test="${not empty sessionScope.loginfo}">
@@ -42,7 +43,7 @@ List<Review> reviews = reviewDao.list(); // 전체 리뷰 목록 가져오기
 }
 
 body {
-   font-family: 'Noto Sans KR', sans-serif;
+   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
    color: #333;
    line-height: 1.6;
 }
