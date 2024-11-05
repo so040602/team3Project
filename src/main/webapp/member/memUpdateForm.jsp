@@ -308,7 +308,7 @@ body {
                 
                 <div class="form-group">
                     <label class="form-label">생일</label>
-                    <input type="date" class="form-control" id="birth" name="birth" 
+                    <input type="text" class="form-control" id="birth" name="birth" 
                            value="${requestScope.bean.birth != null ? requestScope.bean.birth : ''}">
                 </div>
                 
