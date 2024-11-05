@@ -559,7 +559,7 @@ body {
                      <a href="<%=getEnvs%>bookmark"> <i class="fas fa-bookmark"></i>
                         북마크
                      </a>
-                     <a href="<%=getEnvs%>logout"> <i class="fas fa-sign-out-alt"></i>
+                     <a href="<%=getEnvs%>memLogout"> <i class="fas fa-sign-out-alt"></i>
                         <span>로그아웃</span>
                      </a>
                   </c:otherwise>

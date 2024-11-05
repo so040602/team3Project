@@ -45,7 +45,7 @@ public class BookListController extends SuperClass {
 		String pageNumber = (pageNumberParam == null || pageNumberParam.isEmpty()) ? "1" : pageNumberParam;
 		System.out.println(mode);
 		System.out.println(keyword);
-		Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, mode, keyword);
+		Paging pageInfo = new Paging(pageNumber, "12", totalCount, url, mode, keyword);
 		
 		List<Book> bookList = dao.getPaginationData(pageInfo);
 		
@@ -92,7 +92,7 @@ public class BookListController extends SuperClass {
 		String url = "";
 		
 		String pageNumber = (pageNumberParam == null || pageNumberParam.isEmpty()) ? "1" : pageNumberParam;
-		Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, category, keyword);
+		Paging pageInfo = new Paging(pageNumber, "12", totalCount, url, category, keyword);
 		
 		List<Book> bookList = dao.getPaginationData(pageInfo);
 		
@@ -104,7 +104,7 @@ public class BookListController extends SuperClass {
 		request.setAttribute("category_List", category_List);
 		request.setAttribute("datalist", bookList);	
 		request.setAttribute("pagelist", pageInfo);
-		super.gotoPage("book/bookratingList.jsp");
+		super.gotoPage("book/bookList.jsp");
 	}
 
 	

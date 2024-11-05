@@ -7,13 +7,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class MemberLogoutController extends SuperClass {
 	@Override
-	public void doGet(HttpServletRequest requset, HttpServletResponse response) throws Exception {
-		super.doGet(requset, response);
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		super.doGet(request, response);
 		System.out.println("로그아웃");
 		
 		// 나의 세션 관련 정보를 깔끔히 비워 주세요.
 		super.session.invalidate();
 		
-		super.gotoPage("book/bookMain.jsp");  
+		response.sendRedirect(request.getContextPath() + "/coolapp?opsmode=bookMain");
+
 	}
 }

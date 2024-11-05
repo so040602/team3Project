@@ -45,7 +45,7 @@ public class BookratingListController extends SuperClass{
 		String url = "";
 		
 		String pageNumber = (pageNumberParam == null || pageNumberParam.isEmpty()) ? "1" : pageNumberParam;
-		Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, category, keyword);
+		Paging pageInfo = new Paging(pageNumber, "12", totalCount, url, category, keyword);
 		
 		List<Book> bookList = dao.getRatingPaginationData(pageInfo);
 		
@@ -91,7 +91,7 @@ public class BookratingListController extends SuperClass{
 		String url = "";
 		
 		String pageNumber = (pageNumberParam == null || pageNumberParam.isEmpty()) ? "1" : pageNumberParam;
-		Paging pageInfo = new Paging(pageNumber, "10", totalCount, url, category, keyword);
+		Paging pageInfo = new Paging(pageNumber, "12", totalCount, url, category, keyword);
 		
 		List<Book> bookList = dao.getRatingPaginationData(pageInfo);
 		

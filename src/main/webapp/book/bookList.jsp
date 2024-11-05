@@ -2,7 +2,7 @@
 <%@ include file="./../common/common.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +30,7 @@
 }
 
 body {
-   font-family: 'Noto Sans KR', sans-serif;
+   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
    background: var(--bg-color);
    color: var(--text-color);
    line-height: 1.6;
