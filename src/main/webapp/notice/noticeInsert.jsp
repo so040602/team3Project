@@ -75,7 +75,8 @@ label {
 }
 
 input[type="text"],
-textarea {
+textarea,
+input[type="file"] {
    width: 100%;
    padding: 12px 16px;
    border: 1px solid var(--border-color);
@@ -88,7 +89,8 @@ textarea {
 }
 
 input[type="text"]:focus,
-textarea:focus {
+textarea:focus,
+input[type="file"]:focus {
    outline: none;
    border-color: var(--primary-color);
    background-color: #fafafa;
@@ -103,6 +105,11 @@ textarea {
    min-height: 400px;
    resize: vertical;
    line-height: 1.6;
+}
+
+input[type="file"] {
+   padding: 10px;
+   background-color: #fafafa;
 }
 
 .button-group {
@@ -202,7 +209,7 @@ textarea {
 </head>
 <body>
     <div class="container">
-        <form class="notice-form" action="<%=getEnvs%>noticeInsert" method="post">
+        <form class="notice-form" action="<%=getEnvs%>noticeInsert" method="post" enctype="multipart/form-data">
             <h1 class="form-title">공지사항 작성</h1>
 
 <% if (request.getAttribute("errorMessage") != null) { %>
@@ -218,11 +225,11 @@ textarea {
                value="${param.title}" placeholder="제목을 입력하세요">
     </div>
 
-    <div class="form-group">
-        <label class="required" for="author">작성자</label>
-        <input type="text" id="author" name="author" required
-               value="${param.author}" placeholder="작성자를 입력하세요">
-    </div>
+     <div class="form-group">
+                    <label class="required" for="memid">작성자</label>
+                    <!-- 작성자 필드를 세션에서 가져오고 readonly로 설정 -->
+                    <input type="text" id="memid" name="memid" value="${sessionScope.loginfo.memid}" class="readonly-field" readonly>
+                </div>
 
     <div class="form-group">
         <label class="required" for="content">내용</label>
@@ -232,8 +239,7 @@ textarea {
 
     <div class="form-group">
         <label for="attachments">첨부파일</label>
-        <input type="text" id="attachments" name="attachments"
-               value="${param.attachments}" placeholder="첨부파일 경로를 입력하세요">
+        <input type="file" id="attachments" name="attachments">
     </div>
 </div>
 

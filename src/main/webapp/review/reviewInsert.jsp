@@ -40,7 +40,7 @@ List<Book> bookList = bookDao.getAllBooks();
     }
 
     body {
-        font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
         background-color: var(--bg-color);
         color: var(--text-color);
         line-height: 1.6;
