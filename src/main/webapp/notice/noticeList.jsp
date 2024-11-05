@@ -232,9 +232,15 @@ tr:hover {
         <a href="<%=getEnvs%>bookMain" class="btn btn-back">
             <i class="fas fa-home"></i> 홈으로
         </a>
+        
+        <c:choose>
+        <c:when test="${whologin == 2}">
         <a href="<%=getEnvs%>noticeInsert" class="btn btn-primary">
             <i class="fas fa-pen"></i> 등록하기
         </a>
+        </c:when>
+        </c:choose>
+        
     </div>
 </div>
 
@@ -266,7 +272,6 @@ tr:hover {
 					for (Notice notice : notices) {
 					%>
 					<tr>
-						<!-- NoticeMain.jsp의 제목 링크 부분 -->
 						<td>
 							<div class="notice-title">
 								<a href="<%=getEnvs%>noticeDetail&id=<%=notice.getNoticeId()%>">

@@ -177,7 +177,7 @@ body {
 <body>
     <header class="header">
         <div class="header-content">
-            <a href="<%=getEnvs%>home" class="logo">책숲</a>
+            <a href="<%=getEnvs%>home" class="logo">댕글댕글</a>
             <nav class="user-menu">
                 <c:choose>
                     <c:when test="${whologin == 0}">

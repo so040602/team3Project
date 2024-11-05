@@ -236,7 +236,7 @@
 <body>
 <header class="top-header">
     <div class="nav-wrapper">
-        <a href="<%=getEnvs%>home" class="logo">책숲</a>
+        <a href="<%=getEnvs%>home" class="logo">댕글댕글</a>
         <div class="nav-right">
             <c:choose>
                 <c:when test="${whologin == 0}">

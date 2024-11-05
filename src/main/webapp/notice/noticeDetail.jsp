@@ -3,6 +3,23 @@
 <%@ page import="com.team3.model.dao.NoticeDao"%>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
+
+<%-- jstl을 위한 태그 라이브러리 지시어 선언 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%-- whologin 변수는 현재 로그인 상태를 알려 주는 변수입니다. --%>
+<%-- 미로그인(0), 일반 사용자(1), 관리자(2) --%>
+<c:set var="whologin" value="0" />
+<c:if test="${not empty sessionScope.loginfo}">
+    <c:if test="${sessionScope.loginfo.memid == 'admin'}">
+        <c:set var="whologin" value="2" />
+    </c:if>
+    <c:if test="${sessionScope.loginfo.memid != 'admin'}">
+        <c:set var="whologin" value="1" />
+    </c:if>
+</c:if>
+
 <%
 int noticeId = Integer.parseInt(request.getParameter("id"));
 NoticeDao dao = new NoticeDao();
@@ -303,6 +320,9 @@ body {
             <i class="fas fa-arrow-left"></i> 목록으로
         </a>
     </div>
+    
+    <c:choose>
+    <c:when test="${whologin == 2}">
     <div class="button-group-right">
         <a href="<%=getEnvs%>noticeUpdate&id=<%=notice.getNoticeId()%>" class="btn btn-edit">
             <i class="fas fa-edit"></i> 수정
@@ -311,6 +331,8 @@ body {
             <i class="fas fa-trash-alt"></i> 삭제
         </a>
     </div>
+    </c:when>
+    </c:choose>
 </div>
 
 
