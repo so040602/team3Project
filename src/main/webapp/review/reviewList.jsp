@@ -1,13 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="com.team3.model.bean.Review" %>
 <%@ page import="java.util.List" %>
 
-<%
-String appName = request.getContextPath();
-String mappingName = "/coolapp";
-String postForm = appName + mappingName;
-String getEnvs = appName + mappingName + "?opsmode=";
-%>
+<%@ include file="./../common/common2.jsp"%>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html lang="ko">
@@ -158,6 +154,54 @@ String getEnvs = appName + mappingName + "?opsmode=";
     .action-link:hover {
         color: var(--hover-color);
     }
+    
+    .top-header {
+        background: #fff;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .nav-wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .nav-link {
+        color: #666;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 14px;
+    }
+
+    .nav-link i {
+        font-size: 16px;
+    }
+
+    .nav-link:hover {
+        color: #333;
+    }
+
+
 
     @media (max-width: 768px) {
         .container {
@@ -190,6 +234,43 @@ String getEnvs = appName + mappingName + "?opsmode=";
 </style>
 </head>
 <body>
+<header class="top-header">
+    <div class="nav-wrapper">
+        <a href="<%=getEnvs%>home" class="logo">책숲</a>
+        <div class="nav-right">
+            <c:choose>
+                <c:when test="${whologin == 0}">
+                    <a href="<%=getEnvs%>memLogin" class="nav-link">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        <span>로그인</span>
+                    </a>
+                    <a href="<%=getEnvs%>userAuthStart" class="nav-link">
+                        <i class="fa-solid fa-user"></i>
+                        <span>회원가입</span>
+                    </a>
+                </c:when>
+                <c:otherwise>
+                    <a href="<%=getEnvs%>memMyPage" class="nav-link">
+                        <i class="fa-solid fa-user"></i>
+                        <span>마이페이지</span>
+                    </a>
+                    <a href="<%=getEnvs%>bookmark" class="nav-link">
+                        <i class="fa-solid fa-bookmark"></i>
+                        <span>북마크</span>
+                    </a>
+                    <a href="<%=getEnvs%>memLogout" class="nav-link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>로그아웃</span>
+                    </a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
+</header>
+
+
+
+
     <div class="container">
         <div class="header">
             <h1>

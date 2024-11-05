@@ -107,7 +107,7 @@ public class AibbsDao extends SuperDao {
 	
 	public int updateAibbsData(Aibbs bean) {
 	    // bean을 사용하여 데이터베이스에 수정합니다.
-	    System.out.println("updateData");
+	    System.out.println("updateData in updateAibbsData() ");
 	    System.out.println(bean);
 
 	    StringBuilder sql = new StringBuilder("UPDATE TEAM3_AIBBS SET category = ?, subtitle = ?, contents = ?");
@@ -160,27 +160,34 @@ public class AibbsDao extends SuperDao {
 
 	    // Use try-with-resources for automatic resource management
 	    try (Connection conn = super.getConnection();
-	         PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+	    	     PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
-	        conn.setAutoCommit(false);
+	    	    conn.setAutoCommit(false);
 
-	        // Set parameters dynamically based on the collected list
-	        for (int i = 0; i < paramList.size(); i++) {
-	            pstmt.setObject(i + 1, paramList.get(i));
-	        }
+	    	    // Set parameters dynamically based on the collected list
+	    	    for (int i = 0; i < paramList.size(); i++) {
+	    	        pstmt.setObject(i + 1, paramList.get(i));
+	    	    }
 
-	        cnt = pstmt.executeUpdate();
-	        conn.commit();
+	    	    cnt = pstmt.executeUpdate();
+	    	    
+	    	    // Check if the update affected any rows
+	    	    if (cnt > 0) {
+	    	        conn.commit();  // Commit only if the update was successful
+	    	    } else {
+	    	        conn.rollback(); // Rollback if no rows were updated
+	    	        System.out.println("No rows were updated.");
+	    	    }
 
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        try {
-	            // Rollback transaction on failure
-	            if (conn != null) conn.rollback();
-	        } catch (SQLException rollbackEx) {
-	            rollbackEx.printStackTrace();
-	        }
-	    }
+	    	} catch (SQLException e) {
+	    	    e.printStackTrace();
+	    	    try {
+	    	        if (conn != null) conn.rollback(); // Rollback on failure
+	    	    } catch (SQLException rollbackEx) {
+	    	        rollbackEx.printStackTrace();
+	    	    }
+	    	}
+
 
 	    return cnt;
 	}
@@ -339,4 +346,44 @@ public class AibbsDao extends SuperDao {
 		return bean;
 	}
 
+	public Aibbs getAibbsDataByPkPwd(int brdidx, String boardpwd) {
+		
+		plusReadcnt(brdidx); // 조회수 1회 증가시킴
+		
+		// 기본 키인 게시물 번호를 이용하여 게시물 정보를 반환합니다.
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;		
+		String sql = " SELECT * FROM TEAM3_AIBBS " ;
+		sql += " WHERE brdidx = ? and boardpwd = ? " ;
+		
+		Aibbs bean = null ;
+		
+		try {
+			conn = super.getConnection() ;
+			pstmt = conn.prepareStatement(sql) ;
+			
+			pstmt.setInt(1, brdidx);
+			pstmt.setString(2, boardpwd);
+			
+			rs = pstmt.executeQuery() ;
+			
+			if(rs.next()) {
+				bean = getAibbsBeanData(rs);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null) {rs.close();}
+				if(pstmt!=null) {pstmt.close();}
+				if(conn!=null) {conn.close();}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return bean;
+	}
+	
 }
