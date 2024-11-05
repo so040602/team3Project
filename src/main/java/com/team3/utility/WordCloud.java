@@ -22,7 +22,7 @@ public class WordCloud {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             // 서버로 전송할 URL을 설정
-            HttpPost uploadFile = new HttpPost(PythonApiUtil.getIdCardUploadUrl());
+            HttpPost uploadFile = new HttpPost(PythonApiUtil.getWordCloudUploadUrlTest());
 
             // StringEntity를 사용하여 JSON 데이터 설정
             StringEntity entity = new StringEntity(jsonData);
