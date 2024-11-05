@@ -324,8 +324,8 @@ body {
 						<button class="btn btn-lg btn-buy btn-out" value="<%=bookCnt%>">
 							<i class="fas fa-book"></i> 대출
 						</button>
-						<button class="btn btn-lg btn-wishlist">
-							<i class="fas fa-calendar-check" value="<%=book.getDescription()%>"></i> 대출 예약
+						<button class="btn btn-lg btn-wishlist" value="<%=book.getDescription()%>">
+							<i class="fas fa-calendar-check"></i> 대출 예약
 						</button>
 						<button class="btn btn-lg btn-cart" value="<%=bookCnt%>">
 							<i class="fas fa-bookmark"></i> 북마크
@@ -389,6 +389,7 @@ body {
             
             document.querySelector('.btn-wishlist').addEventListener('click', function() {
                 const bookDiscription = this.value;
+                console.log(bookDiscription)
                 fetch('<%=getEnvs%>BookWordCloud', {
                 	method: 'POST',
                 	headers: {
