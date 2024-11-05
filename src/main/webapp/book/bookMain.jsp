@@ -5,7 +5,6 @@
 <%@ page import="com.team3.model.dao.ReviewDao"%>
 <%@ page import="com.team3.model.bean.Review"%>
 <%@ page import="java.util.List"%>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
 <c:set var="whologin" value="0" />
 <c:if test="${not empty sessionScope.loginfo}">
@@ -43,7 +42,7 @@ List<Review> reviews = reviewDao.list(); // 전체 리뷰 목록 가져오기
 }
 
 body {
-   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+   font-family: 'Noto Sans KR', sans-serif;
    color: #333;
    line-height: 1.6;
 }
@@ -540,7 +539,10 @@ body {
       <header class="header">
          <div
             style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <a href="<%=getEnvs%>bookMain" class="logo">댕글댕글</a>
+            <a href="<%=getEnvs%>home" class="logo" style="display: flex; align-items: center;">
+            <img src="<%=appName%>/resources/images/logo.png" alt="댕글댕글 로고" style="max-height: 40px; margin-right: 8px;">
+            <span style="font-size: 24px; font-weight: bold; color: #333;">댕글댕글</span>
+        </a>
 
             <div class="user-menu">
                <c:choose>
@@ -560,7 +562,7 @@ body {
                      <a href="<%=getEnvs%>bookmark"> <i class="fas fa-bookmark"></i>
                         북마크
                      </a>
-                     <a href="<%=getEnvs%>memLogout"> <i class="fas fa-sign-out-alt"></i>
+                     <a href="<%=getEnvs%>logout"> <i class="fas fa-sign-out-alt"></i>
                         <span>로그아웃</span>
                      </a>
                   </c:otherwise>
