@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#birth').datepicker();
         $('input[value="${requestScope.bean.gender}"]').attr('checked', true);
     });
 </script>
@@ -163,6 +162,100 @@ body {
     }
 }
 </style>
+
+<script>
+    // 비동기 Ajax 함수
+    function ajaxCheckMempwd(callback) {
+        const elmMemid = document.getElementById('memid');
+        const elmMempwd = document.getElementById('mempwd');
+
+        const xhr = new XMLHttpRequest();
+        const url = "AjaxMempwdCheck";
+        
+        // URL 인코딩하여 memid와 mempwd를 data에 포함
+        let data = "memid=" + encodeURIComponent(elmMemid.value);
+        data += "&mempwd=" + encodeURIComponent(elmMempwd.value);
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // 서버의 응답에 따라 콜백 함수를 호출
+                if(xhr.responseText.trim() === "CORRECTPWD") {
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            }
+        };
+        xhr.send(data);
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#birth').datepicker({ dateFormat: "yy-mm-dd" });
+    });
+
+    function validCheck() {
+        const memid = $('#memid').val();
+        const mempwd = $('#mempwd').val();
+
+        if (mempwd.length < 5 || mempwd.length > 12) {
+            alert('비밀번호는 5자리 이상 12자리 이하로 입력해 주세요.');
+            $('#mempwd').focus();
+            return false;
+        }
+
+        // 비동기 검사를 수행하고, 비밀번호 검사가 완료된 후 나머지 검사를 진행
+        ajaxCheckMempwd( function(isValid) {
+            if (!isValid) {
+                alert("비밀번호를 정확하게 입력해 주세요.");
+                $('#mempwd').val("");
+                $('#mempwd').focus();
+                return;
+            }
+
+            // 비밀번호가 유효한 경우에만 나머지 유효성 검사를 수행
+            if ($('input[name="gender"]:checked').length === 0) {
+                alert('성별은 반드시 선택이 되어야 합니다.');
+                return false;
+            }
+
+            const birth = $('#birth').val();
+            const regexBirth = /^\d{4}[-/]\d{2}[-/]\d{2}$/;
+            if (!regexBirth.test(birth)) {
+                alert('생일은 반드시 yyyy/mm/dd 형식 또는 yyyy-mm-dd 형식으로 입력해 주셔야 합니다.');
+                $('#birth').focus();
+                return false;
+            }
+
+            const email = $('#email').val();
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regexEmail.test(email)) {
+                alert("이메일 주소를 정확하게 입력해 주세요");
+                $('#email').val("");
+                $('#email').focus();
+                return false;
+            }
+
+            const addr01 = $('#addr01').val();
+            if (addr01.length < 12) {
+                alert('주소를 입력해 주세요.');
+                $('#addr01').focus();
+                return false;
+            }
+
+            // 모든 유효성 검사를 통과했음을 알리는 메시지
+            alert("모든 입력이 유효합니다!");
+            // 여기에 폼 제출이나 추가 작업을 진행할 수 있습니다.
+        });
+
+        // 비동기 처리가 완료되기 전까지는 나머지 검사가 실행되지 않습니다.
+    }
+</script>
+
 </head>
 <body>
     <div class="container">
@@ -229,8 +322,8 @@ body {
                 </div>
                 
                 <div class="button-group">
-                    <button type="submit" class="btn btn-primary">수정하기</button>
-                    <button type="reset" class="btn btn-secondary">초기화</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validCheck();">수정</button>
+                    <button type="reset" class="btn btn-secondary" onclick="history.back();">취소</button>
                 </div>
             </form>
         </div>

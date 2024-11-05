@@ -231,6 +231,10 @@ body {
                         <td>${mbean.memid}</td>
                     </tr>
                     <tr>
+                        <th>성별</th>
+                        <td>${mbean.gender}</td>
+                    </tr>                    
+                    <tr>
                         <th>생일</th>
                         <td>${mbean.birth}</td>
                     </tr>

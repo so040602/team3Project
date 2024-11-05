@@ -426,7 +426,7 @@ button[type="submit"]:hover {
                </div>
                <c:if test="${whologin > 0}">
 	               <div class="button-group">
-	                  <button class="reserve-button">대출 예약</button>
+	                  <button class="reserve-button" onclick="showConfirm(this.value)" value="${bean.book_idx}">북마크</button>
 	                  <button class="borrow-button btn-out" value="${bean.book_idx}">대출하기</button>
 	               </div>
                </c:if>
@@ -566,6 +566,42 @@ button[type="submit"]:hover {
             });
         });
         });
+    </script>
+    <script>
+        function showConfirm(bookidx) {
+            const result = confirm("북마크에 추가 하시겠습니까?");
+            if(result) {
+                fetch('<%=getEnvs%>bookOutCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({bookId: bookidx})
+                })
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                	if(data === "초과"){
+                    	alert('책은 6권 이상 담을 수 없습니다.');
+                    }else if(data === "중복"){
+                    	alert('같은 책은 담을 수 없습니다.');
+                    }else if(data === "오류"){
+                    	alert('책을 담을 수 없습니다.')
+                    } else if(data === "가능"){
+                    	alert('북마크에 추가되었습니다.');
+                    }else{
+                    	alert('이미 대출중인 도서 입니다.');
+                    }         
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+            }
+        }
     </script>
 </body>
 </html> 
