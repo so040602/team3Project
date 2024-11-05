@@ -8,7 +8,7 @@ String mappingName = "/coolapp";
 String postForm = appName + mappingName;
 String getEnvs = appName + mappingName + "?opsmode=";
 %>
-
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -33,7 +33,7 @@ String getEnvs = appName + mappingName + "?opsmode=";
     }
 
     body {
-        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         background-color: var(--bg-color);
         color: var(--text-color);
         line-height: 1.6;
