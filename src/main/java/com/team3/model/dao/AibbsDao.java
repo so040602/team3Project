@@ -545,6 +545,71 @@ public class AibbsDao extends SuperDao {
 		return lists;
     }
     
+    public boolean deleteAibbs(int brdidx, String memid) {
+        String sql = "DELETE FROM TEAM3_AIBBS WHERE brdidx = ? AND memid = ?";
+        boolean isSuccess = false;
+
+        try (Connection conn = super.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            conn.setAutoCommit(false);
+            
+            pstmt.setInt(1, brdidx);
+            pstmt.setString(2, memid);
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows > 0) {
+                // 첨부 파일 삭제 로직
+                deleteAttachedFiles(brdidx);
+                conn.commit();
+                isSuccess = true;
+            } else {
+                conn.rollback();
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return isSuccess;
+    }
+
+    private void deleteAttachedFiles(int brdidx) {
+        // 첨부 파일 정보 조회
+        String sql = "SELECT attach01, attach02, attach03, attach04, codefile FROM TEAM3_AIBBS WHERE brdidx = ?";
+        
+        try (Connection conn = super.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, brdidx);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                String fileUploadPath = AppConfig.getInstance().getFileUploadPath();
+                
+                // 각 첨부 파일 삭제
+                deleteFileIfExists(fileUploadPath, rs.getString("attach01"));
+                deleteFileIfExists(fileUploadPath, rs.getString("attach02"));
+                deleteFileIfExists(fileUploadPath, rs.getString("attach03"));
+                deleteFileIfExists(fileUploadPath, rs.getString("attach04"));
+                deleteFileIfExists(fileUploadPath, rs.getString("codefile"));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteFileIfExists(String uploadPath, String fileName) {
+        if (fileName != null && !fileName.isEmpty()) {
+            File file = new File(uploadPath + File.separator + fileName);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+    
 
 	
 }
