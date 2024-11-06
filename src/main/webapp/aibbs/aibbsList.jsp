@@ -126,6 +126,10 @@ p {
 .table tr:hover {
    background-color: #f8f9fa;
 }
+.table .btn {
+    padding: 4px 12px;  /* 버튼 크기를 좀 더 작게 조절 */
+    font-size: 12px;    /* 글자 크기도 작게 */
+}
 
 /* 뱃지 스타일 */
 .badge {
@@ -274,10 +278,10 @@ td a {
                        </td>
                        <td>${bean.regdate}</td>
                        <td>
-                           <c:if test="${sessionScope.loginfo.memid == bean.memid}">
-                               <a href="<%=getEnvs%>aibbsUpdate&brdidx=${bean.brdidx}" class="edit-link">수정</a>
-                           </c:if>
-                       </td>
+						    <c:if test="${sessionScope.loginfo.memid == bean.memid}">
+						        <a href="<%=getEnvs%>aibbsUpdate&brdidx=${bean.brdidx}" class="btn btn-primary">수정</a>
+						    </c:if>
+						</td>
                    </tr>
                </c:forEach>
 
