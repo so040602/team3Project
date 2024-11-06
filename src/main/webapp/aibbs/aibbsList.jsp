@@ -126,10 +126,6 @@ p {
 .table tr:hover {
    background-color: #f8f9fa;
 }
-.table .btn {
-    padding: 4px 12px;  /* 버튼 크기를 좀 더 작게 조절 */
-    font-size: 12px;    /* 글자 크기도 작게 */
-}
 
 /* 뱃지 스타일 */
 .badge {
@@ -278,10 +274,10 @@ td a {
                        </td>
                        <td>${bean.regdate}</td>
                        <td>
-						    <c:if test="${sessionScope.loginfo.memid == bean.memid}">
-						        <a href="<%=getEnvs%>aibbsUpdate&brdidx=${bean.brdidx}" class="btn btn-primary">수정</a>
-						    </c:if>
-						</td>
+                           <c:if test="${sessionScope.loginfo.memid == bean.memid}">
+                               <a href="<%=getEnvs%>aibbsUpdate&brdidx=${bean.brdidx}" class="edit-link">수정</a>
+                           </c:if>
+                       </td>
                    </tr>
                </c:forEach>
 
@@ -294,7 +290,97 @@ td a {
                </c:if>
            </tbody>
        </table>
-   </div>
+       
+       <div style="display: flex; justify-content: center; align-items: center; margin-top:10px;">
+			<ul class="pagination">
+	            <c:if test="${requestScope.keyword == ''}">
+	               <c:if test="${pagelist.beginPage > 10}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=1&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= 10}">
+	                  <li class="page-item"><span class="page-link disabled"><i class="fa fa-step-backward" aria-hidden="true"></i></span><!-- 처음 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.beginPage > 1}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= 1}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-backward" aria-hidden="true"></i></span><!-- 이전 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+	                  <c:forEach var="i" begin="${pagelist.beginPage}"
+	                     end="${pagelist.endPage}">
+	                     <li
+	                        class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+	                        class="page-link" href="<%=getEnvs%>aibbsList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+	                  </c:forEach>
+	               </c:if>
+	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+	                  <li class="page-item"><a class="page-link"
+	                        href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
+	               </c:if>
+	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-forward" aria-hidden="true"></i></span><!-- 다음 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
+	               </c:if>
+	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-step-forward" aria-hidden="true"></i></span><!-- 맨끝 -->
+	                  </li>
+	               </c:if>
+	            </c:if>
+	            <c:if test="${requestScope.keyword != ''}">
+	               <c:if test="${pagelist.beginPage > 10}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=1&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= 10}">
+	                  <li class="page-item"><span class="page-link disabled"><i class="fa fa-step-backward" aria-hidden="true"></i></span><!-- 처음 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.beginPage > 1}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= 1}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-backward" aria-hidden="true"></i></span><!-- 이전 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+	                  <c:forEach var="i" begin="${pagelist.beginPage}"
+	                     end="${pagelist.endPage}">
+	                     <li
+	                        class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+	                        class="page-link" href="<%=getEnvs%>aibbsList&pageNumber=${i}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+	                  </c:forEach>
+	               </c:if>
+	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+	                  <li class="page-item"><a class="page-link"
+	                        href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
+	               </c:if>
+	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-forward" aria-hidden="true"></i></span><!-- 다음 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
+	               </c:if>
+	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-step-forward" aria-hidden="true"></i></span> <!-- 맨끝 -->
+	                  </li>
+	               </c:if>
+	            </c:if>
+	         </ul>     
+   		</div>
+       
+    </div>
 
    <script>
        <%
