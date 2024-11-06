@@ -437,18 +437,18 @@ button[type="submit"]:hover {
             <c:if test="${requestScope.keyword == ''}">
                <c:if test="${pagelist.beginPage > 10}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=1&currCategory=${requestScope.selectedCategory}">처음</a></li>
+                     href="<%=getEnvs%>bookList&pageNumber=1&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
                </c:if>
                <c:if test="${pagelist.beginPage <= 10}">
-                  <li class="page-item"><span class="page-link disabled">처음</span>
+                  <li class="page-item"><span class="page-link disabled"><i class="fa fa-step-backward" aria-hidden="true"></i></span><!-- 처음 -->
                   </li>
                </c:if>
                <c:if test="${pagelist.beginPage > 1}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}">이전</a></li>
+                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
                </c:if>
                <c:if test="${pagelist.beginPage <= 1}">
-                  <li class="page-item disabled"><span class="page-link">이전</span>
+                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-backward" aria-hidden="true"></i></span><!-- 이전 -->
                   </li>
                </c:if>
                <c:if test="${pagelist.beginPage <= pagelist.totalPage}">
@@ -461,18 +461,18 @@ button[type="submit"]:hover {
                </c:if>
                <c:if test="${pagelist.endPage < pagelist.totalPage}">
                   <li class="page-item"><a class="page-link"
-                        href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}">다음</a></li>
+                        href="<%=getEnvs%>bookList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
                </c:if>
                <c:if test="${pagelist.endPage >= pagelist.totalPage}">
-                  <li class="page-item disabled"><span class="page-link">다음</span>
+                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-forward" aria-hidden="true"></i></span><!-- 다음 -->
                   </li>
                </c:if>
                <c:if test="${pagelist.endPage < pagelist.totalPage}">
                   <li class="page-item"><a class="page-link"
-                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}">맨끝</a></li>
+                     href="<%=getEnvs%>bookList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
                </c:if>
                <c:if test="${pagelist.endPage >= pagelist.totalPage}">
-                  <li class="page-item disabled"><span class="page-link">맨끝</span>
+                  <li class="page-item disabled"><span class="page-link">맨끝</span><!-- 맨끝 -->
                   </li>
                </c:if>
             </c:if>
