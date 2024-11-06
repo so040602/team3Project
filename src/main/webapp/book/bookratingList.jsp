@@ -527,8 +527,6 @@ button[type="submit"]:hover {
             	const bookOutIdx = this.value;
 
                 console.log(bookOutIdx);
-
-
                 
                 fetch('<%=getEnvs%>BookListOut', {
                 	method: 'POST',
