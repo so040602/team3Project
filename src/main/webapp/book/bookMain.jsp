@@ -5,6 +5,7 @@
 <%@ page import="com.team3.model.dao.ReviewDao"%>
 <%@ page import="com.team3.model.bean.Review"%>
 <%@ page import="java.util.List"%>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 
 <c:set var="whologin" value="0" />
 <c:if test="${not empty sessionScope.loginfo}">
@@ -184,94 +185,22 @@ body {
 
 /* 배너 스타일 */
 .main-banner {
-    background: linear-gradient(135deg, #fff5d7 0%, #ffe5a0 100%);
-    padding: 60px 20px;
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-}
-
-.banner-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 40px;
 }
-
-.banner-text {
-    flex: 1;
+.swiper {
+    width: 100%;
+    height: 400px;
 }
-
-.banner-title {
-    font-size: 3em;
-    margin-bottom: 20px;
-    color: #333;
-    font-weight: bold;
-    line-height: 1.2;
+.swiper-slide svg {
+    width: 100%;
+    height: 100%;
 }
-
-.banner-subtitle {
-    font-size: 1.3em;
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 30px;
+.swiper-button-next, .swiper-button-prev {
+    color: #0066cc;
 }
-
-.banner-cta {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: #0066c0;
-    color: white;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.3s;
-}
-
-.banner-cta:hover {
-    background-color: #004d99;
-}
-
-.banner-illustration {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    position: relative;
-}
-
-/* 장식용 원형 요소 */
-.banner-decoration {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.1;
-}
-
-.decoration-1 {
-    width: 200px;
-    height: 200px;
-    background: #ffb700;
-    top: -100px;
-    right: -50px;
-}
-
-.decoration-2 {
-    width: 150px;
-    height: 150px;
-    background: #0066c0;
-    bottom: -50px;
-    right: 100px;
-}
-
-.banner-subtitle {
-   font-size: 1.2em;
-   color: #666;
+.swiper-pagination-bullet-active {
+    background: #0066cc;
 }
 
 /* 도서 섹션 스타일 */
@@ -625,24 +554,125 @@ document.addEventListener('DOMContentLoaded', function() {
             </a></li>
          </ul>
       </nav>
+      
+      
       <div class="main-banner">
-    <div class="banner-content">
-        <div class="banner-text">
-            <h1 class="banner-title">
-                첫 방문을 위한<br>GUIDE
-            </h1>
-            <p class="banner-subtitle">
-                처음 방문하셨다면,<br>가이드를 따라오세요!
-            </p>
-            <a href="#" class="banner-cta">시작하기</a>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+    <!-- 첫 번째 배너 -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+        <rect width="1200" height="450" fill="#1e3a8a"/>
+        <!-- 배경 원 위치 조정 -->
+        <circle cx="900" cy="200" r="180" fill="#2563eb" opacity="0.3"/>
+        <circle cx="850" cy="150" r="120" fill="#3b82f6" opacity="0.2"/>
+        
+        <!-- 텍스트 영역 -->
+        <text x="150" y="180" font-family="Arial" font-size="56" fill="white" font-weight="bold">
+            이달의 추천도서
+        </text>
+        <text x="150" y="240" font-family="Arial" font-size="36" fill="#93c5fd">
+            당신의 새로운 시작을 함께할
+        </text>
+        <text x="150" y="290" font-family="Arial" font-size="36" fill="#93c5fd">
+            특별한 이야기
+        </text>
+        
+        <!-- 책 이미지 그룹을 오른쪽으로 이동 -->
+        <g transform="translate(750,80)">
+            <rect x="0" y="0" width="250" height="280" fill="#bfdbfe" rx="5"/>
+            <rect x="25" y="40" width="200" height="25" fill="white" opacity="0.6"/>
+            <rect x="25" y="90" width="150" height="25" fill="white" opacity="0.4"/>
+        </g>
+    </svg>
+</div>
+<div class="swiper-slide">
+    <!-- 두 번째 배너 - 회원가입 이벤트 -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+        <rect width="1200" height="450" fill="#f0f9ff"/>
+        <path d="M900,0 L1200,0 L1200,400 L700,400" fill="#0ea5e9" opacity="0.9"/>
+        <circle cx="950" cy="200" r="120" fill="#38bdf8" opacity="0.3"/>
+        
+        <!-- 텍스트 영역 -->
+        <text x="150" y="180" font-family="Arial" font-size="56" fill="#0369a1" font-weight="bold">
+            신규 회원가입 이벤트
+        </text>
+        <text x="150" y="240" font-family="Arial" font-size="36" fill="#0284c7">
+            가입 즉시 대출 연체 면제권
+        </text>
+        <text x="150" y="290" font-family="Arial" font-size="32" fill="#0ea5e9">
+            특별 혜택 무료로 드려요!
+        </text>
+        
+        <!-- 회원카드와 책 이미지 표현 -->
+        <g transform="translate(750,80)">
+            <!-- 회원 카드 -->
+            <rect x="0" y="20" width="250" height="150" fill="#0ea5e9" rx="10"/>
+            <rect x="20" y="50" width="80" height="80" fill="white" opacity="0.6" rx="40"/>
+            <rect x="120" y="60" width="100" height="10" fill="white" opacity="0.8"/>
+            <rect x="120" y="80" width="80" height="10" fill="white" opacity="0.6"/>
+            
+            <!-- 책 스택 -->
+            <rect x="30" y="140" width="200" height="140" fill="#0284c7" rx="5"/>
+            <rect x="50" y="160" width="160" height="20" fill="white" opacity="0.6"/>
+            <rect x="50" y="190" width="120" height="20" fill="white" opacity="0.4"/>
+        </g>
+    </svg>
+</div>
+<div class="swiper-slide">
+    <!-- 세 번째 배너 -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+        <rect width="1200" height="450" fill="#f3f4f6"/>
+        <rect x="600" y="0" width="600" height="400" fill="#4b5563" opacity="0.1"/>
+        
+        <!-- 텍스트 영역 -->
+        <text x="150" y="180" font-family="Arial" font-size="56" fill="#111827" font-weight="bold">
+            신간 도서 특별전
+        </text>
+        <text x="150" y="240" font-family="Arial" font-size="36" fill="#4b5563">
+            이번 주 신규 입고된
+        </text>
+        <text x="150" y="290" font-family="Arial" font-size="36" fill="#4b5563">
+            베스트 신간을 만나보세요
+        </text>
+        
+        <!-- 책 스택 이미지 그룹을 오른쪽으로 이동 -->
+        <g transform="translate(750,80)">
+            <rect x="0" y="0" width="200" height="280" fill="#374151" rx="5"/>
+            <rect x="15" y="40" width="170" height="25" fill="white" opacity="0.6"/>
+            <rect x="50" y="20" width="200" height="280" fill="#6b7280" rx="5"/>
+            <rect x="65" y="60" width="170" height="25" fill="white" opacity="0.5"/>
+            <rect x="100" y="40" width="200" height="280" fill="#9ca3af" rx="5"/>
+            <rect x="115" y="80" width="170" height="25" fill="white" opacity="0.4"/>
+        </g>
+    </svg>
+</div>
         </div>
-        <div class="banner-illustration">
-            <!-- 장식용 원형 요소 -->
-            <div class="banner-decoration decoration-1"></div>
-            <div class="banner-decoration decoration-2"></div>
-        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
     </div>
 </div>
+
+<!-- Swiper JS - body 끝나기 전에 위치 -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
 
       <section class="book-section">
          <div class="section-header">
