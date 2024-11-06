@@ -228,6 +228,7 @@ body {
                         return response.json();
                     })
                     .then(data => {
+                    	console.log(data);
                         switch(data) {
                             case "대여중":
                                 alert('이미 같은 책을 대여중입니다.');

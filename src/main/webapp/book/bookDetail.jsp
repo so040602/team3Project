@@ -325,7 +325,7 @@ body {
 							<i class="fas fa-book"></i> 대출
 						</button>
 						<button class="btn btn-lg btn-wishlist" value="<%=book.getDescription()%>">
-							<i class="fas fa-calendar-check"></i> 대출 예약
+							<i class="fas fa-calendar-check"></i> 워드클라우드
 						</button>
 						<button class="btn btn-lg btn-cart" value="<%=bookCnt%>">
 							<i class="fas fa-bookmark"></i> 북마크
@@ -393,18 +393,24 @@ body {
                 fetch('<%=getEnvs%>BookWordCloud', {
                 	method: 'POST',
                 	headers: {
-                		'Content-Type':'application/json'
+                		'Content-Type':'application/json; charset=UTF-8'
                 	},
                 	body: JSON.stringify({bookdiscription:bookDiscription})
                 }).then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json(); // JSON으로 응답 받기
+                    return response.blob(); // blob으로 응답 받기
                 })
-                .then(data => {
-                    console.log(data);// 서버에서 받은 응답 처리
-                                         
+                .then(imageBlob => {
+                    // Blob을 이미지로 변환하여 페이지에 표시
+                    const imageUrl = URL.createObjectURL(imageBlob);
+
+                    // 새 창을 띄우고 그 안에 이미지를 표시
+                    const newWindow = window.open('', '_blank', 'width=800,height=600');  // 새 창 열기
+                    newWindow.document.write('<html><head><title>Word Cloud</title></head><body>');
+                    newWindow.document.write('<img src="' + imageUrl + '" alt="Word Cloud" style="width: 100%; height: auto;">');
+                    newWindow.document.write('</body></html>');                                      
                 })
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
