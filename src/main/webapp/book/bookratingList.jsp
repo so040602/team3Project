@@ -272,7 +272,8 @@ button[type="submit"]:hover {
    padding: 15px 25px;
    border-radius: 12px;
    box-shadow: var(--shadow-sm);
-   position: fixed;
+	position: absolute;   
+	min-width:390px; 
    bottom: 30px;
    left: 50%;
    transform: translateX(-50%);
