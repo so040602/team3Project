@@ -43,9 +43,9 @@ public class SuperDao {
 
 	        // Database connection details
 	        if (os.contains("win")) {
-		        url = "jdbc:mariadb://192.168.0.160:3306/bonspring";	        	
+		        url = "jdbc:mariadb://192.168.0.160:3306/bonspring"; // 192.168.0.160	        	
 	        } else {
-	        	url = "jdbc:mariadb://192.168.0.160:3306/bonspring";	        
+	        	url = "jdbc:mariadb://localhost:3306/bonspring";	        
 	        }
 
 	        String userid = "team3";

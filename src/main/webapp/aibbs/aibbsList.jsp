@@ -8,101 +8,102 @@
 <title>인공지능 목록</title>
 <style>
 :root {
-   --primary-color: #03C75A;
-   --hover-color: #02b350;
-   --background-color: #fff;
-   --border-color: #e5e5e5;
-   --text-primary: #222;
-   --text-secondary: #666;
-   --section-bg: #f9fafb;
+  --primary-color: #03C75A;
+  --hover-color: #02b350;
+  --background-color: #fff; 
+  --border-color: #e5e5e5;
+  --text-primary: #222;
+  --text-secondary: #666;
+  --section-bg: #f9fafb;
 }
 
 body {
-   background-color: var(--background-color);
-   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-   margin: 0;
-   padding: 0;
-   color: var(--text-primary);
-   line-height: 1.5;
+  background-color: var(--background-color);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+  line-height: 1.5;
 }
 
 .container {
-   max-width: 1000px;
-   margin: 40px auto;
-   padding: 30px;
-   background: #fff;
-   border-radius: 8px;
-   border: 1px solid var(--border-color);
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
 .page-header {
-   margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 h2 {
-   font-size: 24px;
-   color: var(--text-primary);
-   margin-bottom: 10px;
-   font-weight: 600;
+  font-size: 24px;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 p {
-   color: var(--text-secondary);
-   font-size: 14px;
-   margin-bottom: 20px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
 /* 필터 영역 */
 .filter-section {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .custom-select {
-   padding: 8px 12px;
-   border: 1px solid var(--border-color);
-   border-radius: 4px;
-   font-size: 14px;
-   color: var(--text-primary);
-   width: 200px;
-   background-color: #fff;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--text-primary);
+  width: 200px;
+  background-color: #fff;
 }
 
 .button-group {
-   display: flex;
-   gap: 8px;
+  display: flex;
+  gap: 8px;
 }
 
 .btn {
-   padding: 8px 16px;
-   border-radius: 4px;
-   font-size: 14px;
-   font-weight: 500;
-   cursor: pointer;
-   transition: all 0.2s;
-   border: none;
-   display: inline-flex;
-   align-items: center;
-   gap: 6px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .btn-primary {
-   background-color: var(--primary-color);
-   color: white;
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .btn-primary:hover {
-   background-color: var(--hover-color);
+  background-color: var(--hover-color);
 }
 
 /* 테이블 스타일 */
 .table {
    width: 100%;
-   border-top: 1px solid #222;
+   border-top: 2px solid #333;
    border-collapse: collapse;
    margin-top: 20px;
+   table-layout: fixed;  /* 칼럼 너비 고정 */
 }
 
 .table th {
@@ -111,8 +112,9 @@ p {
    font-size: 14px;
    font-weight: 500;
    color: var(--text-primary);
-   text-align: left;
+   text-align: center;  /* 중앙 정렬 */
    border-bottom: 1px solid var(--border-color);
+   white-space: nowrap;
 }
 
 .table td {
@@ -121,15 +123,92 @@ p {
    border-bottom: 1px solid var(--border-color);
    color: var(--text-secondary);
    vertical-align: middle;
+   text-align: center;  /* 중앙 정렬 */
+}
+
+/* 칼럼별 너비 조정 */
+.table th:nth-child(1), 
+.table td:nth-child(1) { /* 번호 */
+   width: 8%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) { /* 개발자 */
+   width: 15%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) { /* 글제목 */
+   width: 40%;
+   text-align: left;  /* 글제목만 좌측 정렬 */
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) { /* 조회수 */
+   width: 10%;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) { /* 작성일 */
+   width: 15%;
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6) { /* 수정,삭제 */
+   width: 12%;
 }
 
 .table tr:hover {
-   background-color: #f8f9fa;
+  background-color: #f8f9fa;
+}
+
+/* 수정/삭제 버튼 컨테이너 */
+.button-group-right {
+    display: flex;
+    gap: 8px;
+    justify-content: center;  /* 중앙 정렬 */
+    flex-direction: row;  /* 가로 방향으로 배치 */
+    align-items: center;  /* 세로 중앙 정렬 */
+    width: 100%;  /* 너비를 100%로 설정 */
+}
+
+.btn-edit, .btn-delete {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* 내용 중앙 정렬 */
+    gap: 4px;
+    min-width: 50px; /* 최소 너비 설정 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+.btn-edit {
+   color: var(--primary-color);
+}
+
+.btn-delete {
+   color: #ff6b6b;
+}
+
+.btn-edit:hover {
+   background-color: var(--primary-color);
+   color: white;
+}
+
+.btn-delete:hover {
+   background-color: #ff6b6b;
+   color: white;
 }
 
 /* 뱃지 스타일 */
 .badge {
+   min-width: 40px;
+   height: 24px;
    display: inline-flex;
+   justify-content: center;
    align-items: center;
    padding: 4px 8px;
    border-radius: 12px;
@@ -139,80 +218,85 @@ p {
 }
 
 .bg-secondary {
-   background-color: #868e96;
-   color: white;
+  background-color: #868e96;
+  color: white;
 }
 
 .bg-primary {
-   background-color: var(--primary-color);
-   color: white;
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .bg-danger {
-   background-color: #ff6b6b;
-   color: white;
+  background-color: #ff6b6b;
+  color: white;
 }
 
 /* 링크 스타일 */
 a {
-   color: var(--text-primary);
-   text-decoration: none;
-   transition: color 0.2s;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
 a:hover {
-   color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 td a {
-   display: flex;
-   align-items: center;
-   gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .empty-data {
-   padding: 40px 0;
-   text-align: center;
-   color: var(--text-secondary);
-   font-size: 14px;
-   background-color: var(--section-bg);
+  padding: 40px 0;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+  background-color: var(--section-bg);
+}
+
+/* 아이콘 스타일 */
+.fas {
+   font-size: 12px;
 }
 
 /* 반응형 */
 @media (max-width: 768px) {
-   .container {
-       padding: 20px;
-       margin: 20px;
-   }
+  .container {
+      padding: 20px;
+      margin: 20px;
+  }
 
-   .filter-section {
-       flex-direction: column;
-       gap: 15px;
-   }
+  .filter-section {
+      flex-direction: column;
+      gap: 15px;
+  }
 
-   .custom-select {
-       width: 100%;
-   }
+  .custom-select {
+      width: 100%;
+  }
 
-   .button-group {
-       width: 100%;
-   }
+  .button-group {
+      width: 100%;
+  }
 
-   .btn {
-       flex: 1;
-       justify-content: center;
-   }
-   
-   .table {
-       display: block;
-       overflow-x: auto;
-       white-space: nowrap;
-   }
+  .btn {
+      flex: 1;
+      justify-content: center;
+  }
+  
+  .table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+  }
 
-   .table th, 
-   .table td {
-       padding: 10px;
-   }
+  .table th, 
+  .table td {
+      padding: 10px;
+  }
 }
 </style>
 </head>
@@ -248,7 +332,7 @@ td a {
                    <th>글제목</th>
                    <th>조회수</th>
                    <th>작성일</th>
-                   <th>수정</th>
+                   <th>수정,삭제</th>
                </tr>
            </thead>
            <tbody>
@@ -273,11 +357,20 @@ td a {
                            </c:if>
                        </td>
                        <td>${bean.regdate}</td>
+                       
                        <td>
-                           <c:if test="${sessionScope.loginfo.memid == bean.memid}">
-                               <a href="<%=getEnvs%>aibbsUpdate&brdidx=${bean.brdidx}" class="edit-link">수정</a>
-                           </c:if>
-                       </td>
+    <c:if test="${sessionScope.loginfo.memid == bean.memid}">
+        <div class="button-group-right">
+            <a href="<%=getEnvs%>aibbsUpdate&brdidx=${bean.brdidx}" class="btn btn-edit">
+                <i class="fas fa-edit"></i> 수정
+            </a>
+            <a href="#" onclick="confirmDelete(${bean.brdidx}); return false;" class="btn btn-delete">
+                <i class="fas fa-trash-alt"></i> 삭제
+            </a>
+        </div>
+    </c:if>
+</td>
+                       
                    </tr>
                </c:forEach>
 
@@ -290,7 +383,97 @@ td a {
                </c:if>
            </tbody>
        </table>
-   </div>
+       
+       <div style="display: flex; justify-content: center; align-items: center; margin-top:10px;">
+			<ul class="pagination">
+	            <c:if test="${requestScope.keyword == ''}">
+	               <c:if test="${pagelist.beginPage > 10}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=1&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= 10}">
+	                  <li class="page-item"><span class="page-link disabled"><i class="fa fa-step-backward" aria-hidden="true"></i></span><!-- 처음 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.beginPage > 1}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= 1}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-backward" aria-hidden="true"></i></span><!-- 이전 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+	                  <c:forEach var="i" begin="${pagelist.beginPage}"
+	                     end="${pagelist.endPage}">
+	                     <li
+	                        class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+	                        class="page-link" href="<%=getEnvs%>aibbsList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+	                  </c:forEach>
+	               </c:if>
+	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+	                  <li class="page-item"><a class="page-link"
+	                        href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
+	               </c:if>
+	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-forward" aria-hidden="true"></i></span><!-- 다음 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
+	               </c:if>
+	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-step-forward" aria-hidden="true"></i></span><!-- 맨끝 -->
+	                  </li>
+	               </c:if>
+	            </c:if>
+	            <c:if test="${requestScope.keyword != ''}">
+	               <c:if test="${pagelist.beginPage > 10}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=1&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= 10}">
+	                  <li class="page-item"><span class="page-link disabled"><i class="fa fa-step-backward" aria-hidden="true"></i></span><!-- 처음 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.beginPage > 1}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= 1}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-backward" aria-hidden="true"></i></span><!-- 이전 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.beginPage <= pagelist.totalPage}">
+	                  <c:forEach var="i" begin="${pagelist.beginPage}"
+	                     end="${pagelist.endPage}">
+	                     <li
+	                        class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
+	                        class="page-link" href="<%=getEnvs%>aibbsList&pageNumber=${i}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+	                  </c:forEach>
+	               </c:if>
+	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+	                  <li class="page-item"><a class="page-link"
+	                        href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
+	               </c:if>
+	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-forward" aria-hidden="true"></i></span><!-- 다음 -->
+	                  </li>
+	               </c:if>
+	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
+	                  <li class="page-item"><a class="page-link"
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
+	               </c:if>
+	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
+	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-step-forward" aria-hidden="true"></i></span> <!-- 맨끝 -->
+	                  </li>
+	               </c:if>
+	            </c:if>
+	         </ul>     
+   		</div>
+       
+    </div>
 
    <script>
        <%
@@ -311,6 +494,13 @@ td a {
            const aibbsBigListUrl = "<%= getEnvs %>aibbsBigList";
            location.assign(aibbsBigListUrl);
        }
+       
+      
+       function confirmDelete(brdidx) {
+    	    if (confirm('정말 이 게시글을 삭제하시겠습니까?')) {
+    	        window.location.href = '<%=getEnvs%>aibbsDelete&brdidx=' + brdidx;
+    	    }
+    	}
    </script>
 </body>
 </html>

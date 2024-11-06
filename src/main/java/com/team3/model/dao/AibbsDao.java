@@ -10,6 +10,8 @@ import java.util.List;
 
 import com.team3.model.bean.Aibbs;
 import com.team3.model.bean.Board;
+import com.team3.model.bean.Book;
+import com.team3.model.bean.Paging;
 import com.team3.utility.AppConfig;
 
 public class AibbsDao extends SuperDao {
@@ -385,5 +387,229 @@ public class AibbsDao extends SuperDao {
 		
 		return bean;
 	}
+	
+    public int getAibbsTotalCount(String mode) {
+    	int totalcount = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(*) as aibbs_cnt FROM TEAM3_AIBBS";
+		
+		boolean bool = mode == null || mode.equals("all");
+		if(!bool) {
+			sql += " WHERE category = ?";
+		}
+		
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			if(!bool) {
+				pstmt.setString(1, mode);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totalcount = rs.getInt("aibbs_cnt");
+			}
+			
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+			} catch (Exception ex) {
+				// TODO: handle exception
+				ex.printStackTrace();
+			}
+		}
+		return totalcount;
+    }
+    
+	public List<String> getAibbsCategory() {
+		// TODO Auto-generated method stub
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				String sql = "SELECT DISTINCT category from TEAM3_AIBBS";
+				List<String> categoryList = null;
+				
+				try{
+					conn = super.getConnection();
+					pstmt = conn.prepareStatement(sql);
+					rs = pstmt.executeQuery();
+					categoryList = new ArrayList<String>();
+					
+					while(rs.next()) {
+						categoryList.add(rs.getString("category"));
+					}
+					
+				}catch (Exception e1) {
+					// TODO: handle exception
+					e1.printStackTrace();
+				}finally {
+					try {
+						if(rs!=null) {rs.close();}
+						if(pstmt!=null) {pstmt.close();}
+						if(conn!=null) {conn.close();}
+					}catch (Exception e2) {
+						// TODO: handle exception
+						e2.printStackTrace();
+					}
+				}
+				
+				return categoryList;
+	}
+	
+    public List<Aibbs> getAibbsPagingData(Paging pageInfo) {
+		Connection conn = null;
+		String mode = pageInfo.getMode() ;
+		String keyword = pageInfo.getKeyword();
+        
+		boolean bool = pageInfo.equals(null) || pageInfo.equals("null") || mode.equals("")|| mode.equals("all");
+        boolean bool1 = pageInfo.equals(null) || pageInfo.equals("null") || keyword.equals("");
+        
+		String sql = " SELECT brdidx, memid, boardpwd, category, subtitle, contents, attach01, attach02, attach03, attach04, codefile, readcnt, groupnum, ordernum, depthcnt, likes, hates, regdate, updated ";
+		sql += " FROM (SELECT brdidx, memid, boardpwd, category, subtitle, contents, attach01, attach02, attach03, attach04, codefile, readcnt, groupnum, ordernum, depthcnt, likes, hates, regdate, updated, ";
+		sql += " ROW_NUMBER() OVER (ORDER BY brdidx ASC) AS ranking";
+		sql += " FROM TEAM3_AIBBS";
+		
+		if(!bool) {
+			sql += " WHERE category = ?";
+		}
+		if(!bool1) {
+			if(bool) {
+				sql += " WHERE book_name LIKE ?";
+			}else {
+				sql += " AND book_name LIKE ?";
+			}
+		}
+		sql += " ) AS ranked_ones";
+		sql += " WHERE ranking BETWEEN ? AND ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("sql is " + sql);
+		
+		List<Aibbs> lists = new ArrayList<Aibbs>();
+		
+		try {
+			conn = super.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			if(!bool) {
+				pstmt.setString(1, mode);
+				pstmt.setInt(2, pageInfo.getBeginRow());
+				pstmt.setInt(3, pageInfo.getEndRow());
+			}
+			else {
+				pstmt.setInt(1, pageInfo.getBeginRow());
+				pstmt.setInt(2, pageInfo.getEndRow());
+			}
+			if(!bool1) {
+				if(bool) {
+					pstmt.setString(1, "%" + keyword + "%");
+					pstmt.setInt(2, pageInfo.getBeginRow());
+					pstmt.setInt(3, pageInfo.getEndRow());
+				}else {
+					pstmt.setString(1, mode);
+					pstmt.setString(2, "%" + keyword + "%");
+					pstmt.setInt(3, pageInfo.getBeginRow());
+					pstmt.setInt(4, pageInfo.getEndRow());
+				}
+			}			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Aibbs bean = this.getAibbsBeanData(rs);
+				lists.add(bean);
+			}
+			
+		} catch (Exception ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(pstmt != null) {pstmt.close();}
+				if(conn != null) {conn.close();}
+				
+			} catch (Exception ex) {
+				// TODO: handle exception
+				ex.printStackTrace();
+			}
+		}
+		
+		
+		return lists;
+    }
+    
+    public boolean deleteAibbs(int brdidx, String memid) {
+        String sql = "DELETE FROM TEAM3_AIBBS WHERE brdidx = ? AND memid = ?";
+        boolean isSuccess = false;
+
+        try (Connection conn = super.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            conn.setAutoCommit(false);
+            
+            pstmt.setInt(1, brdidx);
+            pstmt.setString(2, memid);
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows > 0) {
+                // 첨부 파일 삭제 로직
+                deleteAttachedFiles(brdidx);
+                conn.commit();
+                isSuccess = true;
+            } else {
+                conn.rollback();
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return isSuccess;
+    }
+
+    private void deleteAttachedFiles(int brdidx) {
+        // 첨부 파일 정보 조회
+        String sql = "SELECT attach01, attach02, attach03, attach04, codefile FROM TEAM3_AIBBS WHERE brdidx = ?";
+        
+        try (Connection conn = super.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, brdidx);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                String fileUploadPath = AppConfig.getInstance().getFileUploadPath();
+                
+                // 각 첨부 파일 삭제
+                deleteFileIfExists(fileUploadPath, rs.getString("attach01"));
+                deleteFileIfExists(fileUploadPath, rs.getString("attach02"));
+                deleteFileIfExists(fileUploadPath, rs.getString("attach03"));
+                deleteFileIfExists(fileUploadPath, rs.getString("attach04"));
+                deleteFileIfExists(fileUploadPath, rs.getString("codefile"));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteFileIfExists(String uploadPath, String fileName) {
+        if (fileName != null && !fileName.isEmpty()) {
+            File file = new File(uploadPath + File.separator + fileName);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+    
+
 	
 }

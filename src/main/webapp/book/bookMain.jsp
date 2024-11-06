@@ -31,7 +31,7 @@ List<Review> reviews = reviewDao.list(); // 전체 리뷰 목록 가져오기
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>모두의 도서관</title>
+<title>댕글댕글</title>
 <link rel="stylesheet"
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
@@ -491,7 +491,7 @@ body {
                      <a href="<%=getEnvs%>bookmark"> <i class="fas fa-bookmark"></i>
                         북마크
                      </a>
-                     <a href="<%=getEnvs%>logout"> <i class="fas fa-sign-out-alt"></i>
+                     <a href="<%=getEnvs%>memLogout"> <i class="fas fa-sign-out-alt"></i>
                         <span>로그아웃</span>
                      </a>
                   </c:otherwise>

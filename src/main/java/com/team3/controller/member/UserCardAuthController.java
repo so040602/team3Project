@@ -66,6 +66,7 @@ public class UserCardAuthController extends SuperClass {
 
     	    if(resResult.equalsIgnoreCase("FAILURE")) {
     			String message = "사용자 인증 정보가 잘못 되었습니다.";
+    			request.setAttribute("process", "FAILURE");
     			super.setAlertMessage(message);
     	    	super.gotoPage("member/userAuthStartForm.jsp");
 
@@ -89,6 +90,7 @@ public class UserCardAuthController extends SuperClass {
     		    request.setAttribute("parsedAddr01", addr01);
     		    request.setAttribute("parsedAddr02", addr02);
     		    
+    		    request.setAttribute("process", "SUCCESS");
     	    	super.gotoPage("member/memInsertForm.jsp");
     	    } 	
 			
