@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./../common/common.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -249,6 +250,12 @@
     <div class="container">
         <div class="auth-box">
             <h2 class="page-title">회원 가입 사용자 인증</h2>
+            
+            <c:if test="${process == 'FAILURE'}">
+			    <h5 class="mb-3" style="text-align:center; color:#ee0000;">
+            		사용자 인증 정보 처리가 실패했습니다.
+            	</h5>
+			</c:if>
             
             <form action="<%= postForm %>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="opsmode" value="userCardParse">
