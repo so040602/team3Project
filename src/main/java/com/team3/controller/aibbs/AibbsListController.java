@@ -31,7 +31,7 @@ public class AibbsListController extends SuperClass{
 		List<String> categoryList = new ArrayList<String>();
 		
 		//categoryList = dao.getAibbsCategory();
-		categoryList.add("빅데이터");
+		categoryList.add("머신러닝");
 		categoryList.add("인공지능");
 		
 		String pageNumberParam = request.getParameter("pageNumber");
