@@ -308,21 +308,29 @@ td a {
        </div>
 
        <div class="filter-section">
-           <select class="custom-select">
+           <select class="custom-select" onchange="moveCate(this)">
                <option value=""> 전체 카테고리 </option>
-               <option value="인공지능"> 인공지능 </option>
-               <option value="빅데이터"> 빅데이터 </option>
+               <option value="인공지능" <c:if test="${requestScope.selectedCate == '인공지능'}">selected</c:if>> 인공지능 </option>
+               <option value="머신러닝" <c:if test="${requestScope.selectedCate == '머신러닝'}">selected</c:if>> 머신러닝 </option>
            </select>
            
            <div class="button-group">
                <button type="submit" class="btn btn-primary" onclick="aibbsInsert();">
-                   <i class="fas fa-plus"></i>인공 지능 개발 추가
+                   <i class="fas fa-plus"></i>개발 산출물 추가
                </button>
-               <button type="submit" class="btn btn-primary" onclick="aibbsBigData();">
-                   <i class="fas fa-database"></i>빅데이터 처리 목록
-               </button>
+               <!--button type="submit" class="btn btn-primary" onclick="aibbsBigData();">
+                   <i class="fas fa-database"></i>머신러닝 처리 목록
+               </button-->
            </div>
        </div>
+       
+		<script>
+		    function moveCate(selectElem) {
+		        const category = encodeURIComponent(selectElem.value);  // 선택된 카테고리 값 인코딩
+		        const myURL = "<%= getEnvs %>aibbsList&category=" + category;  // 동적으로 URL 생성
+		        location.assign(myURL);  // 해당 URL로 이동
+		    }
+		</script>
 
        <table class="table">
            <thead>
@@ -389,7 +397,7 @@ td a {
 	            <c:if test="${requestScope.keyword == ''}">
 	               <c:if test="${pagelist.beginPage > 10}">
 	                  <li class="page-item"><a class="page-link"
-	                     href="<%=getEnvs%>aibbsList&pageNumber=1&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
+	                     href="<%=getEnvs%>aibbsList&pageNumber=1&category=${requestScope.selectedCate}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
 	               </c:if>
 	               <c:if test="${pagelist.beginPage <= 10}">
 	                  <li class="page-item"><span class="page-link disabled"><i class="fa fa-step-backward" aria-hidden="true"></i></span><!-- 처음 -->
@@ -397,7 +405,7 @@ td a {
 	               </c:if>
 	               <c:if test="${pagelist.beginPage > 1}">
 	                  <li class="page-item"><a class="page-link"
-	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.beginPage - 1}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.beginPage - 1}&category=${requestScope.selectedCate}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
 	               </c:if>
 	               <c:if test="${pagelist.beginPage <= 1}">
 	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-backward" aria-hidden="true"></i></span><!-- 이전 -->
@@ -408,12 +416,12 @@ td a {
 	                     end="${pagelist.endPage}">
 	                     <li
 	                        class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
-	                        class="page-link" href="<%=getEnvs%>aibbsList&pageNumber=${i}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+	                        class="page-link" href="<%=getEnvs%>aibbsList&pageNumber=${i}&category=${requestScope.selectedCate}">${i}</a></li>
 	                  </c:forEach>
 	               </c:if>
 	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
 	                  <li class="page-item"><a class="page-link"
-	                        href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.endPage + 1}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
+	                        href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.endPage + 1}&category=${requestScope.selectedCate}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
 	               </c:if>
 	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
 	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-forward" aria-hidden="true"></i></span><!-- 다음 -->
@@ -421,7 +429,7 @@ td a {
 	               </c:if>
 	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
 	                  <li class="page-item"><a class="page-link"
-	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.totalPage}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.totalPage}&category=${requestScope.selectedCate}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
 	               </c:if>
 	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
 	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-step-forward" aria-hidden="true"></i></span><!-- 맨끝 -->
@@ -431,7 +439,7 @@ td a {
 	            <c:if test="${requestScope.keyword != ''}">
 	               <c:if test="${pagelist.beginPage > 10}">
 	                  <li class="page-item"><a class="page-link"
-	                     href="<%=getEnvs%>aibbsList&pageNumber=1&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
+	                     href="<%=getEnvs%>aibbsList&pageNumber=1&search=${requestScope.keyword}&category=${requestScope.selectedCate}"><i class="fa fa-step-backward" aria-hidden="true"></i></a></li><!-- 처음 -->
 	               </c:if>
 	               <c:if test="${pagelist.beginPage <= 10}">
 	                  <li class="page-item"><span class="page-link disabled"><i class="fa fa-step-backward" aria-hidden="true"></i></span><!-- 처음 -->
@@ -439,7 +447,7 @@ td a {
 	               </c:if>
 	               <c:if test="${pagelist.beginPage > 1}">
 	                  <li class="page-item"><a class="page-link"
-	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.beginPage - 1}&search=${requestScope.keyword}&category=${requestScope.selectedCate}"><i class="fa fa-backward" aria-hidden="true"></i></a></li><!-- 이전 -->
 	               </c:if>
 	               <c:if test="${pagelist.beginPage <= 1}">
 	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-backward" aria-hidden="true"></i></span><!-- 이전 -->
@@ -450,12 +458,12 @@ td a {
 	                     end="${pagelist.endPage}">
 	                     <li
 	                        class="page-item <c:if test="${i == pagelist.pageNumber}">active</c:if>"><a
-	                        class="page-link" href="<%=getEnvs%>aibbsList&pageNumber=${i}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}">${i}</a></li>
+	                        class="page-link" href="<%=getEnvs%>aibbsList&pageNumber=${i}&search=${requestScope.keyword}&category=${requestScope.selectedCate}">${i}</a></li>
 	                  </c:forEach>
 	               </c:if>
 	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
 	                  <li class="page-item"><a class="page-link"
-	                        href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
+	                        href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.endPage + 1}&search=${requestScope.keyword}&category=${requestScope.selectedCate}"><i class="fa fa-forward" aria-hidden="true"></i></a></li><!-- 다음 -->
 	               </c:if>
 	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
 	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-forward" aria-hidden="true"></i></span><!-- 다음 -->
@@ -463,7 +471,7 @@ td a {
 	               </c:if>
 	               <c:if test="${pagelist.endPage < pagelist.totalPage}">
 	                  <li class="page-item"><a class="page-link"
-	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&currCategory=${requestScope.selectedCategory}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
+	                     href="<%=getEnvs%>aibbsList&pageNumber=${pagelist.totalPage}&search=${requestScope.keyword}&category=${requestScope.selectedCate}"><i class="fa fa-step-forward" aria-hidden="true"></i></a></li><!-- 맨끝 -->
 	               </c:if>
 	               <c:if test="${pagelist.endPage >= pagelist.totalPage}">
 	                  <li class="page-item disabled"><span class="page-link"><i class="fa fa-step-forward" aria-hidden="true"></i></span> <!-- 맨끝 -->
