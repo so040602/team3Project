@@ -249,13 +249,14 @@
     function validCheck() {
         const boardpwd = $('#boardpwd').val();
 
+        // 비밀번호 유효성 검사
         if (boardpwd.length < 5 || boardpwd.length > 12) {
             showErrorMessage('비밀번호는 5자리 이상 12자리 이하로 입력해 주세요.');
             $('#boardpwd').focus();
             return false;
         }
 
-        // 비동기 검사를 수행하고, 비밀번호 검사가 완료된 후 나머지 검사를 진행
+        // 비동기 비밀번호 검사
         ajaxCheckBoardpwd(function(isValid) {
             if (!isValid) {
                 showErrorMessage("비밀번호를 정확하게 입력해 주세요.");
@@ -264,7 +265,7 @@
                 return false;
             }
 
-            // 제목 필드 검사
+            // 제목 검사
             const subtitle = document.getElementById('subtitle').value.trim();
             if (subtitle.length === 0) {
                 alert('제목을 입력해 주세요.');
@@ -272,7 +273,7 @@
                 return false;
             }
 
-            // 내용 필드 검사
+            // 내용 검사
             const contents = document.getElementById('contents').value.trim();
             if (contents.length === 0) {
                 alert('내용을 입력해 주세요.');
@@ -280,17 +281,7 @@
                 return false;
             }
             
-            // 첨부파일 검사: 반드시 입력되어야 함
-            const attach01FileName = document.getElementById('attach01FileName').value;
-            const attach01 = document.getElementById('attach01').value;
-            
-            if (!attach01FileName && attach01.length === 0) {
-                alert('첨부파일(1)은 반드시 입력해 주세요.');
-                document.getElementById('attach01').focus();
-                return false;
-            }
-
-            // 파일 확장자 검사
+            // 첨부파일 유효성 검사
             const attachments = [
                 { id: 'attach01', message: 'jpg, jpeg, png, gif, pdf 파일만 첨부할 수 있습니다.' },
                 { id: 'attach02', message: 'jpg, jpeg, png, gif, pdf 파일만 첨부할 수 있습니다.' },
@@ -314,8 +305,8 @@
                 }
             }
 
-            // 모든 유효성 검사를 통과한 경우
-            alert("모든 입력이 유효합니다!"); // 알림 메시지
+            // 모든 유효성 검사 통과 후 폼 제출
+            alert("모든 입력이 유효합니다!");
             document.forms[0].submit(); // 폼을 제출하여 서버에 요청
         });
 
@@ -351,5 +342,6 @@
         alert(message);
     }
 </script>
+
 </body>
 </html>
