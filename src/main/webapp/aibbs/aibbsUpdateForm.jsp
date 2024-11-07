@@ -208,7 +208,10 @@
            
            <c:forEach var="i" begin="1" end="4">
                <div class="form-row">
-                   <div class="form-label">첨부파일 ${i}</div>
+                   <div class="form-label">
+                   		<div>첨부파일 ${i}</div>
+                   		<div>파일변경 ${i}</div>
+                   </div>		
                    <div class="form-input">
                        <c:set var="attachVar" value="attach0${i}" />
                        <c:if test="${not empty requestScope.bean[attachVar]}">
@@ -220,7 +223,10 @@
            </c:forEach>
            
            <div class="form-row">
-               <div class="form-label">코드파일</div>
+               <div class="form-label">
+               		<div>코드파일</div>
+               		<div>파일변경</div>
+               	</div>
                <div class="form-input">
                    <c:if test="${not empty requestScope.bean.codefile}">
                        <div class="file-info">현재 파일: ${requestScope.bean.codefile}</div>
