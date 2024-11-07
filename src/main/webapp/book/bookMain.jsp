@@ -470,7 +470,7 @@ body {
             style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
             <a href="<%=getEnvs%>home" class="logo" style="display: flex; align-items: center;">
             <img src="<%=appName%>/resources/images/logo.png" alt="댕글댕글 로고" style="max-height: 40px; margin-right: 8px;">
-            <span style="font-size: 24px; font-weight: bold; color: #333;">댕글댕글</span>
+            <span style="font-size: 24px; font-weight: bold; color: #333;">댕글댕글 도서관</span>
         </a>
 
             <div class="user-menu">
@@ -733,7 +733,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <h2>&nbsp;&nbsp;도서 리뷰</h2>
             <a href="<%=getEnvs%>reviewList">더보기 ></a>
          </div>
-
          <div style="position: relative;">
             <div class="articles-container">
                <%
