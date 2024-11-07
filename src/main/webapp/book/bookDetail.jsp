@@ -321,13 +321,13 @@ body {
 				
 				<c:if test="${whologin > 0}">
 					<div class="action-buttons">
-						<button class="btn btn-lg btn-buy btn-out" value="<%=bookCnt%>">
+						<button class="btn btn-lg btn-buy btn-out" onclick="showBookOutConfirm(this.value)" value="<%=bookCnt%>">
 							<i class="fas fa-book"></i> 대출
 						</button>
 						<button class="btn btn-lg btn-wishlist" value="<%=book.getDescription()%>">
 							<i class="fas fa-calendar-check"></i> 워드클라우드
 						</button>
-						<button class="btn btn-lg btn-cart" value="<%=bookCnt%>">
+						<button class="btn btn-lg btn-cart" onclick="showConfirm(this.value)" value="<%=bookCnt%>">
 							<i class="fas fa-bookmark"></i> 북마크
 						</button>
 					</div>
@@ -349,43 +349,7 @@ body {
                 description.classList.toggle("expanded");
                 toggleButton.classList.toggle("expanded");
                 toggleButton.textContent = description.classList.contains("expanded") ? "접기" : "더보기";
-            });
-
-            // 버튼 클릭 이벤트
-            document.querySelector('.btn-cart').addEventListener('click', function() {
-                const bookCartIdx = this.value;
-				
-                fetch('<%=getEnvs%>bookOutCart', {
-                	method: 'POST',
-                	headers: {
-                		'Content-Type':'application/json'
-                	},
-                	body: JSON.stringify({bookId:bookCartIdx})
-                }).then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json(); // JSON으로 응답 받기
-                })
-                .then(data => {
-                    console.log(data);// 서버에서 받은 응답 처리
-                    
-                    if(data === "초과"){
-                    	alert('책은 6권 이상 담을 수 없습니다.');
-                    }else if(data === "중복"){
-                    	alert('같은 책은 담을 수 없습니다.');
-                    }else if(data === "오류"){
-                    	alert('책을 담을 수 없습니다.')
-                    } else if(data === "가능"){
-                    	alert('북마크에 추가되었습니다.');
-                    }else{
-                    	alert('이미 대출중인 도서 입니다.');
-                    }                   
-                })
-                .catch(error => {
-                    console.error('There has been a problem with your fetch operation:', error);
-                });
-            });
+            });     
             
             document.querySelector('.btn-wishlist').addEventListener('click', function() {
                 const bookDiscription = this.value;
@@ -416,40 +380,86 @@ body {
                     console.error('There has been a problem with your fetch operation:', error);
                 });
             });           
-            document.querySelector('.btn-buy').addEventListener('click', function() {
-            	const bookOutIdx = this.value;
-            	console.log(bookOutIdx);
-            	fetch('<%=getEnvs%>BookListOut', {
-                	method: 'POST',
-                	headers: {
-                		'Content-Type':'application/json'
-                	},
-                	body: JSON.stringify({bookId: bookOutIdx})
-                }).then(response => {
-                    if (!response.ok) {
+        });
+    </script>
+    <script>
+	   	function showBookOutConfirm(bookidx) {
+	        const result = confirm("대출을 진행 하시겠습니까?");
+	        if(result) {
+	            fetch('<%=getEnvs%>BookListOut', {
+	                method: 'POST',
+	                headers: {
+	                    'Content-Type': 'application/json'
+	                },
+	                body: JSON.stringify({bookId: bookidx})
+	            })
+	            .then(response => {
+	                if(!response.ok) {
+	                    throw new Error('Network response was not ok');
+	                }
+	                return response.json();
+	            })
+	            .then(data => {
+	            	
+	            	switch (data) {
+		                case "불가능":
+		                    alert('이미 책이 대여 중 입니다.');
+		                    break;
+		                case "성공":
+		                    alert('해당 책이 대출되었습니다.');
+		                    break;
+		                case "실패":
+		                    alert('책을 대출할 수 없습니다.');
+		                    break;
+		                case "오류":
+		                    alert('대출 진행 중 오류가 발생했습니다. 다시 시도해주세요.');
+		                    break;
+		                case "초과":
+		                    alert('대출 가능한 권수(4)를 초과했습니다.');
+		                    break;
+	            		}
+	            })
+	            .catch(error => {
+	                console.error('There has been a problem with your fetch operation:', error);
+	            });
+	        }
+	    }
+    </script>
+    <script>
+        function showConfirm(bookidx) {
+            const result = confirm("북마크에 추가 하시겠습니까?");
+            if(result) {
+                fetch('<%=getEnvs%>bookOutCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({bookId: bookidx})
+                })
+                .then(response => {
+                    if(!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json(); // JSON으로 응답 받기
+                    return response.json();
                 })
                 .then(data => {
-                    console.log(data);// 서버에서 받은 응답 처리  
-                    if(data === "불가능"){
-                    	alert('이미 책이 대여 중 입니다.');
-                    }else if(data === "성공"){
-                    	alert('해당 책이 대출 되었습니다.');
-                    	window.location.href = window.location.href;
-                    }else if(data === "실패"){
-                    	alert('책을 대출할 수 없습니다.')
-                    } else if(data === "오류"){
-                    	alert('대출 진행 중 오류가 발생했습니다. 다시 시도해주세요.');
-                    }else if(data === "초과")
-                    	alert('대출 가능한 권수(4)를 초과했습니다.')
+                	if(data === "초과"){
+                    	alert('책은 6권 이상 담을 수 없습니다.');
+                    }else if(data === "중복"){
+                    	alert('같은 책은 담을 수 없습니다.');
+                    }else if(data === "오류"){
+                    	alert('책을 담을 수 없습니다.')
+                    } else if(data === "가능"){
+                    	alert('북마크에 추가되었습니다.');
+                    }else{
+                    	alert('이미 대출중인 도서 입니다.');
+                    }         
                 })
                 .catch(error => {
                     console.error('There has been a problem with your fetch operation:', error);
                 });
-            });
-        });
+            }
+        }
     </script>
 </body>
 </html>

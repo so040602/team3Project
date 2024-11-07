@@ -371,13 +371,14 @@ button[type="submit"]:hover {
       <h2>전체도서 목록</h2>
 
     <!-- 통합 검색 폼 -->
+    <!-- 카테고리 설정 후 검색 내용을 Post 형식으로 bookList Controller에 전달하는 코드입니다. -->
     <form id="bookSearch" action="<%=getEnvs%>bookList" method="POST">
         <div class="search-wrapper">
             <select name="category">
                 <option value="전체보기">전체</option>
                 <c:forEach var="category" items="${requestScope.category_List}">
                     <option value="${category}" 
-                        <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
+                        <c:if test="${category == requestScope.selectedCategory}">selected</c:if>> <!-- 검색 후 카테고리를 유지하기 위한 코드입니다. -->
                         ${category}
                     </option>
                 </c:forEach>
@@ -392,12 +393,13 @@ button[type="submit"]:hover {
     
     
     <!-- 독립적인 카테고리 선택 -->
+    <!-- 선택된 카테고리 값을 bookList에 Post 형식으로 전달-->
     <form id="categoryForm" action="<%=getEnvs%>bookList" method="POST">
         <select class="category-select" name="category" onchange="document.getElementById('categoryForm').submit()">
             <option value="전체보기">전체</option>
             <c:forEach var="category" items="${requestScope.category_List}">
                 <option value="${category}" 
-                    <c:if test="${category == requestScope.selectedCategory}">selected</c:if>>
+                    <c:if test="${category == requestScope.selectedCategory}">selected</c:if>> <!-- bookList에서 현재 카테고리 값을 받아서 카테고리를 유지하기 위한 코드입니다. -->
                     ${category}
                 </option>
             </c:forEach>
@@ -428,7 +430,7 @@ button[type="submit"]:hover {
                <c:if test="${whologin > 0}">
 	               <div class="button-group">
 	                  <button class="reserve-button" onclick="showConfirm(this.value)" value="${bean.book_idx}">북 마크</button>
-	                  <button class="borrow-button btn-out" value="${bean.book_idx}">대출하기</button>
+	                  <button class="borrow-button btn-out" onclick="showBookOutConfirm(this.value)" value="${bean.book_idx}">대출하기</button>
 	               </div>
                </c:if>
             </div>
@@ -524,49 +526,47 @@ button[type="submit"]:hover {
    </div>
    
    	<script>
-        // DOM 로드 이벤트와 버튼 이벤트를 하나의 스크립트로 통합
-        document.addEventListener("DOMContentLoaded", function() {
-        	const buttons = document.querySelectorAll('.btn-out')
-            // 버튼 클릭 이벤트
-            buttons.forEach(button => {button.addEventListener('click', function() {
-            	const bookOutIdx = this.value;
-
-                console.log(bookOutIdx);
-
-
-                
-                fetch('<%=getEnvs%>BookListOut', {
-                	method: 'POST',
-                	headers: {
-                		'Content-Type':'application/json'
-                	},
-                	body: JSON.stringify({bookId: bookOutIdx})
-                }).then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json(); // JSON으로 응답 받기
-                })
-                .then(data => {
-                    console.log(data);// 서버에서 받은 응답 처리  
-                    if(data === "불가능"){
-                    	alert('이미 책이 대여 중 입니다.');
-                    }else if(data === "성공"){
-                    	alert('해당 책이 대출 되었습니다.');
-                    	window.location.href = window.location.href;
-                    }else if(data === "실패"){
-                    	alert('책을 대출할 수 없습니다.')
-                    } else if(data === "오류"){
-                    	alert('대출 진행 중 오류가 발생했습니다. 다시 시도해주세요.');
-                    }else if(data === "초과")
-                    	alert('대출 가능한 권수(4)를 초과했습니다.')
-                })
-                .catch(error => {
-                    console.error('There has been a problem with your fetch operation:', error);
-                });
-            });
-        });
-        });
+	   	function showBookOutConfirm(bookidx) {
+	        const result = confirm("대출을 진행 하시겠습니까?");
+	        if(result) {
+	            fetch('<%=getEnvs%>BookListOut', {
+	                method: 'POST',
+	                headers: {
+	                    'Content-Type': 'application/json'
+	                },
+	                body: JSON.stringify({bookId: bookidx})
+	            })
+	            .then(response => {
+	                if(!response.ok) {
+	                    throw new Error('Network response was not ok');
+	                }
+	                return response.json();
+	            })
+	            .then(data => {
+	            	
+	            	switch (data) {
+		                case "불가능":
+		                    alert('이미 책이 대여 중 입니다.');
+		                    break;
+		                case "성공":
+		                    alert('해당 책이 대출되었습니다.');
+		                    break;
+		                case "실패":
+		                    alert('책을 대출할 수 없습니다.');
+		                    break;
+		                case "오류":
+		                    alert('대출 진행 중 오류가 발생했습니다. 다시 시도해주세요.');
+		                    break;
+		                case "초과":
+		                    alert('대출 가능한 권수(4)를 초과했습니다.');
+		                    break;
+	            		}
+	            })
+	            .catch(error => {
+	                console.error('There has been a problem with your fetch operation:', error);
+	            });
+	        }
+	    }
     </script>
     <script>
         function showConfirm(bookidx) {

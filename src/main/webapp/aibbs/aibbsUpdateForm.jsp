@@ -187,7 +187,7 @@
                    <select id="category" name="category">
                        <option value="" ${empty requestScope.bean.category ? 'selected' : ''}>선택</option>
                        <option value="인공지능" ${requestScope.bean.category eq '인공지능' ? 'selected' : ''}>인공지능</option>
-                       <option value="빅데이터" ${requestScope.bean.category eq '빅데이터' ? 'selected' : ''}>빅데이터</option>
+                       <option value="머신러닝" ${requestScope.bean.category eq '머신러닝' ? 'selected' : ''}>머신러닝</option>
                    </select>
                </div>
            </div>
@@ -208,7 +208,10 @@
            
            <c:forEach var="i" begin="1" end="4">
                <div class="form-row">
-                   <div class="form-label">첨부파일 ${i}</div>
+                   <div class="form-label">
+                   		<div>첨부파일 ${i}</div>
+                   		<div>파일변경 ${i}</div>
+                   </div>		
                    <div class="form-input">
                        <c:set var="attachVar" value="attach0${i}" />
                        <c:if test="${not empty requestScope.bean[attachVar]}">
@@ -220,7 +223,10 @@
            </c:forEach>
            
            <div class="form-row">
-               <div class="form-label">코드파일</div>
+               <div class="form-label">
+               		<div>코드파일</div>
+               		<div>파일변경</div>
+               	</div>
                <div class="form-input">
                    <c:if test="${not empty requestScope.bean.codefile}">
                        <div class="file-info">현재 파일: ${requestScope.bean.codefile}</div>

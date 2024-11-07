@@ -58,7 +58,20 @@ public class AibbsDetailController extends SuperClass {
             String filePath = os.contains("win") ? "team3_uploads" : "./../team3_uploads";
             
             request.setAttribute("filePath", filePath);
+            
+            // Bean에서 contents를 가져옵니다.
+            String contents = bean.getContents();
+
+            // 줄바꿈을 <br/>로 변환
+            String convertedContents = contents != null ? contents.replace("\n", "<br/>") : "";
+
+            // 변환된 내용을 request에 속성으로 추가
+            request.setAttribute("convertedContents", convertedContents);
+
+            // 원래 bean 객체도 request에 추가 (필요한 경우)
             request.setAttribute("bean", bean);
+            
+            
             super.gotoPage("aibbs/aibbsDetail.jsp");
             
         } catch (Exception e) {

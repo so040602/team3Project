@@ -20,8 +20,6 @@ import javax.imageio.ImageIO;
 
 public class WordCloud {
 
-//    private String fileUploadPath = "http://127.0.0.1:5000/wordcloud";
-
     // 파일 없이 JSON 데이터를 보내는 메서드
     public byte[] sendJsonData(String jsonData) {
 //        System.out.println("jsonData in sendJsonData(): " + jsonData);

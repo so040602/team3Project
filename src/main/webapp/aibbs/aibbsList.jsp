@@ -309,7 +309,7 @@ td a {
 
        <div class="filter-section">
            <select class="custom-select" onchange="moveCate(this)">
-               <option value=""> 전체 카테고리 </option>
+               <option value="all"> 전체 카테고리 </option>
                <option value="인공지능" <c:if test="${requestScope.selectedCate == '인공지능'}">selected</c:if>> 인공지능 </option>
                <option value="머신러닝" <c:if test="${requestScope.selectedCate == '머신러닝'}">selected</c:if>> 머신러닝 </option>
            </select>
