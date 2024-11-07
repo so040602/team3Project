@@ -610,6 +610,72 @@ public class AibbsDao extends SuperDao {
         }
     }
     
-
+    public Aibbs getAibbsDataWithIncrementViewCount(int brdidx, boolean shouldIncrement) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Aibbs bean = null;
+        
+        try {
+            conn = super.getConnection();
+            conn.setAutoCommit(false); // 트랜잭션 시작
+            
+            // 조회수 증가가 필요한 경우에만 수행
+            if (shouldIncrement) {
+                String updateSql = "UPDATE team3_aibbs SET readcnt = readcnt + 1 WHERE brdidx = ?";
+                pstmt = conn.prepareStatement(updateSql);
+                pstmt.setInt(1, brdidx);
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
+            
+            // JSP에서 실제로 사용되는 필드만 조회
+            String selectSql = "SELECT brdidx, memid, subtitle, contents, " +
+                             "attach01, attach02, attach03, attach04, codefile, " +
+                             "readcnt " +
+                             "FROM team3_aibbs WHERE brdidx = ?";
+            
+            pstmt = conn.prepareStatement(selectSql);
+            pstmt.setInt(1, brdidx);
+            rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                bean = new Aibbs();
+                bean.setBrdidx(rs.getInt("brdidx"));
+                bean.setMemid(rs.getString("memid"));
+                bean.setSubtitle(rs.getString("subtitle"));
+                bean.setContents(rs.getString("contents"));
+                bean.setAttach01(rs.getString("attach01"));
+                bean.setAttach02(rs.getString("attach02"));
+                bean.setAttach03(rs.getString("attach03"));
+                bean.setAttach04(rs.getString("attach04"));
+                bean.setCodefile(rs.getString("codefile"));
+                bean.setReadcnt(rs.getInt("readcnt"));
+            }
+            
+            conn.commit();
+            return bean;
+            
+        } catch (Exception e) {
+            try {
+                if (conn != null) conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 	
 }

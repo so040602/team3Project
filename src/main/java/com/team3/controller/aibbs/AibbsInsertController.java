@@ -46,7 +46,8 @@ public class AibbsInsertController extends SuperClass {
 			} else { 
 				// 게시물 목록 보기 페이지로 이동
 				//new HomeController().doGet(request, response);
-				//super.gotoPage("board/brdList.jsp");
+				response.sendRedirect(request.getContextPath() + 
+	                    "/coolapp?opsmode=aibbsList&brdidx=");
 				new AibbsListController().doGet(request, response);
 			}
 			

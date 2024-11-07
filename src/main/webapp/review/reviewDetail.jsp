@@ -1,3 +1,4 @@
+<%@page import="com.team3.model.bean.Member"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.team3.model.bean.Review" %>
 <%@ page import="java.util.List" %>
@@ -8,6 +9,9 @@ String mappingName = "/coolapp";
 String postForm = appName + mappingName;
 String getEnvs = appName + mappingName + "?opsmode=";
 Review review = (Review) request.getAttribute("review");
+
+Member loggedInMember = (Member) session.getAttribute("loginfo");
+String loggedInUserId = (loggedInMember != null) ? loggedInMember.getMemid() : null;
 %>
 
 <!DOCTYPE html>
@@ -221,12 +225,15 @@ Review review = (Review) request.getAttribute("review");
             <a href="<%= getEnvs %>reviewList" class="btn btn-secondary">
                 <i class="fas fa-list"></i> 목록으로
             </a>
+            <% if (loggedInUserId != null && loggedInUserId.equals(review.getMemid())) { %>
+            <!-- 로그인한 사용자와 작성자가 같을 경우에만 수정/삭제 버튼 표시 -->
             <a href="<%= getEnvs %>reviewUpdate&reviewidx=<%= review.getReviewidx() %>" class="btn btn-primary">
                 <i class="fas fa-edit"></i> 수정
             </a>
             <a href="#" onclick="confirmDelete(<%= review.getReviewidx() %>)" class="btn btn-danger">
                 <i class="fas fa-trash-alt"></i> 삭제
             </a>
+            <% } %>
         </div>
     </div>
 

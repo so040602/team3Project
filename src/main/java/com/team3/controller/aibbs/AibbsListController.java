@@ -17,7 +17,7 @@ public class AibbsListController extends SuperClass{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		super.doGet(request, response);
 		
-		String mode = request.getParameter("currCategory");
+		String mode = request.getParameter("category");
 		int totalCount = 0;
 		
 		if(mode == null || mode.equals("전체보기")) {
@@ -50,7 +50,7 @@ public class AibbsListController extends SuperClass{
 		int beginpage = pageInfo.getBeginPage();
 
 		//request.setAttribute("keyword", keyword);
-		request.setAttribute("selectedCategory", mode);
+		request.setAttribute("selectedCate", mode);
 		request.setAttribute("categoryList", categoryList);
 		request.setAttribute("datalist", aibbsList);	
 		request.setAttribute("pagelist", pageInfo);

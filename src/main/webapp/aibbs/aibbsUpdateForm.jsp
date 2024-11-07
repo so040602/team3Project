@@ -187,7 +187,7 @@
                    <select id="category" name="category">
                        <option value="" ${empty requestScope.bean.category ? 'selected' : ''}>선택</option>
                        <option value="인공지능" ${requestScope.bean.category eq '인공지능' ? 'selected' : ''}>인공지능</option>
-                       <option value="빅데이터" ${requestScope.bean.category eq '빅데이터' ? 'selected' : ''}>빅데이터</option>
+                       <option value="머신러닝" ${requestScope.bean.category eq '머신러닝' ? 'selected' : ''}>머신러닝</option>
                    </select>
                </div>
            </div>
