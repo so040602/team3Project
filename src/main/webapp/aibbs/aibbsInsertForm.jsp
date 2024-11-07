@@ -179,7 +179,7 @@
                    <select name="category" required>
                        <option value="">- 선택 -</option>
                        <option value="인공지능">인공지능</option>
-                       <option value="빅데이터">빅데이터</option>
+                       <option value="머신러닝">머신러닝</option>
                    </select>
                </div>
            </div>
