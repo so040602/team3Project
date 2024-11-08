@@ -280,10 +280,14 @@
                 <i class="fas fa-book-reader"></i>
                 리뷰 목록
             </h1>
+            <c:choose>
+            <c:when test="${whologin == 1}">
             <a href="<%=getEnvs%>reviewInsert" class="btn btn-primary">
                 <i class="fas fa-pen"></i>
                 리뷰 등록
             </a>
+            </c:when>
+            </c:choose>
         </div>
 
         <% 
